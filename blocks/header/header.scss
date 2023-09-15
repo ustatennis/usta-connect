@@ -1,0 +1,103 @@
+header {
+  color: black;
+  height: 141px;
+  margin: 0 auto;
+  font-size: var(--body-font-size-s);
+}
+
+header .header {
+  max-width: 1440px;
+  background: #00288c
+    url('https://www.usta.com/content/dam/bmw/assets/us_open_hdr_logo.png')
+    no-repeat center center;
+  background-size: 269px 48px;
+  height: 116px;
+  width: 100%;
+  z-index: 2;
+}
+
+header .header .header-wrapper {
+  position: relative;
+  max-width: 1440px;
+  height: 125px;
+}
+
+header .header picture {
+  bottom: 0;
+  position: absolute;
+  right: 27px;
+
+  @media (max-width: 700px) {
+    display: none;
+  }
+}
+
+.alert-bar {
+  position: relative;
+  max-width: 1440px;
+}
+
+.alert-bar .main-alert-bar {
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  height: 25px;
+}
+
+.alert-bar .main-alert-bar picture {
+  position: relative;
+  right: 0;
+}
+
+.alert-bar .main-alert-bar picture img {
+  text-align: center;
+  height: 18px;
+  width: 18px;
+  padding-right: 6px;
+}
+
+.alert-bar .main-alert-bar a {
+  margin-top: auto;
+  margin-bottom: auto;
+  color: #fff;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.alert-bar .main-alert-bar p {
+  font-size: 12px;
+  margin-top: auto;
+  margin-bottom: auto;
+  color: #fff;
+  padding-right: 5px;
+}
+
+.alert-bar p:nth-child(1) {
+  font-size: 18px !important;
+  padding: 0 !important;
+}
+
+.alert-bar > div > div > p:nth-child(2) {
+  font-weight: bold;
+}
+
+.alert-bar .alert-bar-div {
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+}
+
+.alert-bar .main-alert-bar .alert-bar-btn {
+  border: none;
+  color: #fff;
+  background-color: transparent;
+  padding: 0;
+  margin: 5px;
+  cursor: pointer;
+  float: left;
+  display: flex;
+  justify-content: normal;
+  align-items: center;
+  position: absolute;
+  right: 22px;
+}

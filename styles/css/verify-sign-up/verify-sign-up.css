@@ -1,0 +1,150 @@
+main .section {
+  margin: 0 !important;
+  padding: 0 !important; }
+
+header {
+  display: none; }
+
+.verify-sign-up-container {
+  width: 100%;
+  min-height: 100vh;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 !important;
+  padding: 0 !important; }
+
+.verify-sign-up-container.none {
+  display: none !important; }
+
+.verify-sign-up-container .verify-sign-up-wrapper {
+  background-color: #fff;
+  border: 1px solid #606060;
+  border-radius: 3px;
+  box-shadow: 0 3px 9px #0000007F;
+  padding: 15px;
+  max-width: 350px;
+  width: 100%;
+  margin: 30px 0; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal-cover {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #666;
+  z-index: -1; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .verify-sign-up-description {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-top: 20px;
+  margin-bottom: 10px; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .verify-sign-up-err-msg {
+  display: none;
+  padding: 5px;
+  font-size: 14px;
+  background: #F5F5F5;
+  border: 2px solid #D64958;
+  color: #D64958;
+  margin-bottom: 10px; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal {
+  display: flex;
+  flex-direction: column; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .send-code-button-wrapper {
+  display: flex;
+  margin: 10px 0; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .send-code-button-wrapper button {
+  font-size: 14px;
+  font-weight: bold;
+  height: 40px;
+  width: 100%;
+  color: #fff;
+  background-color: #337ab7;
+  padding: 6px 12px;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  position: relative; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .send-code-button-wrapper button:hover {
+  color: #fff;
+  background-color: #286090; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .send-code-button-wrapper button:disabled {
+  color: #fff;
+  background-color: #286090; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .send-code-button-wrapper button.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 47%;
+  border-radius: 100%;
+  width: 0;
+  height: 0;
+  border: 2px solid #FFFFFF7F;
+  border-left-color: #FFF;
+  border-top-color: #FFF;
+  animation: spin .6s infinite linear, grow .3s forwards ease-out; }
+
+@keyframes spin {
+  to {
+    transform: rotate(359deg); } }
+
+@keyframes grow {
+  to {
+    width: 14px;
+    height: 14px;
+    margin-top: -8px;
+    right: 13px; } }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .code-wrapper {
+  margin-bottom: 5px;
+  font-weight: 400;
+  font-size: 14px; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .code-wrapper .code-input-wrapper {
+  display: flex; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .code-wrapper .code-input-wrapper input {
+  width: 100%;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 5px; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .code-wrapper .code-input-wrapper input:focus {
+  border-color: #66afe9;
+  outline: 0; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .code-wrapper .code-input-wrapper input.error {
+  border: 1px solid #D64958; }
+
+.verify-sign-up-container .verify-sign-up-wrapper .verify-sign-up .modal .sign-in-link {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  text-align: center; }

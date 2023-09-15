@@ -1,0 +1,43 @@
+.cards > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+  grid-gap: 16px; }
+
+.cards > ul > li {
+  border: 1px solid var(--highlight-background-color);
+  background-color: var(--background-color); }
+
+.cards .cards-card-body {
+  margin: 16px; }
+
+.cards .cards-card-body a {
+  margin: 14px 0; }
+
+.cards .cards-card-body h6 {
+  font-weight: normal;
+  font-size: 16px;
+  margin-bottom: 0;
+  line-height: 0; }
+
+.cards .cards-card-image {
+  line-height: 0; }
+
+.cards .cards-card-body > *:first-child {
+  margin-top: 0; }
+
+.cards .cards-card-body > p:last-child {
+  display: inline-block;
+  position: relative;
+  width: 100%; }
+
+.cards .cards-card-body > p:last-child span {
+  position: absolute;
+  right: 0; }
+
+.cards > ul > li img {
+  width: 100%;
+  aspect-ratio: 4 / 4;
+  object-fit: cover; }

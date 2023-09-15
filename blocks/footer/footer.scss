@@ -1,0 +1,139 @@
+footer {
+  padding: 0 15px 30px;
+  margin: 0 auto;
+  background-color: #f0f2f3;
+  font-size: var(--body-font-size-s);
+  border-top: solid 9px #212121;
+
+  .footer {
+    max-width: 1200px;
+
+    p,
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+
+      & > div:nth-child(1) {
+        padding: 1.5rem 2rem;
+
+        @media (max-width: 84em) {
+          padding: 1rem 1.5rem;
+        }
+
+        @media (max-width: 62em) {
+          padding: 1rem;
+        }
+
+        & > ul {
+          display: flex;
+          justify-content: space-between;
+          list-style-type: none;
+          align-items: center;
+
+          @media (max-width: 32em) {
+            flex-wrap: wrap;
+          }
+
+          li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            @media (max-width: 32em) {
+              padding: 10px 0;
+            }
+
+            picture {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+            }
+
+            &:nth-child(1) {
+              @media (max-width: 32em) {
+                width: 50%;
+              }
+            }
+
+            &:nth-child(2) {
+              color: #858a83;
+              font-size: 12px;
+              font-weight: 500;
+
+              @media (max-width: 32em) {
+                width: 50%;
+              }
+            }
+
+            &:nth-child(3) {
+              flex-direction: row;
+
+              @media (max-width: 32em) {
+                width: 100%;
+              }
+
+              picture {
+                margin-left: 10px;
+              }
+            }
+          }
+        }
+      }
+
+      & > div:nth-child(2) {
+        text-align: center;
+        align-content: center;
+        align-items: center;
+        margin: auto;
+        padding: 1.2rem 0;
+        justify-content: center;
+        display: flex;
+
+        & ul {
+          list-style-type: none;
+          display: flex;
+          width: 100%;
+          justify-content: center;
+          align-content: center;
+          font-size: 12px;
+
+          @media (max-width: 48em) {
+            flex-wrap: wrap;
+          }
+
+          & li {
+            @media (max-width: 48em) {
+              padding: 8px 0;
+            }
+
+            a {
+              display: block;
+              color: #858a83;
+              padding: 0 8px;
+              text-decoration: none;
+
+              &:hover {
+                cursor: pointer;
+                color: #3b8ede;
+              }
+            }
+          }
+        }
+      }
+
+      & > div:nth-child(3) {
+        font-size: 12px;
+        margin: auto;
+        text-align: center;
+        color: #858a83;
+      }
+    }
+  }
+}

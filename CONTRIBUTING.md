@@ -1,7 +1,3 @@
-# Contributing to Project Helix
-
-This project (like almost all of Project Helix) is an Open Development project and welcomes contributions from everyone who finds it useful or lacking.
-
 ## Code Of Conduct
 
 This project adheres to the Adobe [code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to cstaub at adobe dot com.
@@ -41,6 +37,38 @@ Each commit message that is not part of a pull request:
 * Should contain the issue ID like `#123`
 * Can contain the tag `[trivial]` for trivial changes that don't relate to an issue
 
+* If you are working on a new task:
+
+  * Create a new branch from `develop`
+  * Commit your changes to that branch
+  * Open a pull request against the `develop` branch
+  * Resolve merge conflicts (if any)
+
+## Naming Conventions
+
+In order to keep the git log clean and consistent, please follow these conventions.
+
+### Branch Names
+
+Branches should be named using the following format:
+
+`{token}/{jira-number}?/{task-description}`
+
+**Token can be:**
+
+* `feature`: Tasks to be merged into `develop`
+* `hotfix`: Critical bug fixes to be merged into `develop`
+* `release`: Staging to be merged into `develop` and `master`
+
+**Please use short and meaningful descriptions for your branch names and use dashes (`-`) as the delimeter.**
+
+**Jira task number is mandatory unless the branch does not belong to Jira task.**
+
+#### Examples
+
+`feature/BMW-1/menu`
+
+`hotfix/agenda-style`
 
 
 ## Coding Styleguides
@@ -50,15 +78,10 @@ We enforce a coding styleguide using `eslint`. As part of your build, run `npm r
 You can fix some of the issues automatically by running `npx eslint . --fix`.
 
 ## Commit Message Format
+We use [semantic-release](https://github.com/semantic-release/semantic-release) for release management and require that all commits are properly formatted.
 
-This project uses a structured commit changelog format that should be used for every commit. Use `npm run commit` instead of your usual `git commit` to generate commit messages using a wizard.
-
+In order to help you craft a good commit message, we added [commitizen](https://www.npmjs.com/package/commitizen) as dev dependency, so you can just run
 ```bash
-# either add all changed files
-$ git add -A
-# or selectively add files
-$ git add package.json
-# then commit using the wizard
 $ npm run commit
 ```
 

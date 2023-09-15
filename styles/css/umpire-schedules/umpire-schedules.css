@@ -1,0 +1,39 @@
+#umpire-schedules-grid {
+  height: 500px;
+  width: 100%;
+  font-size: 17px; }
+
+.grid-header {
+  height: 60px;
+  width: calc(100% - 44px);
+  background-color: #ffd400;
+  font-family: highway-gothic-narrow, sans-serif;
+  font-size: 35px;
+  font-weight: bold;
+  padding-left: 22px;
+  padding-right: 22px;
+  display: flex;
+  justify-content: space-between; }
+
+.umpire-schedules .grid-header .grid-header-right {
+  font-size: 14px;
+  background-color: black;
+  margin: 14px 0; }
+
+#btn-view,
+#btn-download {
+  border: none;
+  background-color: transparent; }
+
+#btn-view {
+  background-image: url("/icons/icon_view.png");
+  height: 22px;
+  width: 40px;
+  margin-top: 5px; }
+
+#btn-download {
+  background-image: url("/icons/icon_download.png");
+  height: 27px;
+  width: 21px;
+  margin-left: 25px;
+  margin-top: 5px; }

@@ -1,40 +1,61 @@
 {
-  "name": "@adobe/helix-project-boilerplate",
+  "name": "media-ONLY-website",
+  "description": "Media Only Website",
   "private": true,
-  "version": "1.2.2",
-  "description": "Starter project for Adobe Helix",
+  "version": "1.0.0",
   "scripts": {
+    "test": "wtr \"./test/**/*.test.js\" --node-resolve --port=2000 --coverage",
+    "test:watch": "npm test -- --watch",
     "lint:js": "eslint .",
-    "lint:css": "stylelint blocks/**/*.css styles/*.css",
+    "lint:js:format": "npm run lint:js -- --fix",
+    "lint:css": "stylelint blocks/**/*.scss styles/**/*.{css,scss}",
+    "lint:css:format": "npm run lint:css -- --fix",
     "lint": "npm run lint:js && npm run lint:css",
-    "semantic-release": "semantic-release --debug"
+    "lint:format": "npm run lint:js:format && npm run lint:css:format",
+    "prettier": "prettier ./**/*.js",
+    "prettier:format": "npm run prettier -- --write",
+    "scss": "node-sass -rw-o styles/scss/global.scss -o styles/css && node-sass -rw-o blocks -o styles/css",
+    "watch:g:scss": "node-sass -rw styles/scss/global.scss -o styles/css",
+    "watch:scss": "node-sass -rw blocks -o styles/css",
+    "hlx": "concurrently --kill-others \"npm run watch:g:scss\" \"npm run watch:scss\" \"hlx up\"",
+    "prepare": "husky install",
+    "commit": "cz"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/adobe/helix-project-boilerplate.git"
-  },
-  "author": "Adobe",
   "license": "Apache License 2.0",
-  "bugs": {
-    "url": "https://github.com/adobe/helix-project-boilerplate/issues"
-  },
-  "homepage": "https://github.com/adobe/helix-project-boilerplate#readme",
   "devDependencies": {
-    "@semantic-release/changelog": "6.0.3",
-    "@semantic-release/exec": "6.0.3",
-    "@semantic-release/git": "10.0.1",
-    "semantic-release": "21.0.5",
     "@babel/core": "7.21.0",
     "@babel/eslint-parser": "7.19.1",
-    "chai": "4.3.7",
-    "eslint": "8.35.0",
-    "eslint-config-airbnb-base": "15.0.0",
-    "eslint-plugin-import": "2.27.5",
     "@esm-bundle/chai": "4.3.4-fix.0",
     "@web/test-runner": "0.15.1",
     "@web/test-runner-commands": "0.6.5",
+    "chai": "4.3.7",
+    "commitizen": "^4.3.0",
+    "concurrently": "^8.1.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "8.35.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "node-sass": "^9.0.0",
+    "postcss-scss": "^4.0.6",
+    "prettier": "^2.8.8",
     "sinon": "15.0.1",
     "stylelint": "15.2.0",
     "stylelint-config-standard": "30.0.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
+    }
+  },
+  "dependencies": {
+    "ag-grid-community": "^29.3.5"
   }
 }
