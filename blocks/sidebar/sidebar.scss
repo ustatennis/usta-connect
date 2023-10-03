@@ -1,7 +1,7 @@
 #sidebar {
-  width: 135px;
+  width: 174px;
   height: 2000px;
-  background-color: #00288c;
+  background-color: #f4f4f4;
   position: absolute;
 
   .disabled {
@@ -21,24 +21,30 @@
   font-size: 14px;
   font-weight: bold;
   color: white;
-  margin-left: -24px;
-  width: 127px;
+  margin-left: -25px;
+  width: 166px;
   text-align: center;
   white-space: normal;
 }
 
 #sidebar .sidebar-menu > div {
-  padding: 12px 8px;
+  padding: 40px 8px 12px;
   margin-left: -8px;
+  overflow: auto;
+  height: 77px;
+
+  > div:nth-of-type(1) {
+    float: left;
+  }
 }
 
 #sidebar .sidebar-menu > div:hover {
-  background-color: lightgrey;
+  background-color: white;
   color: black;
 }
 
 #sidebar .sidebar-menu > div.selected {
-  background-color: #c1c8cc; //#337ab7;
+  background-color: #fff; //#337ab7;
   color: black;
 }
 
@@ -82,7 +88,7 @@
 }
 
 #sidebar .nav-wrapper nav a:any-link {
-  color: currentcolor;
+  color: black;
 }
 
 #sidebar .nav-wrapper nav[aria-expanded='true'] {
@@ -156,7 +162,7 @@ button
   #sidebar .nav-wrapper nav[aria-expanded='true'] .nav-sections {
     align-self: unset;
     position: relative;
-    top: -65px;
+    top: -64px;
   }
 }
 

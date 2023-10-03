@@ -1,6 +1,6 @@
 {
-  "name": "media-ONLY-website",
-  "description": "Media Only Website",
+  "name": "usta-connect-website",
+  "description": "USTA Connect Website",
   "private": true,
   "version": "1.0.0",
   "scripts": {
@@ -30,7 +30,7 @@
     "@web/test-runner-commands": "0.6.5",
     "chai": "4.3.7",
     "commitizen": "^4.3.0",
-    "concurrently": "^8.1.0",
+    "concurrently": "^8.2.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "8.35.0",
     "eslint-config-airbnb-base": "15.0.0",

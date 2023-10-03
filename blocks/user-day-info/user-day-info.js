@@ -21,7 +21,6 @@ export default async function decorate(block) {
   );
 
   if (resp.ok && respWeatherAlert.ok) {
-    const weatherAlertHTML = await respWeatherAlert.text();
     const userNameCpitalized =
       // eslint-disable-next-line no-unsafe-optional-chaining
       userName?.charAt(0).toUpperCase() + userName.slice(1);
@@ -29,10 +28,10 @@ export default async function decorate(block) {
     div.className = 'user-day-info';
     div.innerHTML = `
     <div class='user-day-info-left'>
-    <div class='weather-alert'>${weatherAlertHTML}</div>
+    <div class='weather-alert'>FILE PORTAL</div>
     </div>
     <div class='user-day-info-center'>
-    &nbsp;
+    Welcome to USTA Connect!
     </div>
     <div class='user-day-info-right'>
     <div class="username">Welcome <b>${userNameCpitalized}</b>(${userRole?.role})</div>
