@@ -1,17 +1,18 @@
 header {
   color: black;
-  height: 141px;
+  height: 55px;
   margin: 0 auto;
   font-size: var(--body-font-size-s);
 }
 
 header .header {
   max-width: 1440px;
-  background: #00288c
-    url('https://www.usta.com/content/dam/bmw/assets/us_open_hdr_logo.png')
-    no-repeat center center;
-  background-size: 269px 48px;
-  height: 116px;
+  background: #92bfb7
+    url('https://www.usta.com/content/dam/usta-connect/USTA_CONNECT_LOGO.png')
+    no-repeat center left;
+  background-position: 24px 15px;
+  background-size: 289px 29px;
+  height: 55px;
   width: 100%;
   z-index: 2;
 }

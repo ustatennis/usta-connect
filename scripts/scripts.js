@@ -39,7 +39,7 @@ import {
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
-window.hlx.RUM_GENERATION = 'media-only'; // add your RUM generation information here
+window.hlx.RUM_GENERATION = 'usta-connect'; // add your RUM generation information here
 window.hlx.CLIENT_ID = 'd6t7eioir35hn04f5c6n24kuv'; // temporary setting clientID here
 window.hlx.USER_POOL_ID = 'us-east-1_y4oy4EoxU'; // temporary setting userPoolID here
 window.hlx.IDENTITY_POOL_ID = 'us-east-1:0615f9dc-3f38-45c3-9342-78a464163f75'; // temporary setting userPoolID here

@@ -1,9 +1,10 @@
-# Your Project's Title...
+USTA Connect
 Your project's description...
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.hlx.page/
-- Live: https://main--{repo}--{owner}.hlx.live/
+
+- Preview: https://main--usta-connect--ustatennis.hlx.page/
+- Live: https://main--usta-connect--ustatennis.hlx.live/
 
 ## Installation
 
