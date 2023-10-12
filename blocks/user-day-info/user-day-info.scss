@@ -3,7 +3,7 @@
   font-size: 16px;
 
   .user-day-info-wrapper {
-    height: 83px;
+    height: 42px;
     max-width: 1440px;
     background-color: #c1c8cc;
   }
@@ -17,9 +17,8 @@
 
   .user-day-info-wrapper .user-day-info-left {
     padding-left: 35px;
-    margin-top: auto;
-    margin-bottom: auto;
     margin-left: 0;
+    padding-top: 10px;
 
     a {
       text-decoration: underline;
@@ -40,11 +39,11 @@
   }
 
   .user-day-info-wrapper .user-day-info-center {
-    padding-top: 25px;
+    padding-top: 10px;
   }
 
   .user-day-info-wrapper .user-day-info-right {
-    padding-top: 12px;
+    padding-top: 10px;
     margin-right: 47px;
 
     .username {

@@ -26,6 +26,13 @@ export async function getCredentialsForIdentity() {
     setAWSConfigs(res);
     return res;
   } catch (e) {
-    setUserRole(USER_ROLES.user);
+    try {
+      console.log('retry cognito login');
+      const res = await identityApi.getCredentialsForIdentity(reqData);
+      setAWSConfigs(res);
+      return res;
+    } catch (er) {
+      setUserRole(USER_ROLES.user);
+    }
   }
 }
