@@ -2,76 +2,94 @@ header {
   color: black;
   height: 55px;
   margin: 0 auto;
-  font-size: var(--body-font-size-s); }
+  font-size: var(--body-font-size-s);
+}
 
 header .header {
   max-width: 1440px;
-  background: #92bfb7 url("https://www.usta.com/content/dam/usta-connect/USTA_CONNECT_LOGO.png") no-repeat center left;
-  background-position: 24px 15px;
+  background-color: #92bfb7;
+  background-image: url('https://www.usta.com/content/dam/usta-connect/USTA_CONNECT_LOGO.png');
+  background-repeat: no-repeat;
+  background-position-x: 24px;
+  background-position-y: 15px;
   background-size: 289px 29px;
   height: 55px;
   width: 100%;
-  z-index: 2; }
+  z-index: 2;
+}
 
 header .header .header-wrapper {
   position: relative;
   max-width: 1440px;
-  height: 125px; }
+  height: 125px;
+}
 
 header .header picture {
   bottom: 0;
   position: absolute;
-  right: 27px; }
+  right: 27px;
+}
 
 @media (max-width: 700px) {
   header .header picture {
-    display: none; } }
+    display: none;
+  }
+}
 
 .alert-bar {
   position: relative;
-  max-width: 1440px; }
+  max-width: 1440px;
+}
 
 .alert-bar .main-alert-bar {
   background-color: #000;
   display: flex;
   justify-content: center;
-  height: 25px; }
+  height: 25px;
+}
 
 .alert-bar .main-alert-bar picture {
   position: relative;
-  right: 0; }
+  right: 0;
+}
 
 .alert-bar .main-alert-bar picture img {
   text-align: center;
   height: 18px;
   width: 18px;
-  padding-right: 6px; }
+  padding-right: 6px;
+}
 
 .alert-bar .main-alert-bar a {
   margin-top: auto;
   margin-bottom: auto;
   color: #fff;
   text-align: center;
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
 .alert-bar .main-alert-bar p {
   font-size: 12px;
   margin-top: auto;
   margin-bottom: auto;
   color: #fff;
-  padding-right: 5px; }
+  padding-right: 5px;
+}
 
 .alert-bar p:nth-child(1) {
   font-size: 18px !important;
-  padding: 0 !important; }
+  padding: 0 !important;
+}
 
 .alert-bar > div > div > p:nth-child(2) {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .alert-bar .alert-bar-div {
   display: flex;
   justify-content: center;
-  background-color: #000; }
+  background-color: #000;
+}
 
 .alert-bar .main-alert-bar .alert-bar-btn {
   border: none;
@@ -85,4 +103,5 @@ header .header picture {
   justify-content: normal;
   align-items: center;
   position: absolute;
-  right: 22px; }
+  right: 22px;
+}
