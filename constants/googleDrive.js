@@ -1,6 +1,6 @@
 export const FOLDER_IDS = {
   daily: '1fIVJ3P3ugV2ck13St8A6LuiMivatzHea',
-  scorecard: '1QGGiUZh5wIw9Ao3eGkdKKs6eeOSG05EW',
+  availablefiles: '1QGGiUZh5wIw9Ao3eGkdKKs6eeOSG05EW',
   umpire: '1msOkVuBWDBUQv6Lu-HF5Av67Q3pjsCia',
 };
 
