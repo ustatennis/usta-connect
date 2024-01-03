@@ -7,7 +7,6 @@ import { formatBytes } from '../../jslibraries/utility/utility.js';
 import { iconColorBar } from '../../scripts/helpers.js';
 
 export default async function decorate(block) {
-
   function formatBytesGetter(params) {
     return formatBytes(params.data.size, 0);
   }
@@ -85,7 +84,7 @@ export default async function decorate(block) {
       headerName: 'DOWNLOAD',
       cellRenderer: BtnCellRenderer,
       cellRendererParams: {
-        clicked() { },
+        clicked() {},
       },
       minWidth: 150,
     },

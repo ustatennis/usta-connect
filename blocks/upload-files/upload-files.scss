@@ -1,6 +1,5 @@
 .upload-files-wrapper {
   height: 600px;
-
   margin-bottom: 100px;
   overflow: hidden;
 }
@@ -100,17 +99,20 @@ progress {
   height: 8px;
   border-radius: 5px;
 }
+
 progress::-webkit-progress-bar {
   border: 0;
   height: 8px;
   border-radius: 5px;
 }
+
 progress::-webkit-progress-value {
   border: 0;
   height: 8px;
   border-radius: 5px;
   background-color: #02a2fa;
 }
+
 progress::-moz-progress-bar {
   border: 0;
   height: 10px;
@@ -119,8 +121,7 @@ progress::-moz-progress-bar {
 
 .upload-files .flexrow {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   width: 100%;
 }
 
@@ -130,10 +131,10 @@ progress::-moz-progress-bar {
 }
 
 .upload-files .column {
+  flex: 1;
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
-  flex: 1;
 }
 
 .upload-files button.upload {
@@ -148,11 +149,13 @@ progress::-moz-progress-bar {
   background-position: center right;
   background-repeat: no-repeat;
   display: block;
+
   &.upload-success {
-    background-image: (url(/icons/icon_success.png));
+    background-image: (url('/icons/icon_success.png'));
   }
+
   &.upload-errors {
-    background-image: (url(/icons/icon_fail.png));
+    background-image: (url('/icons/icon_fail.png'));
   }
 }
 

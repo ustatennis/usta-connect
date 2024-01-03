@@ -109,28 +109,33 @@
 .gridNameDate {
   padding-left: 35px;
   margin-top: -5px;
+
   u {
     color: #4558b2;
     text-decoration-color: #4558b2;
   }
 }
+
 progress {
   border: 0;
   height: 8px;
   border-radius: 5px;
 }
+
 progress::-webkit-progress-bar {
   border: 0;
   height: 8px;
   border-radius: 5px;
   background-color: green;
 }
+
 progress::-webkit-progress-value {
   border: 0;
   height: 8px;
   border-radius: 5px;
   background-color: #02a2fa;
 }
+
 progress::-moz-progress-bar {
   border: 0;
   height: 10px;
