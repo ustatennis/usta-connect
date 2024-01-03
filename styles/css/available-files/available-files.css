@@ -77,9 +77,10 @@
 .gridNameDate {
   padding-left: 35px;
   margin-top: -5px; }
-  .gridNameDate u {
-    color: #4558b2;
-    text-decoration-color: #4558b2; }
+
+.gridNameDate u {
+  color: #4558b2;
+  text-decoration-color: #4558b2; }
 
 progress {
   border: 0;

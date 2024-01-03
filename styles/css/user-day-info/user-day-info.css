@@ -1,53 +1,64 @@
 #user-day-info {
   color: black;
   font-size: 16px; }
-  #user-day-info .user-day-info-wrapper {
-    height: 42px;
-    max-width: 1440px;
-    background-color: #c1c8cc; }
-  #user-day-info .user-day-info-wrapper .user-day-info {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between; }
-  #user-day-info .user-day-info-wrapper .user-day-info-left {
-    padding-left: 35px;
-    margin-left: 0;
-    padding-top: 10px; }
-    #user-day-info .user-day-info-wrapper .user-day-info-left a {
-      text-decoration: underline; }
-    #user-day-info .user-day-info-wrapper .user-day-info-left .weather-alert {
-      font-family: var(--body-font-family);
-      font-size: 17px;
-      line-height: 0;
-      background: none;
-      padding-top: 10px; }
-      #user-day-info .user-day-info-wrapper .user-day-info-left .weather-alert p {
-        margin-top: 7px; }
-  #user-day-info .user-day-info-wrapper .user-day-info-center {
-    padding-top: 10px; }
-  #user-day-info .user-day-info-wrapper .user-day-info-right {
-    padding-top: 10px;
-    margin-right: 47px; }
-    #user-day-info .user-day-info-wrapper .user-day-info-right .username {
-      padding-top: 8px; }
-  #user-day-info .user-day-info-wrapper .user-day-info-right #foo {
-    border-radius: 30px;
-    display: block;
-    height: 32px;
-    width: 290px;
-    padding-top: 10px;
-    border: 1px solid #848484;
-    opacity: 1;
-    padding-left: 10px;
-    background: no-repeat;
-    background-image: url("/icons/edit_pencil.svg");
-    background-position: right -8px bottom 6px;
-    background-origin: content-box;
-    padding-right: 15px;
-    background-color: white; }
-  #user-day-info .datepicker-input {
-    width: 70px;
-    border: none;
-    text-decoration: underline;
-    cursor: pointer; }
+
+#user-day-info .user-day-info-wrapper {
+  height: 42px;
+  max-width: 1440px;
+  background-color: #c1c8cc; }
+
+#user-day-info .user-day-info-wrapper .user-day-info {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between; }
+
+#user-day-info .user-day-info-wrapper .user-day-info-left {
+  padding-left: 35px;
+  margin-left: 0;
+  padding-top: 10px; }
+
+#user-day-info .user-day-info-wrapper .user-day-info-left a {
+  text-decoration: underline; }
+
+#user-day-info .user-day-info-wrapper .user-day-info-left .weather-alert {
+  font-family: var(--body-font-family);
+  font-size: 17px;
+  line-height: 0;
+  background: none;
+  padding-top: 10px; }
+
+#user-day-info .user-day-info-wrapper .user-day-info-left .weather-alert p {
+  margin-top: 7px; }
+
+#user-day-info .user-day-info-wrapper .user-day-info-center {
+  padding-top: 10px; }
+
+#user-day-info .user-day-info-wrapper .user-day-info-right {
+  padding-top: 10px;
+  margin-right: 47px; }
+
+#user-day-info .user-day-info-wrapper .user-day-info-right .username {
+  padding-top: 8px; }
+
+#user-day-info .user-day-info-wrapper .user-day-info-right #foo {
+  border-radius: 30px;
+  display: block;
+  height: 32px;
+  width: 290px;
+  padding-top: 10px;
+  border: 1px solid #848484;
+  opacity: 1;
+  padding-left: 10px;
+  background: no-repeat;
+  background-image: url("/icons/edit_pencil.svg");
+  background-position: right -8px bottom 6px;
+  background-origin: content-box;
+  padding-right: 15px;
+  background-color: white; }
+
+#user-day-info .datepicker-input {
+  width: 70px;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer; }
