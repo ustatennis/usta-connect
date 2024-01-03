@@ -40,35 +40,44 @@ import {
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 
 // prod
-function setProductionPoolConfig(){
+function setProductionPoolConfig() {
   window.hlx.RUM_GENERATION = 'usta-connect'; // add your RUM generation information here
-window.hlx.CLIENT_ID = '4di342va4kbl5devk1d5p4uog0'; // temporary setting clientID here
-window.hlx.USER_POOL_ID = 'us-east-1_CRUiPa1lK'; // temporary setting userPoolID here
-window.hlx.IDENTITY_POOL_ID = 'us-east-1:c90a0d53-f82a-4907-8bf6-bfb96337ef9a'; // temporary setting userPoolID here
+  window.hlx.CLIENT_ID = '4di342va4kbl5devk1d5p4uog0'; // temporary setting clientID here
+  window.hlx.USER_POOL_ID = 'us-east-1_CRUiPa1lK'; // temporary setting userPoolID here
+  window.hlx.IDENTITY_POOL_ID =
+    'us-east-1:c90a0d53-f82a-4907-8bf6-bfb96337ef9a'; // temporary setting userPoolID here
 }
-function setDevPoolConfig(){
+function setDevPoolConfig() {
   window.hlx.RUM_GENERATION = 'usta-connect'; // add your RUM generation information here
-window.hlx.CLIENT_ID = 'fcivtnqoqh25v79hcqgb3l9mp'; // temporary setting clientID here
-window.hlx.USER_POOL_ID = 'us-east-1_XcYnoGlwq'; // temporary setting userPoolID here
-window.hlx.IDENTITY_POOL_ID = 'us-east-1:12372ea4-1035-4ca7-9428-2d1d6deb5ecf'; // temporary setting userPoolID here
-
+  window.hlx.CLIENT_ID = 'fcivtnqoqh25v79hcqgb3l9mp'; // temporary setting clientID here
+  window.hlx.USER_POOL_ID = 'us-east-1_XcYnoGlwq'; // temporary setting userPoolID here
+  window.hlx.IDENTITY_POOL_ID =
+    'us-east-1:12372ea4-1035-4ca7-9428-2d1d6deb5ecf'; // temporary setting userPoolID here
 }
 
-function setStagePoolConfig(){
+function setStagePoolConfig() {
   window.hlx.RUM_GENERATION = 'usta-connect'; // add your RUM generation information here
-window.hlx.CLIENT_ID = '1ia99di3pruap7emhcv9jv571j'; // temporary setting clientID here
-window.hlx.USER_POOL_ID = 'us-east-1_DKSSJUVlY'; // temporary setting userPoolID here
-window.hlx.IDENTITY_POOL_ID = 'us-east-1:a5df722d-28a6-408b-a10c-8a391051bfb5'; // temporary setting userPoolID here
-
+  window.hlx.CLIENT_ID = '1ia99di3pruap7emhcv9jv571j'; // temporary setting clientID here
+  window.hlx.USER_POOL_ID = 'us-east-1_DKSSJUVlY'; // temporary setting userPoolID here
+  window.hlx.IDENTITY_POOL_ID =
+    'us-east-1:a5df722d-28a6-408b-a10c-8a391051bfb5'; // temporary setting userPoolID here
 }
-var subdomain = window.location.hostname.split('.')[0];
-var envUnderDomain = subdomain?.split('-')[0];
+const subdomain = window.location.hostname.split('.')[0];
+const envUnderDomain = subdomain?.split('-')[0];
 
-switch(envUnderDomain){
-  case 'ustaconnect': setProductionPoolConfig(); break;
-  case 'dev': setDevPoolConfig(); break;
-  case 'stage': setStagePoolConfig();break;
-  case 'localhost': setDevPoolConfig(); break;
+switch (envUnderDomain) {
+  case 'ustaconnect':
+    setProductionPoolConfig();
+    break;
+  case 'dev':
+    setDevPoolConfig();
+    break;
+  case 'stage':
+    setStagePoolConfig();
+    break;
+  case 'localhost':
+    setDevPoolConfig();
+    break;
 }
 
 window.hlx.GOOGLE_API_KEY = 'AIzaSyCuwCMWaz-O7G2cDFwMKUHv7bhoNNvzlyE'; // 'AIzaSyBVsBh7IhYPwtLlwT-uXtUc93igm-kCK5Q';
