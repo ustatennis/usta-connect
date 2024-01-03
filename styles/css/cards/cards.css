@@ -12,15 +12,13 @@
 
 .cards .cards-card-body {
   margin: 16px; }
-
-.cards .cards-card-body a {
-  margin: 14px 0; }
-
-.cards .cards-card-body h6 {
-  font-weight: normal;
-  font-size: 16px;
-  margin-bottom: 0;
-  line-height: 0; }
+  .cards .cards-card-body a {
+    margin: 14px 0; }
+  .cards .cards-card-body h6 {
+    font-weight: normal;
+    font-size: 16px;
+    margin-bottom: 0;
+    line-height: 0; }
 
 .cards .cards-card-image {
   line-height: 0; }

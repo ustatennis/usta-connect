@@ -13,17 +13,15 @@
 
 .ca.thumbnailsrds .cards-card-body {
   margin: 16px; }
-
-.ca.thumbnailsrds .cards-card-body a {
-  font-size: 14px;
-  background-color: black;
-  margin: 14px 0; }
-
-.ca.thumbnailsrds .cards-card-body h6 {
-  font-weight: normal;
-  font-size: 16px;
-  margin-bottom: 0;
-  line-height: 0; }
+  .ca.thumbnailsrds .cards-card-body a {
+    font-size: 14px;
+    background-color: black;
+    margin: 14px 0; }
+  .ca.thumbnailsrds .cards-card-body h6 {
+    font-weight: normal;
+    font-size: 16px;
+    margin-bottom: 0;
+    line-height: 0; }
 
 .thumbnails .cards-card-image {
   line-height: 0; }

@@ -1,0 +1,177 @@
+.upload-files-wrapper {
+  height: 600px;
+
+  margin-bottom: 100px;
+  overflow: hidden;
+}
+
+#upload-files-grid {
+  height: 500px;
+  width: 100%;
+  font-size: 12px;
+  overflow-y: scroll;
+}
+
+.grid-header {
+  height: 60px;
+  width: calc(100% - 44px);
+  background-color: white;
+  font: var(--body-font-family);
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 22px;
+  padding-right: 22px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.upload-files .grid-header .grid-header-right {
+  font-size: 14px;
+  margin: 14px 0;
+}
+
+// #filter-text-box {
+//   border-radius: 25px;
+//   height: 46px;
+//   border: 1px solid #000;
+//   padding-left: 20px;
+//   margin-bottom: 40px;
+//   margin-left: auto;
+//   margin-right: auto;
+//   display: block;
+//   background: no-repeat;
+//   background-image: url('/icons/search.svg');
+//   background-position: right center;
+//   background-origin: content-box;
+//   padding-right: 15px;
+// }
+
+// #filter-text-box:focus {
+//   outline: none;
+// }
+
+.upload-files-grid #btn-view,
+.upload-files-grid #btn-download {
+  border: none;
+  background-color: transparent;
+}
+
+.upload-files-grid #btn-view {
+  background-image: url('/icons/icon_view.png');
+  height: 22px;
+  width: 40px;
+  margin-top: 5px;
+}
+
+.upload-files-grid #btn-download {
+  background-image: url('/icons/icon_download.png');
+  height: 27px;
+  width: 21px;
+  margin-left: 25px;
+  margin-top: 5px;
+}
+
+.upload-files-grid #btn-user {
+  background-image: url('/icons/icon_user.png');
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  margin-left: 25px;
+  margin-top: 5px;
+}
+
+.upload-files-grid #btn-system {
+  background-image: url('/icons/icon_system.png');
+  display: inline-block;
+  height: 26px;
+  width: 26px;
+  margin-left: 25px;
+  margin-top: 5px;
+}
+
+.upload-files-grid #btn-legend {
+  position: relative;
+  top: -8px;
+  left: 6px;
+}
+
+progress {
+  border: 0;
+  height: 8px;
+  border-radius: 5px;
+}
+progress::-webkit-progress-bar {
+  border: 0;
+  height: 8px;
+  border-radius: 5px;
+}
+progress::-webkit-progress-value {
+  border: 0;
+  height: 8px;
+  border-radius: 5px;
+  background-color: #02a2fa;
+}
+progress::-moz-progress-bar {
+  border: 0;
+  height: 10px;
+  border-radius: 5px;
+}
+
+.upload-files .flexrow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.button-row {
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.upload-files .column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.upload-files button.upload {
+  background-color: #cfff05;
+}
+
+.upload-files .upload-progress {
+  width: 410px;
+  padding-top: 10px;
+  height: 28px;
+  padding-right: 35px;
+  background-position: center right;
+  background-repeat: no-repeat;
+  display: block;
+  &.upload-success {
+    background-image: (url(/icons/icon_success.png));
+  }
+  &.upload-errors {
+    background-image: (url(/icons/icon_fail.png));
+  }
+}
+
+.upload-header {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.upload-body {
+  margin-top: 7px;
+  font-size: 14px;
+  line-height: 18px;
+  width: 370px;
+}
+
+.upload-files button {
+  border-radius: 10px;
+  border-width: thin;
+  width: 115px;
+  height: 23px;
+}

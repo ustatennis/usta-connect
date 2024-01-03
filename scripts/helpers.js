@@ -173,13 +173,19 @@ export function padZero(value) {
 export function formatDateTime(dateTime) {
   const date = new Date(dateTime);
   const year = date.getFullYear();
-  const month = padZero(date.getMonth() + 1);
-  const day = padZero(date.getDate());
-  const hours = padZero(date.getHours());
-  const minutes = padZero(date.getMinutes());
-  const seconds = padZero(date.getSeconds());
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  // const hours = padZero(date.getHours());
+  // const minutes = padZero(date.getMinutes());
+  // const seconds = padZero(date.getSeconds());
 
-  const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  // const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  const formattedDateTime = ` ${month} / ${day} / ${year}`;
 
   return formattedDateTime;
+}
+
+export function iconColorBar() {
+  console.log();
+  return `<div class="colorbar"></div>`;
 }

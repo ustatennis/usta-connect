@@ -3,9 +3,8 @@
   height: 2000px;
   background-color: #f4f4f4;
   position: absolute; }
-
-#sidebar .disabled {
-  display: none; }
+  #sidebar .disabled {
+    display: none; }
 
 #sidebar .sidebar {
   position: absolute; }
@@ -27,9 +26,8 @@
   margin-left: -8px;
   overflow: auto;
   height: 77px; }
-
-#sidebar .sidebar-menu > div > div:nth-of-type(1) {
-  float: left; }
+  #sidebar .sidebar-menu > div > div:nth-of-type(1) {
+    float: left; }
 
 #sidebar .sidebar-menu > div:hover {
   background-color: white;
@@ -274,7 +272,6 @@ button
     position: relative;
     padding-right: 16px;
     cursor: pointer; }
-
   #sidebar .nav-wrapper .nav-sections ul > li.nav-drop::after {
     content: '';
     display: inline-block;
@@ -290,10 +287,10 @@ button
 
 @media (min-width: 900px) {
   #sidebar
-  .nav-wrapper
-  .nav-sections
-  ul
-  > li.nav-drop[aria-expanded='true']::after {
+.nav-wrapper
+.nav-sections
+ul
+> li.nav-drop[aria-expanded='true']::after {
     top: unset;
     bottom: 0.5em;
     transform: rotate(315deg); } }

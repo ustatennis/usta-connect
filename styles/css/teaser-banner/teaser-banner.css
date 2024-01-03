@@ -4,92 +4,74 @@ body .teaser-banner-container {
 .teaser-banner {
   display: flex;
   justify-content: center;
-  font-family: highway-gothic; }
-
-.teaser-banner .banner-right {
-  width: 55%; }
-
-@media (max-width: 1000px) {
+  font-family: "highway-gothic"; }
   .teaser-banner .banner-right {
-    display: none; } }
-
-.teaser-banner .banner-right > img {
-  width: 600px; }
-
-.teaser-banner .banner-right > div > picture > img {
-  height: 730px;
-  width: 760px; }
-
-.teaser-banner .banner-left {
-  width: 43%; }
-
-@media (max-width: 1000px) {
+    width: 55%; }
+    @media (max-width: 1000px) {
+      .teaser-banner .banner-right {
+        display: none; } }
+    .teaser-banner .banner-right > img {
+      width: 600px; }
+    .teaser-banner .banner-right > div > picture > img {
+      height: 730px;
+      width: 760px; }
   .teaser-banner .banner-left {
-    width: 100%; } }
-
-.teaser-banner .banner-title {
-  text-align: left;
-  height: 210px;
-  font: normal normal bold 100px/100px highway-gothic, sans-serif;
-  letter-spacing: 1px;
-  color: #1a4486;
-  text-transform: uppercase;
-  opacity: 1; }
-
-@media (max-width: 500px) {
+    width: 43%; }
+    @media (max-width: 1000px) {
+      .teaser-banner .banner-left {
+        width: 100%; } }
   .teaser-banner .banner-title {
-    font-size: 60px;
-    line-height: 60px; } }
-
-.teaser-banner .banner-info {
-  text-align: left;
-  font: normal normal normal 38px/30px highway-gothic, sans-serif;
-  opacity: 1;
-  margin-bottom: 15px; }
-
-.teaser-banner .banner-logo {
-  display: flex;
-  justify-content: center; }
-
-@media (max-width: 500px) {
+    text-align: left;
+    height: 210px;
+    font: normal normal bold 100px/100px highway-gothic, sans-serif;
+    letter-spacing: 1px;
+    color: #1a4486;
+    text-transform: uppercase;
+    opacity: 1; }
+    @media (max-width: 500px) {
+      .teaser-banner .banner-title {
+        font-size: 60px;
+        line-height: 60px; } }
+  .teaser-banner .banner-info {
+    text-align: left;
+    font: normal normal normal 38px/30px highway-gothic, sans-serif;
+    opacity: 1;
+    margin-bottom: 15px; }
   .teaser-banner .banner-logo {
-    display: none; } }
-
-.teaser-banner .banner-logo > picture > img {
-  height: 40px;
-  width: 242px;
-  margin-left: -70%; }
-
-.teaser-banner .banner-buttons {
-  height: 40px;
-  display: flex;
-  justify-content: start;
-  margin-bottom: 20px; }
-
-.teaser-banner .banner-buttons > button {
-  border-radius: 10px;
-  width: 190px;
-  text-align: center;
-  font-size: 17px;
-  margin: 0 10px;
-  background-color: #000; }
-
-.teaser-banner .banner-buttons > button > a {
-  text-decoration: none;
-  color: #fff;
-  font-family: highway-gothic; }
-
-.teaser-banner .banner-button-info {
-  display: flex;
-  justify-content: start;
-  font-size: 12px;
-  font-weight: bold;
-  height: 30px; }
-
-.teaser-banner .banner-button-info .new-users {
-  padding-left: 65px;
-  width: 190px; }
-
-.teaser-banner .banner-button-info .reg-users {
-  margin-left: 10%;
-  width: 190px; }
+    display: flex;
+    justify-content: center; }
+    @media (max-width: 500px) {
+      .teaser-banner .banner-logo {
+        display: none; } }
+    .teaser-banner .banner-logo > picture > img {
+      height: 40px;
+      width: 242px;
+      margin-left: -70%; }
+  .teaser-banner .banner-buttons {
+    height: 40px;
+    display: flex;
+    justify-content: start;
+    margin-bottom: 20px; }
+    .teaser-banner .banner-buttons > button {
+      border-radius: 10px;
+      width: 190px;
+      text-align: center;
+      font-size: 17px;
+      margin: 0 10px;
+      background-color: #000; }
+      .teaser-banner .banner-buttons > button > a {
+        text-decoration: none;
+        color: #fff;
+        font-family: "highway-gothic"; }
+  .teaser-banner .banner-button-info {
+    display: flex;
+    justify-content: start;
+    font-size: 12px;
+    font-weight: bold;
+    height: 30px; }
+    .teaser-banner .banner-button-info .new-users {
+      padding-left: 65px;
+      width: 190px; }
+    .teaser-banner .banner-button-info .reg-users {
+      margin-left: 10%;
+      width: 190px; }
