@@ -21,7 +21,7 @@ export async function getDataFromFolder(folderId) {
       q: `'${folderId}' in parents`,
       pageSize: 50,
       fields:
-        'files(id, name, mimeType, webViewLink, webContentLink, modifiedTime, createdTime, owners(displayName))',
+        'files(id, name, mimeType, size, webViewLink, webContentLink, modifiedTime, createdTime, owners(displayName))',
     };
     await loadDriveApiClient(connectionReqData);
     const response = await googleDriveApi.getDocumentsFromFolder(
@@ -33,10 +33,11 @@ export async function getDataFromFolder(folderId) {
       files.forEach(file => {
         res.push({
           fileName: file.name,
+          size: file.size,
           downloadLink: file?.webContentLink,
           viewLink: file?.webViewLink,
           modifiedTime: formatDateTime(file?.modifiedTime),
-          createdTime: formatDateTime(file?.createdTime),
+          createdTime: file?.createdTime,
           owner: file?.owners?.[0]?.displayName,
         });
       });
