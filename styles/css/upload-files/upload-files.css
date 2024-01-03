@@ -97,8 +97,7 @@ progress::-moz-progress-bar {
 .upload-files .column {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  flex-basis: 100%; }
+  flex-direction: column; }
 
 .upload-files button.upload {
   background-color: #cfff05; }
