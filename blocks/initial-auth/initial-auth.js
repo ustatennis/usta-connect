@@ -239,23 +239,23 @@ async function onSendClick() {
   );
   const name = document.querySelector('input[name="name"]');
   const phoneNumber = document.querySelector('input[name="phoneNumber"]');
-  const affiliation = document.querySelector('input[name="affiliation"]');
-  const country = document.querySelector('input[name="country"]');
+  //const affiliation = document.querySelector('input[name="affiliation"]');
+  //const country = document.querySelector('input[name="country"]');
 
   if (!newPassword.reportValidity()) return;
   if (!newPasswordRepeat.reportValidity()) return;
   if (!name.reportValidity()) return;
   if (!phoneNumber.reportValidity()) return;
-  if (!affiliation.reportValidity()) return;
-  if (!country.reportValidity()) return;
+  //if (!affiliation.reportValidity()) return;
+  //if (!country.reportValidity()) return;
 
   const formData = {
     newPassword: newPassword.value,
     newPasswordRepeat: newPasswordRepeat.value,
     name: name.value,
     phoneNumber: phoneNumber.value,
-    country: country.value,
-    affiliation: affiliation.value,
+    //country: country.value,
+    //affiliation: affiliation.value,
   };
 
   const sendButton = document.querySelector('#sendButton');
@@ -265,9 +265,9 @@ async function onSendClick() {
 
   try {
     await respondToAuthChallenge(formData);
-    if (formData?.affiliation || formData?.country) {
-      await updateUserInitialAttributes(formData.affiliation, formData.country);
-    }
+    //if (formData?.affiliation || formData?.country) {
+    //  await updateUserInitialAttributes(formData.affiliation, formData.country);
+    //}
     const user = getUser();
     const isVerified =
       user?.UserAttributes?.find(attr => attr.Name === 'email_verified')
@@ -333,8 +333,8 @@ export default function decorate(block) {
   const newPasswordRepeatInput = createNewPasswordRepeatInput();
   const nameInput = createNameInput();
   const phoneNumberInput = createPhoneNumberInput();
-  const countryInput = createCountryInput();
-  const affiliationInput = createAffiliationInput();
+  //const countryInput = createCountryInput();
+  //const affiliationInput = createAffiliationInput();
   const sendButton = createSendButton();
   const passwordValidationMessage = createPasswordValidationMessage();
 
@@ -344,8 +344,8 @@ export default function decorate(block) {
     passwordValidationMessage,
     nameInput,
     phoneNumberInput,
-    countryInput,
-    affiliationInput,
+    //countryInput,
+    //affiliationInput,
     sendButton,
   );
   modal.append(form);
