@@ -78,7 +78,7 @@ switch (envUnderDomain) {
   case 'localhost':
     setDevPoolConfig();
     break;
-  default: 
+  default:
     setDevPoolConfig();
 }
 
