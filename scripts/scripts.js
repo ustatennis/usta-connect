@@ -78,6 +78,7 @@ switch (envUnderDomain) {
   case 'localhost':
     setDevPoolConfig();
     break;
+    default : setDevPoolConfig();
 }
 
 window.hlx.GOOGLE_API_KEY = 'AIzaSyCuwCMWaz-O7G2cDFwMKUHv7bhoNNvzlyE'; // 'AIzaSyBVsBh7IhYPwtLlwT-uXtUc93igm-kCK5Q';
@@ -257,7 +258,7 @@ async function checkRoute() {
     } else if (!user && PRIVATE_ROUTES.includes(path)) {
       redirectTo(ROUTES.signIn, { redirect_url: path });
     } else {
-    // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console
       console.log(error);
     }
     removeTokens();
