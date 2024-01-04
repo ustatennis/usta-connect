@@ -8,7 +8,7 @@ import {
 import { respondToAuthChallenge } from '../../middleware/auth.js';
 import {
   getEmailVerificationCode,
-  updateUserInitialAttributes,
+  // updateUserInitialAttributes,
 } from '../../middleware/user.js';
 import { getUser } from '../../store/userStore.js';
 import {
@@ -87,49 +87,49 @@ function createNameInput() {
   return wrapper;
 }
 
-function createCountryInput() {
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('country-wrapper');
+// function createCountryInput() {
+//   const wrapper = document.createElement('div');
+//   wrapper.classList.add('country-wrapper');
 
-  const label = document.createElement('label');
-  label.setAttribute('for', 'country');
-  label.innerText = 'Country';
+//   const label = document.createElement('label');
+//   label.setAttribute('for', 'country');
+//   label.innerText = 'Country';
 
-  const inputWrapper = document.createElement('div');
-  inputWrapper.classList.add('country-input-wrapper');
-  const input = document.createElement('input');
-  input.setAttribute('type', 'text');
-  input.setAttribute('name', 'country');
-  input.required = true;
+//   const inputWrapper = document.createElement('div');
+//   inputWrapper.classList.add('country-input-wrapper');
+//   const input = document.createElement('input');
+//   input.setAttribute('type', 'text');
+//   input.setAttribute('name', 'country');
+//   input.required = true;
 
-  inputWrapper.appendChild(input);
-  label.appendChild(inputWrapper);
-  wrapper.appendChild(label);
+//   inputWrapper.appendChild(input);
+//   label.appendChild(inputWrapper);
+//   wrapper.appendChild(label);
 
-  return wrapper;
-}
+//   return wrapper;
+// }
 
-function createAffiliationInput() {
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('affiliation-wrapper');
+// function createAffiliationInput() {
+//   const wrapper = document.createElement('div');
+//   wrapper.classList.add('affiliation-wrapper');
 
-  const label = document.createElement('label');
-  label.setAttribute('for', 'affiliation');
-  label.innerText = 'Affiliation';
+//   const label = document.createElement('label');
+//   label.setAttribute('for', 'affiliation');
+//   label.innerText = 'Affiliation';
 
-  const inputWrapper = document.createElement('div');
-  inputWrapper.classList.add('affiliation-input-wrapper');
-  const input = document.createElement('input');
-  input.setAttribute('type', 'text');
-  input.setAttribute('name', 'affiliation');
-  input.required = true;
+//   const inputWrapper = document.createElement('div');
+//   inputWrapper.classList.add('affiliation-input-wrapper');
+//   const input = document.createElement('input');
+//   input.setAttribute('type', 'text');
+//   input.setAttribute('name', 'affiliation');
+//   input.required = true;
 
-  inputWrapper.appendChild(input);
-  label.appendChild(inputWrapper);
-  wrapper.appendChild(label);
+//   inputWrapper.appendChild(input);
+//   label.appendChild(inputWrapper);
+//   wrapper.appendChild(label);
 
-  return wrapper;
-}
+//   return wrapper;
+// }
 
 function createPasswordValidationMessage() {
   const messageDiv = document.createElement('div');
@@ -239,23 +239,23 @@ async function onSendClick() {
   );
   const name = document.querySelector('input[name="name"]');
   const phoneNumber = document.querySelector('input[name="phoneNumber"]');
-  const affiliation = document.querySelector('input[name="affiliation"]');
-  const country = document.querySelector('input[name="country"]');
+  // const affiliation = document.querySelector('input[name="affiliation"]');
+  // const country = document.querySelector('input[name="country"]');
 
   if (!newPassword.reportValidity()) return;
   if (!newPasswordRepeat.reportValidity()) return;
   if (!name.reportValidity()) return;
   if (!phoneNumber.reportValidity()) return;
-  if (!affiliation.reportValidity()) return;
-  if (!country.reportValidity()) return;
+  // if (!affiliation.reportValidity()) return;
+  // if (!country.reportValidity()) return;
 
   const formData = {
     newPassword: newPassword.value,
     newPasswordRepeat: newPasswordRepeat.value,
     name: name.value,
     phoneNumber: phoneNumber.value,
-    country: country.value,
-    affiliation: affiliation.value,
+    // country: country.value,
+    // affiliation: affiliation.value,
   };
 
   const sendButton = document.querySelector('#sendButton');
@@ -265,9 +265,9 @@ async function onSendClick() {
 
   try {
     await respondToAuthChallenge(formData);
-    if (formData?.affiliation || formData?.country) {
-      await updateUserInitialAttributes(formData.affiliation, formData.country);
-    }
+    // if (formData?.affiliation || formData?.country) {
+    //  await updateUserInitialAttributes(formData.affiliation, formData.country);
+    // }
     const user = getUser();
     const isVerified =
       user?.UserAttributes?.find(attr => attr.Name === 'email_verified')
@@ -333,8 +333,8 @@ export default function decorate(block) {
   const newPasswordRepeatInput = createNewPasswordRepeatInput();
   const nameInput = createNameInput();
   const phoneNumberInput = createPhoneNumberInput();
-  const countryInput = createCountryInput();
-  const affiliationInput = createAffiliationInput();
+  // const countryInput = createCountryInput();
+  // const affiliationInput = createAffiliationInput();
   const sendButton = createSendButton();
   const passwordValidationMessage = createPasswordValidationMessage();
 
@@ -344,8 +344,8 @@ export default function decorate(block) {
     passwordValidationMessage,
     nameInput,
     phoneNumberInput,
-    countryInput,
-    affiliationInput,
+    // countryInput,
+    // affiliationInput,
     sendButton,
   );
   modal.append(form);
