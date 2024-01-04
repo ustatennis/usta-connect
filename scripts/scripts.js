@@ -257,6 +257,7 @@ async function checkRoute() {
     } else if (!user && PRIVATE_ROUTES.includes(path)) {
       redirectTo(ROUTES.signIn, { redirect_url: path });
     } else {
+    // eslint-disable-next-line no-console
       console.log(error);
     }
     removeTokens();

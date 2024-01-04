@@ -8,7 +8,7 @@ import {
 import { respondToAuthChallenge } from '../../middleware/auth.js';
 import {
   getEmailVerificationCode,
-  updateUserInitialAttributes,
+  // updateUserInitialAttributes,
 } from '../../middleware/user.js';
 import { getUser } from '../../store/userStore.js';
 import {
@@ -87,49 +87,49 @@ function createNameInput() {
   return wrapper;
 }
 
-function createCountryInput() {
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('country-wrapper');
+// function createCountryInput() {
+//   const wrapper = document.createElement('div');
+//   wrapper.classList.add('country-wrapper');
 
-  const label = document.createElement('label');
-  label.setAttribute('for', 'country');
-  label.innerText = 'Country';
+//   const label = document.createElement('label');
+//   label.setAttribute('for', 'country');
+//   label.innerText = 'Country';
 
-  const inputWrapper = document.createElement('div');
-  inputWrapper.classList.add('country-input-wrapper');
-  const input = document.createElement('input');
-  input.setAttribute('type', 'text');
-  input.setAttribute('name', 'country');
-  input.required = true;
+//   const inputWrapper = document.createElement('div');
+//   inputWrapper.classList.add('country-input-wrapper');
+//   const input = document.createElement('input');
+//   input.setAttribute('type', 'text');
+//   input.setAttribute('name', 'country');
+//   input.required = true;
 
-  inputWrapper.appendChild(input);
-  label.appendChild(inputWrapper);
-  wrapper.appendChild(label);
+//   inputWrapper.appendChild(input);
+//   label.appendChild(inputWrapper);
+//   wrapper.appendChild(label);
 
-  return wrapper;
-}
+//   return wrapper;
+// }
 
-function createAffiliationInput() {
-  const wrapper = document.createElement('div');
-  wrapper.classList.add('affiliation-wrapper');
+// function createAffiliationInput() {
+//   const wrapper = document.createElement('div');
+//   wrapper.classList.add('affiliation-wrapper');
 
-  const label = document.createElement('label');
-  label.setAttribute('for', 'affiliation');
-  label.innerText = 'Affiliation';
+//   const label = document.createElement('label');
+//   label.setAttribute('for', 'affiliation');
+//   label.innerText = 'Affiliation';
 
-  const inputWrapper = document.createElement('div');
-  inputWrapper.classList.add('affiliation-input-wrapper');
-  const input = document.createElement('input');
-  input.setAttribute('type', 'text');
-  input.setAttribute('name', 'affiliation');
-  input.required = true;
+//   const inputWrapper = document.createElement('div');
+//   inputWrapper.classList.add('affiliation-input-wrapper');
+//   const input = document.createElement('input');
+//   input.setAttribute('type', 'text');
+//   input.setAttribute('name', 'affiliation');
+//   input.required = true;
 
-  inputWrapper.appendChild(input);
-  label.appendChild(inputWrapper);
-  wrapper.appendChild(label);
+//   inputWrapper.appendChild(input);
+//   label.appendChild(inputWrapper);
+//   wrapper.appendChild(label);
 
-  return wrapper;
-}
+//   return wrapper;
+// }
 
 function createPasswordValidationMessage() {
   const messageDiv = document.createElement('div');
