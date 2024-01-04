@@ -78,7 +78,8 @@ switch (envUnderDomain) {
   case 'localhost':
     setDevPoolConfig();
     break;
-    default : setDevPoolConfig();
+  default: 
+    setDevPoolConfig();
 }
 
 window.hlx.GOOGLE_API_KEY = 'AIzaSyCuwCMWaz-O7G2cDFwMKUHv7bhoNNvzlyE'; // 'AIzaSyBVsBh7IhYPwtLlwT-uXtUc93igm-kCK5Q';
