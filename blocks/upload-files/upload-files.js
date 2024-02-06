@@ -42,7 +42,7 @@ export default async function decorate(block) {
   divcolumns.innerHTML = `
     <div class='column'>
     <div class='button-row'>
-    <button class="selectfiles">SELECT FILES</button>
+    <input type="file" id="myfile" name="myfile" class='select-files' multiple>
     <button class="upload">UPLOAD</button>
     </div>
     <div class="upload-status">
