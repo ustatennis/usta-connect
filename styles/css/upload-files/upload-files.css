@@ -120,10 +120,12 @@ input[type='file']::file-selector-button {
   background-position: center right;
   background-repeat: no-repeat;
   display: block; }
-  .upload-files .upload-progress.upload-success {
-    background-image: url("/icons/icon_success.png"); }
-  .upload-files .upload-progress.upload-errors {
-    background-image: url("/icons/icon_fail.png"); }
+
+.upload-files .upload-progress.upload-success {
+  background-image: url("/icons/icon_success.png"); }
+
+.upload-files .upload-progress.upload-errors {
+  background-image: url("/icons/icon_fail.png"); }
 
 .upload-header {
   font-weight: bold;
@@ -141,5 +143,6 @@ input[type='file']::file-selector-button {
   border-width: thin;
   width: 115px;
   height: 23px; }
-  .upload-files button#btn-download {
-    border-radius: 0; }
+
+.upload-files button#btn-download {
+  border-radius: 0; }
