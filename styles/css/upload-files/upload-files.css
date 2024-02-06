@@ -102,6 +102,16 @@ progress::-moz-progress-bar {
 .upload-files button.upload {
   background-color: #cfff05; }
 
+.upload-files input.select-files {
+  height: 30px;
+  border-radius: 5px; }
+
+input[type='file']::file-selector-button {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 3px 2em; }
+
 .upload-files .upload-progress {
   width: 410px;
   padding-top: 10px;
@@ -110,12 +120,10 @@ progress::-moz-progress-bar {
   background-position: center right;
   background-repeat: no-repeat;
   display: block; }
-
-.upload-files .upload-progress.upload-success {
-  background-image: url("/icons/icon_success.png"); }
-
-.upload-files .upload-progress.upload-errors {
-  background-image: url("/icons/icon_fail.png"); }
+  .upload-files .upload-progress.upload-success {
+    background-image: url("/icons/icon_success.png"); }
+  .upload-files .upload-progress.upload-errors {
+    background-image: url("/icons/icon_fail.png"); }
 
 .upload-header {
   font-weight: bold;
@@ -133,3 +141,5 @@ progress::-moz-progress-bar {
   border-width: thin;
   width: 115px;
   height: 23px; }
+  .upload-files button#btn-download {
+    border-radius: 0; }

@@ -141,6 +141,18 @@ progress::-moz-progress-bar {
   background-color: #cfff05;
 }
 
+.upload-files input.select-files {
+  height: 30px;
+  border-radius: 5px;
+}
+
+input[type='file']::file-selector-button {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 3px 2em;
+}
+
 .upload-files .upload-progress {
   width: 410px;
   padding-top: 10px;
@@ -177,4 +189,7 @@ progress::-moz-progress-bar {
   border-width: thin;
   width: 115px;
   height: 23px;
+  &#btn-download {
+    border-radius: 0;
+  }
 }
