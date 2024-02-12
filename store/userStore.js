@@ -1,5 +1,5 @@
 import { createStore } from '../scripts/helpers.js';
-import { USER_ROLES } from '../constants/user.js';
+// import { USER_ROLES } from '../constants/user.js';
 
 const userStore = createStore();
 
@@ -28,5 +28,6 @@ export function removeUserRole() {
 }
 
 export function isAdminUser() {
-  return userStore.getData('role').role === USER_ROLES.admin;
+  return false;
+  // return userStore.getData('role').role === USER_ROLES.admin;
 }
