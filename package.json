@@ -57,6 +57,7 @@
     }
   },
   "dependencies": {
-    "ag-grid-community": "^29.3.5"
+    "ag-grid-community": "^29.3.5",
+    "aws-sdk": "^2.1552.0"
   }
 }
