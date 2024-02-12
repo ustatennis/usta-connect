@@ -76,10 +76,10 @@ switch (envUnderDomain) {
     setStagePoolConfig();
     break;
   case 'localhost':
-    setDevPoolConfig();
+    setStagePoolConfig();
     break;
   default:
-    setDevPoolConfig();
+    setStagePoolConfig();
 }
 
 window.hlx.GOOGLE_API_KEY = 'AIzaSyCuwCMWaz-O7G2cDFwMKUHv7bhoNNvzlyE'; // 'AIzaSyBVsBh7IhYPwtLlwT-uXtUc93igm-kCK5Q';
