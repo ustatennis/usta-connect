@@ -28,5 +28,6 @@ export function removeUserRole() {
 }
 
 export function isAdminUser() {
-  return userStore.getData('role').role === USER_ROLES.admin;
+  return false;
+  // return userStore.getData('role').role === USER_ROLES.admin;
 }
