@@ -14,7 +14,6 @@ import {
   removeUserRole,
   setUser,
 } from '../store/userStore.js';
-import { getAdminUser } from './admin.js';
 import { getCredentialsForIdentity } from './identity.js';
 
 export async function fetchUser() {

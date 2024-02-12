@@ -125,7 +125,7 @@ export default async function decorate(block) {
     const bodytag = document.getElementsByTagName('body')[0];
     nav.id = 'nav';
     nav.innerHTML = html;
-    const alllinks = nav.querySelectorAll('a');
+    // const alllinks = nav.querySelectorAll('a');
     const urlPath = window.location.pathname;
     bodytag.className +=
       urlPath !== '/' ? ` page${urlPath.replace('/', '-')}` : 'page-home';
@@ -144,7 +144,7 @@ export default async function decorate(block) {
     if (isAdminUser()) bodytag.className += ' role-admin';
     else bodytag.className += ' role-user';
 
-    const nnn = nav.querySelectorAll('a[href*="/users"]');
+    /// const nnn = nav.querySelectorAll('a[href*="/users"]');
     // if (!isAdminUser()) {
     //   nnn[0].parentElement.parentElement.className += 'disabled';
     //   nnn.forEach((l, i) => {
