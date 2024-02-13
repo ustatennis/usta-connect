@@ -125,32 +125,32 @@ export default async function decorate(block) {
     const bodytag = document.getElementsByTagName('body')[0];
     nav.id = 'nav';
     nav.innerHTML = html;
-    const alllinks = nav.querySelectorAll('a');
+    // const alllinks = nav.querySelectorAll('a');
     const urlPath = window.location.pathname;
     bodytag.className +=
       urlPath !== '/' ? ` page${urlPath.replace('/', '-')}` : 'page-home';
-    alllinks.forEach((l, i) => {
-      const linkPath = new URL(l.href);
-      if (linkPath.pathname === urlPath) {
-        alllinks[i].parentElement.parentElement.className = 'selected';
-      }
-      if (linkPath.host !== window.location.host) {
-        if (l.target === '') {
-          l.target = '_blank';
-        }
-      }
-    });
+    // alllinks.forEach((l, i) => {
+    //   const linkPath = new URL(l.href);
+    //   if (linkPath.pathname === urlPath) {
+    //     alllinks[i].parentElement.parentElement.className = 'selected';
+    //   }
+    //   if (linkPath.host !== window.location.host) {
+    //     if (l.target === '') {
+    //       l.target = '_blank';
+    //     }
+    //   }
+    // });
 
     if (isAdminUser()) bodytag.className += ' role-admin';
     else bodytag.className += ' role-user';
 
-    const nnn = nav.querySelectorAll('a[href*="/users"]');
-    if (!isAdminUser()) {
-      nnn[0].parentElement.parentElement.className += 'disabled';
-      nnn.forEach((l, i) => {
-        nnn[i].className = 'disabled';
-      });
-    }
+    /// const nnn = nav.querySelectorAll('a[href*="/users"]');
+    // if (!isAdminUser()) {
+    //   nnn[0].parentElement.parentElement.className += 'disabled';
+    //   nnn.forEach((l, i) => {
+    //     nnn[i].className = 'disabled';
+    //   });
+    // }
 
     const classes = ['brand', 'sections', 'auth', 'tools'];
     classes.forEach((c, i) => {
