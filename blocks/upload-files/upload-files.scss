@@ -110,7 +110,7 @@ progress::-webkit-progress-value {
   border: 0;
   height: 8px;
   border-radius: 5px;
-  background-color: #02a2fa;
+  background-color: #fa0202;
 }
 
 progress::-moz-progress-bar {
@@ -193,4 +193,10 @@ input[type='file']::file-selector-button {
   &#btn-download {
     border-radius: 0;
   }
+
+}
+
+
+#file-names {
+  font-size: 15px;
 }

@@ -42,16 +42,18 @@ export default async function decorate(block) {
   divcolumns.innerHTML = `
     <div class='column'>
     <div class='button-row'>
-    <input type="file" id="myfile" name="myfile" class='select-files' multiple>
+    <input type="file" name="uploadedFile" class="inputfile" id="uploadedFile" data-multiple-caption="{count} files selected" multiple>
+    <label for="uploadedFile" id="uploadFileTest"><img class="total-center" src=""></label>
     <button class="upload">UPLOAD</button>
+    <p id="file-names"></p>
     </div>
     <div class="upload-status">
-    <progress class="upload-progress upload-success" value=100></progress>
+    <progress id="upload-success" class="upload-progress upload-success" value=0 max=100></progress>
     <div class="upload-header">Success! Uploads Complete</div>
     <div class="upload-body">Success / Error Lorem ipsum message dolor sit amet,
     consectetur adipiscing elit, sed do eiusmod tempor.</div>
     <br/>
-    <progress class="upload-progress upload-errors" value=100></progress>
+    <progress id="upload-errors" class="upload-progress upload-errors" value=0 max=100></progress>
     <div class="upload-header">Uploads completed with errors</div>
     <div class="upload-body">Success / Error Lorem ipsum message dolor sit amet,
     consectetur adipiscing elit, sed do eiusmod tempor.</div>
@@ -141,7 +143,7 @@ export default async function decorate(block) {
 
   const gridDiv1 = document.querySelector('#upload-files-grid');
   // eslint-disable-next-line
-    const userGrid1 = new agGrid.Grid(gridDiv1, gridOptions1);
+  const userGrid1 = new agGrid.Grid(gridDiv1, gridOptions1);
   gridOptions1.api.setRowData(rowData);
   gridOptions1.api.sizeColumnsToFit();
   gridOptions1.api.setDomLayout('autoHeight');
@@ -151,4 +153,21 @@ export default async function decorate(block) {
       document.getElementById('filter-text-box').value,
     );
   });
+
+  const input = document.getElementById('uploadedFile');
+  // eslint-disable-next-line func-names
+  input.addEventListener('change', function (e) {
+    const filenames = document.getElementById('file-names');
+    if (e.target.files.length > 0) {
+      Array.from(e.target.files).forEach(file => {
+        filenames.innerHTML += `<br>${file.name}`;
+      });
+    }
+  });
+
+  const uploadsuccess = document.getElementById('upload-success');
+  const succ = Math.floor(Math.random() * 100);
+  uploadsuccess.value = succ;
+  const uploaderrors = document.getElementById('upload-errors');
+  uploaderrors.value = 100 - succ;
 }
