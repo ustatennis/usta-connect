@@ -1,6 +1,7 @@
-import { FOLDER_IDS } from '../../constants/googleDrive.js';
+// import { FOLDER_IDS } from '../../constants/googleDrive.js';
 import '../../jslibraries/ag-grid-community.min.js';
-import { getDataFromFolder } from '../../middleware/googleDrive.js';
+// import { getDataFromFolder } from '../../middleware/googleDrive.js';
+import { listFiles } from '../../scripts/s3script.js';
 import BtnCellRenderer from './btn-cell-renderer.js';
 import userSystemCellRenderer from './user-system-cell-renderer.js';
 import { formatBytes } from '../../jslibraries/utility/utility.js';
@@ -10,7 +11,9 @@ export default async function decorate(block) {
   function formatBytesGetter(params) {
     return formatBytes(params.data.size, 0);
   }
-  const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
+  // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
+
+  const files = await listFiles();
   const isHomePage = window.location.pathname === '/';
 
   const div = document.createElement('div');
@@ -84,7 +87,9 @@ export default async function decorate(block) {
       headerName: 'DOWNLOAD',
       cellRenderer: BtnCellRenderer,
       cellRendererParams: {
-        clicked() {},
+        clicked() {
+          // console.log(this)
+        },
       },
       minWidth: 150,
     },
