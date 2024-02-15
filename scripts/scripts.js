@@ -46,6 +46,9 @@ function setProductionPoolConfig() {
   window.hlx.USER_POOL_ID = 'us-east-1_CRUiPa1lK'; // temporary setting userPoolID here
   window.hlx.IDENTITY_POOL_ID =
     'us-east-1:c90a0d53-f82a-4907-8bf6-bfb96337ef9a'; // temporary setting userPoolID here
+  window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET = 's3upload-ui-upload-prod';
+  window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET = 's3upload-ui-download-prod';
+  window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned-prod';
 }
 function setDevPoolConfig() {
   window.hlx.RUM_GENERATION = 'usta-connect'; // add your RUM generation information here
@@ -53,6 +56,9 @@ function setDevPoolConfig() {
   window.hlx.USER_POOL_ID = 'us-east-1_XcYnoGlwq'; // temporary setting userPoolID here
   window.hlx.IDENTITY_POOL_ID =
     'us-east-1:12372ea4-1035-4ca7-9428-2d1d6deb5ecf'; // temporary setting userPoolID here
+  window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET = 's3upload-ui-upload';
+  window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET = 's3upload-ui-download';
+  window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned';
 }
 
 function setStagePoolConfig() {
@@ -61,6 +67,9 @@ function setStagePoolConfig() {
   window.hlx.USER_POOL_ID = 'us-east-1_DKSSJUVlY'; // temporary setting userPoolID here
   window.hlx.IDENTITY_POOL_ID =
     'us-east-1:a5df722d-28a6-408b-a10c-8a391051bfb5'; // temporary setting userPoolID here
+  window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET = 's3upload-ui-upload-stage';
+  window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET = 's3upload-ui-download-stage';
+  window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned-stage';
 }
 const subdomain = window.location.hostname.split('.')[0];
 const envUnderDomain = subdomain?.split('-')[0];

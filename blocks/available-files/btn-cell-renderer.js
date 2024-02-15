@@ -1,3 +1,5 @@
+import { getObject } from '../../scripts/s3script.js';
+
 class ScoreBtnCellRenderer {
   init(params) {
     this.params = params;
@@ -31,11 +33,34 @@ class ScoreBtnCellRenderer {
     return this.eGui;
   }
 
-  btnClickedHandler(event, arg) {
+  async btnClickedHandler(event, arg) {
     if (arg === 'view') {
       window.open(this.params.data.viewLink, '_blank');
     } else {
-      window.location.assign(this.params.data.downloadLink);
+      // window.location.assign(this.params.data.downloadLink);
+      event.preventDefault();
+      const data = await getObject(this.params.data);
+      // const result = await Storage.get(fileKey, { bucket: props.bucket, level: appConfig.buckets.accessLevel });
+      // s3upload-ui-bucket-stage
+      // Create a Blob from the data received
+      const blob = new Blob([data.Body], { type: data.ContentType });
+
+      // Create a temporary URL for the Blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Create an anchor element to trigger the download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = this.params.data.Key.split('/').pop(); // Specify the filename
+      document.body.appendChild(a);
+
+      // Trigger the download
+      a.click();
+
+      // Cleanup
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      return false;
     }
 
     // this.params.clicked(this.params.value);
