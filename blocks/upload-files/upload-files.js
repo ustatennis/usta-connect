@@ -12,7 +12,7 @@ export default async function decorate(block) {
   }
   const config = getAWSStore();
   // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
-  const files = await listFiles(config.s3ScannedBucket);
+  const files = await listFiles(config.s3ScannedBucket, 3);
   const isHomePage = window.location.pathname === '/';
 
   // const div = document.createElement('div');

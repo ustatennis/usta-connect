@@ -15,8 +15,8 @@ export default async function decorate(block) {
   // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
   const config = getAWSStore();
 
-  const downloadFiles = await listFiles(config.s3DownloadBucket);
-  const scannedFiles = await listFiles(config.s3ScannedBucket);
+  const downloadFiles = await listFiles(config.s3DownloadBucket, 100);
+  const scannedFiles = await listFiles(config.s3ScannedBucket, 100);
   const files = [...downloadFiles, ...scannedFiles];
   const isHomePage = window.location.pathname === '/';
 

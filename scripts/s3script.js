@@ -59,23 +59,24 @@ function extractFileMetatadata(values, objects, bucket) {
   });
 }
 
-async function fetchFilestoObject(s3Client, config, objects, bucketName) {
+async function fetchFilestoObject(s3Client, config, objects, bucketName, max) {
   const values = await s3Client
     .listObjectsV2({
       Bucket: bucketName,
       Prefix: `private/${config.identityPoolId}`,
+      MaxKeys: max,
     })
     .promise();
   // console.log(values);
   extractFileMetatadata(values, objects, bucketName);
 }
 
-export async function listFiles(bucket) {
+export async function listFiles(bucket, max) {
   const s3Client = createS3Client();
   const objects = [];
   const config = getAWSStore();
   try {
-    await fetchFilestoObject(s3Client, config, objects, bucket);
+    await fetchFilestoObject(s3Client, config, objects, bucket, max);
   } catch (errr) {
     console.error('Exception occurred while fetching files.');
   }
