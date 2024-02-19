@@ -1,16 +1,29 @@
 import { getAWSStore } from '../store/awsStore.js';
 import { getValueFromLocalStorage, formatDateTime } from './helpers.js';
+import { getUser } from '../store/userStore.js';
 
-export function createS3Client() {
+export function getFederationId(identityPoolId) {
+  // fedeation Id = aws.cognito.identity-id.us-east-1:a5df722d-28a6-408b-a10c-8a391051bfb5
+  return getValueFromLocalStorage(`aws.cognito.identity-id.${identityPoolId}`);
+}
+
+export function getUserPoolIDP(identityPoolId) {
+  return getValueFromLocalStorage(
+    `aws.cognito.identity-providers.${identityPoolId}`,
+  );
+}
+
+export async function createS3Client() {
   const config = getAWSStore();
   // Get the identity pool ID.
   const { identityPoolId } = config;
-  const USER_POOL_ID = config.userPoolId;
+
   const idToken = getValueFromLocalStorage('id_token');
   // Create a new Amazon S3 client.
   let s3Client = null;
+  const userPoolIdIDP = getUserPoolIDP(identityPoolId);
   const logins = {
-    [`cognito-idp.${AWS.config.region}.amazonaws.com/${USER_POOL_ID}`]: idToken,
+    [`${userPoolIdIDP}`]: idToken,
   };
   try {
     s3Client = new AWS.S3({
@@ -63,7 +76,7 @@ async function fetchFilestoObject(s3Client, config, objects, bucketName, max) {
   const values = await s3Client
     .listObjectsV2({
       Bucket: bucketName,
-      Prefix: `private/${config.identityPoolId}`,
+      Prefix: `private/${getFederationId(config.identityPoolId)}/`,
       MaxKeys: max,
     })
     .promise();
@@ -72,7 +85,7 @@ async function fetchFilestoObject(s3Client, config, objects, bucketName, max) {
 }
 
 export async function listFiles(bucket, max) {
-  const s3Client = createS3Client();
+  const s3Client = await createS3Client();
   const objects = [];
   const config = getAWSStore();
   try {
@@ -80,12 +93,38 @@ export async function listFiles(bucket, max) {
   } catch (errr) {
     console.error('Exception occurred while fetching files.');
   }
-  objects.sort((a, b) => b.createdTime - a.createdTime);
   return objects;
 }
 
+function constructFileKey(fileName) {
+  const user = getUser();
+  const config = getAWSStore();
+  let uploadFileKey = `private/${getFederationId(config.identityPoolId)}/${
+    user.Username
+  }/`;
+  const currDateStr = `_${new Date().getTime()}`;
+  const fileExtIndex = fileName.search(/\.\w{3}$/g);
+  if (fileExtIndex >= 0) {
+    uploadFileKey +=
+      fileName.slice(0, fileExtIndex) +
+      currDateStr +
+      fileName.slice(fileExtIndex);
+  } else {
+    uploadFileKey += fileName + currDateStr;
+  }
+  return uploadFileKey;
+}
+
+export function triggerUpdate() {
+  console.log('triggering custom evnet');
+  const customEvent = new CustomEvent('uploaded', {
+    detail: 'data changed/new files uploaded',
+  });
+  document.dispatchEvent(customEvent);
+}
+
 export async function uploadS3Objects(files) {
-  const s3Client = createS3Client();
+  const s3Client = await createS3Client();
   const config = getAWSStore();
   const output = document.getElementById('output');
   output.innerHTML = '';
@@ -113,13 +152,14 @@ export async function uploadS3Objects(files) {
     uploadStatusDiv.appendChild(uploadBody);
 
     output.appendChild(uploadStatusDiv);
-
+    // const user = getUser();
+    // console.log(getUser());
     const params = {
       // TODO - bucketchange - 's3upload-ui-bucket-stage'
       Bucket: config.s3UploadBucket,
-      Key: `private/${config.identityPoolId}/${file.name}`,
+      Key: constructFileKey(file.name),
       Body: file,
-      // ACL: 'public-read' // Adjust ACL permissions as needed
+      ACL: 'private', // Adjust ACL permissions as needed
     };
 
     const request = s3Client.upload(params);
@@ -145,7 +185,13 @@ export async function uploadS3Objects(files) {
         document
           .getElementById(`upload-progress-${i}`)
           .classList.add('upload-success');
+        triggerUpdate();
       }
     });
   }
 }
+
+// https://s3upload-ui-scanned-prod.s3.us-east-1.amazonaws.com/?list-type=2&prefix=private%2Fus-east-1%3Aa0ea4540-cbcc-4ff9-9b53-2c258f383593%2F
+// https://s3upload-ui-scanned-stage.s3.amazonaws.com/?list-type=2&prefix=private%2Fus-east-1%3A68ffed30-3180-48d2-8b37-2e07596c5389
+
+// https://s3upload-ui-upload-prod.s3.us-east-1.amazonaws.com/private/us-east-1%3Aa0ea4540-cbcc-4ff9-9b53-2c258f383593/sai.theja%40contractor.usta.com/logo192_1708367868662.png?x-id=PutObjecthttps://s3upload-ui-upload-prod.s3.us-east-1.amazonaws.com/private/us-east-1%3Aa0ea4540-cbcc-4ff9-9b53-2c258f383593/sai.theja%40contractor.usta.com/logo192_1708367868662.png?x-id=PutObject
