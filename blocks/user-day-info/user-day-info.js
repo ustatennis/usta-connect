@@ -1,9 +1,9 @@
-import { getUser, getUserRole } from '../../store/userStore.js';
+import { getUser } from '../../store/userStore.js';
 import { decorateIcons } from '../../scripts/lib-franklin.js';
 
 export default async function decorate(block) {
   const user = getUser();
-  const userRole = getUserRole();
+
   const userName = user.UserAttributes.find(o => o.Name === 'name').Value;
   const userDayInfoPath = '/user-day-info';
   const weatherAlertPath = '/weather-alert';
@@ -34,7 +34,7 @@ export default async function decorate(block) {
     Welcome to USTA Connect!
     </div>
     <div class='user-day-info-right'>
-    <div class="username">Welcome <b>${userNameCpitalized}</b>(${userRole?.role})</div>
+    <div class="username">Welcome <b>${userNameCpitalized}</b></div>
     </div>
     `;
     const userDayWrapper = document.createElement('div');

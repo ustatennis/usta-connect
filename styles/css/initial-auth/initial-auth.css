@@ -18,102 +18,88 @@ header {
   align-items: center;
   margin: 0 !important;
   padding: 0 !important; }
-
-.initial-auth-container.none {
-  display: none !important; }
-
-.initial-auth-container .initial-auth-wrapper {
-  background-color: #fff;
-  border: 1px solid #606060;
-  border-radius: 3px;
-  padding: 15px;
-  box-shadow: 0 3px 9px #0000007F;
-  max-width: 350px;
-  width: 100%;
-  margin: 30px 0; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal-cover {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #666;
-  z-index: -1; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .logo-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .change-password-about .title-wrapper {
-  padding: 10px 0;
-  font-size: 18px;
-  color: #3B3B3B; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .change-password-about .description-wrapper {
-  padding: 10px 0;
-  font-size: 14px;
-  color: #3B3B3B; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .init-auth-err-msg {
-  display: none;
-  padding: 5px;
-  font-size: 14px;
-  background: #F5F5F5;
-  border: 2px solid #D64958;
-  color: #D64958;
-  margin-bottom: 10px; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal {
-  display: flex;
-  flex-direction: column; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form {
-  color: #3B3B3B;
-  font-size: 14px; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper {
-  display: flex;
-  margin: 40px 0 10px; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper button {
-  font-size: 14px;
-  font-weight: bold;
-  height: 40px;
-  width: 100%;
-  color: #fff;
-  background-color: #337ab7;
-  padding: 6px 12px;
-  text-align: center;
-  white-space: nowrap;
-  border: 1px solid transparent;
-  border-radius: 5px;
-  position: relative; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper button:hover {
-  color: #fff;
-  background-color: #286090; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper button:disabled {
-  color: #fff;
-  background-color: #286090; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper button.loading::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 47%;
-  border-radius: 100%;
-  width: 0;
-  height: 0;
-  border: 2px solid #FFFFFF7F;
-  border-left-color: #FFF;
-  border-top-color: #FFF;
-  animation: spin .6s infinite linear, grow .3s forwards ease-out; }
+  .initial-auth-container.none {
+    display: none !important; }
+  .initial-auth-container .initial-auth-wrapper {
+    background-color: #fff;
+    border: 1px solid #606060;
+    border-radius: 3px;
+    padding: 15px;
+    box-shadow: 0 3px 9px #0000007F;
+    max-width: 350px;
+    width: 100%;
+    margin: 30px 0; }
+    .initial-auth-container .initial-auth-wrapper .initial-auth .modal-cover {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #666;
+      z-index: -1; }
+    .initial-auth-container .initial-auth-wrapper .initial-auth .logo-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; }
+    .initial-auth-container .initial-auth-wrapper .initial-auth .change-password-about .title-wrapper {
+      padding: 10px 0;
+      font-size: 18px;
+      color: #3B3B3B; }
+    .initial-auth-container .initial-auth-wrapper .initial-auth .change-password-about .description-wrapper {
+      padding: 10px 0;
+      font-size: 14px;
+      color: #3B3B3B; }
+    .initial-auth-container .initial-auth-wrapper .initial-auth .init-auth-err-msg {
+      display: none;
+      padding: 5px;
+      font-size: 14px;
+      background: #F5F5F5;
+      border: 2px solid #D64958;
+      color: #D64958;
+      margin-bottom: 10px; }
+    .initial-auth-container .initial-auth-wrapper .initial-auth .modal {
+      display: flex;
+      flex-direction: column; }
+      .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form {
+        color: #3B3B3B;
+        font-size: 14px; }
+        .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper {
+          display: flex;
+          margin: 40px 0 10px; }
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper button {
+            font-size: 14px;
+            font-weight: bold;
+            height: 40px;
+            width: 100%;
+            color: #fff;
+            background-color: #337ab7;
+            padding: 6px 12px;
+            text-align: center;
+            white-space: nowrap;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            position: relative; }
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper button:hover {
+              color: #fff;
+              background-color: #286090; }
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper button:disabled {
+              color: #fff;
+              background-color: #286090; }
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper button.loading::after {
+              content: "";
+              position: absolute;
+              top: 50%;
+              left: 47%;
+              border-radius: 100%;
+              width: 0;
+              height: 0;
+              border: 2px solid #FFFFFF7F;
+              border-left-color: #FFF;
+              border-top-color: #FFF;
+              animation: spin .6s infinite linear, grow .3s forwards ease-out; }
 
 @keyframes spin {
   to {
@@ -125,149 +111,141 @@ header {
     height: 14px;
     margin-top: -8px;
     right: 13px; } }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper {
-  margin-bottom: 5px;
-  font-weight: 400;
-  font-size: 14px; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-repeat-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .name-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .phone-number-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .country-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .affiliation-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-repeat-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .name-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .phone-number-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .country-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .affiliation-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-repeat-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .name-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .phone-number-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .country-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .affiliation-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-repeat-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .name-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .phone-number-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .country-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .affiliation-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-repeat-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .name-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .phone-number-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .country-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .affiliation-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-repeat-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .name-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .phone-number-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .country-input-wrapper,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .affiliation-input-wrapper {
-  display: flex; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-repeat-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .name-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .phone-number-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .country-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .affiliation-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-repeat-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .name-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .phone-number-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .country-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .affiliation-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-repeat-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .name-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .phone-number-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .country-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .affiliation-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-repeat-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .name-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .phone-number-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .country-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .affiliation-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-repeat-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .name-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .phone-number-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .country-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .affiliation-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-repeat-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .name-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .phone-number-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .country-input-wrapper input,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .affiliation-input-wrapper input {
-  width: 100%;
-  color: #555;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 5px; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-repeat-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .name-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .phone-number-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .country-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .affiliation-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-repeat-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .name-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .phone-number-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .country-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .affiliation-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-repeat-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .name-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .phone-number-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .country-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .affiliation-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-repeat-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .name-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .phone-number-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .country-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .affiliation-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-repeat-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .name-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .phone-number-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .country-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .affiliation-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-repeat-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .name-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .phone-number-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .country-input-wrapper input:focus,
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .affiliation-input-wrapper input:focus {
-  border-color: #66afe9;
-  outline: 0; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .initial-auth-password-message {
-  display: flex;
-  flex-direction: column;
-  margin: 10px 0; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .initial-auth-password-message.none {
-  display: none !important; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .initial-auth-password-message span {
-  font-size: 14px;
-  color: #19BF00; }
-
-.initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .initial-auth-password-message span.error {
-  color: #D64958; }
+        .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper,
+        .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper,
+        .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper,
+        .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper,
+        .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper,
+        .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper {
+          margin-bottom: 5px;
+          font-weight: 400;
+          font-size: 14px; }
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-repeat-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .name-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .phone-number-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .country-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .affiliation-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-repeat-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .name-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .phone-number-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .country-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .affiliation-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-repeat-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .name-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .phone-number-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .country-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .affiliation-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-repeat-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .name-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .phone-number-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .country-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .affiliation-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-repeat-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .name-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .phone-number-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .country-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .affiliation-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-repeat-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .name-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .phone-number-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .country-input-wrapper,
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .affiliation-input-wrapper {
+            display: flex; }
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-repeat-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .name-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .phone-number-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .country-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .affiliation-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-repeat-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .name-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .phone-number-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .country-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .affiliation-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-repeat-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .name-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .phone-number-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .country-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .affiliation-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-repeat-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .name-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .phone-number-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .country-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .affiliation-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-repeat-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .name-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .phone-number-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .country-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .affiliation-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-repeat-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .name-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .phone-number-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .country-input-wrapper input,
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .affiliation-input-wrapper input {
+              width: 100%;
+              color: #555;
+              background-color: #fff;
+              border: 1px solid #ccc;
+              padding: 6px 12px;
+              font-size: 14px;
+              border-radius: 5px; }
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .new-password-repeat-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .name-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .phone-number-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .country-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-wrapper .affiliation-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .new-password-repeat-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .name-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .phone-number-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .country-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .new-password-repeat-wrapper .affiliation-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .new-password-repeat-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .name-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .phone-number-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .country-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .name-wrapper .affiliation-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .new-password-repeat-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .name-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .phone-number-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .country-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .phone-number-wrapper .affiliation-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .new-password-repeat-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .name-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .phone-number-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .country-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .country-wrapper .affiliation-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .new-password-repeat-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .name-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .phone-number-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .country-input-wrapper input:focus,
+              .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .affiliation-wrapper .affiliation-input-wrapper input:focus {
+                border-color: #66afe9;
+                outline: 0; }
+        .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .initial-auth-password-message {
+          display: flex;
+          flex-direction: column;
+          margin: 10px 0; }
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .initial-auth-password-message.none {
+            display: none !important; }
+          .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .initial-auth-password-message span {
+            font-size: 14px;
+            color: #19BF00; }
+            .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .initial-auth-password-message span.error {
+              color: #D64958; }

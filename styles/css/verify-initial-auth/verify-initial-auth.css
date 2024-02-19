@@ -18,117 +18,101 @@ header {
   align-items: center;
   margin: 0 !important;
   padding: 0 !important; }
-
-.verify-initial-auth-container.none {
-  display: none !important; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper {
-  background-color: #fff;
-  border: 1px solid #606060;
-  border-radius: 3px;
-  padding: 15px;
-  box-shadow: 0 3px 9px #0000007F;
-  max-width: 350px;
-  width: 100%;
-  margin: 30px 0; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal-cover {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #666;
-  z-index: -1; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .logo-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .verify-initial-auth-description {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.1;
-  margin-top: 20px;
-  margin-bottom: 10px; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .verify-init-auth-err-msg {
-  display: none;
-  padding: 5px;
-  font-size: 14px;
-  background: #F5F5F5;
-  border: 2px solid #D64958;
-  color: #D64958;
-  margin-bottom: 10px; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal {
-  display: flex;
-  flex-direction: column; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .code-wrapper {
-  margin-bottom: 5px;
-  font-weight: 400;
-  font-size: 14px; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .code-wrapper .code-input-wrapper {
-  display: flex; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .code-wrapper .code-input-wrapper input {
-  width: 100%;
-  height: 34px;
-  color: #555;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 5px; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .code-wrapper .code-input-wrapper input:focus {
-  border-color: #66afe9;
-  outline: 0; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper {
-  display: flex;
-  margin: 40px 0 10px; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper button {
-  font-size: 14px;
-  font-weight: bold;
-  height: 40px;
-  width: 100%;
-  color: #fff;
-  background-color: #337ab7;
-  padding: 6px 12px;
-  text-align: center;
-  white-space: nowrap;
-  border: 1px solid transparent;
-  border-radius: 5px;
-  position: relative; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper button:hover {
-  color: #fff;
-  background-color: #286090; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper button:disabled {
-  color: #fff;
-  background-color: #286090; }
-
-.verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper button.loading::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 47%;
-  border-radius: 100%;
-  width: 0;
-  height: 0;
-  border: 2px solid #FFFFFF7F;
-  border-left-color: #FFF;
-  border-top-color: #FFF;
-  animation: spin .6s infinite linear, grow .3s forwards ease-out; }
+  .verify-initial-auth-container.none {
+    display: none !important; }
+  .verify-initial-auth-container .verify-initial-auth-wrapper {
+    background-color: #fff;
+    border: 1px solid #606060;
+    border-radius: 3px;
+    padding: 15px;
+    box-shadow: 0 3px 9px #0000007F;
+    max-width: 350px;
+    width: 100%;
+    margin: 30px 0; }
+    .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal-cover {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #666;
+      z-index: -1; }
+    .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .logo-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; }
+    .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .verify-initial-auth-description {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.1;
+      margin-top: 20px;
+      margin-bottom: 10px; }
+    .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .verify-init-auth-err-msg {
+      display: none;
+      padding: 5px;
+      font-size: 14px;
+      background: #F5F5F5;
+      border: 2px solid #D64958;
+      color: #D64958;
+      margin-bottom: 10px; }
+    .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal {
+      display: flex;
+      flex-direction: column; }
+      .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .code-wrapper {
+        margin-bottom: 5px;
+        font-weight: 400;
+        font-size: 14px; }
+        .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .code-wrapper .code-input-wrapper {
+          display: flex; }
+          .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .code-wrapper .code-input-wrapper input {
+            width: 100%;
+            height: 34px;
+            color: #555;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 6px 12px;
+            font-size: 14px;
+            border-radius: 5px; }
+            .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .code-wrapper .code-input-wrapper input:focus {
+              border-color: #66afe9;
+              outline: 0; }
+      .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper {
+        display: flex;
+        margin: 40px 0 10px; }
+        .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper button {
+          font-size: 14px;
+          font-weight: bold;
+          height: 40px;
+          width: 100%;
+          color: #fff;
+          background-color: #337ab7;
+          padding: 6px 12px;
+          text-align: center;
+          white-space: nowrap;
+          border: 1px solid transparent;
+          border-radius: 5px;
+          position: relative; }
+          .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper button:hover {
+            color: #fff;
+            background-color: #286090; }
+          .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper button:disabled {
+            color: #fff;
+            background-color: #286090; }
+          .verify-initial-auth-container .verify-initial-auth-wrapper .verify-initial-auth .modal .form .send-code-button-wrapper button.loading::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 47%;
+            border-radius: 100%;
+            width: 0;
+            height: 0;
+            border: 2px solid #FFFFFF7F;
+            border-left-color: #FFF;
+            border-top-color: #FFF;
+            animation: spin .6s infinite linear, grow .3s forwards ease-out; }
 
 @keyframes spin {
   to {

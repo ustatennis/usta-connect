@@ -197,7 +197,7 @@ export default function decorate(block) {
         .closest('picture')
         .replaceWith(
           createOptimizedPicture(img.src, img.alt, true, [
-            { width: 100, height: 70 },
+            { width: 300, height: 30 },
           ]),
         ),
     );

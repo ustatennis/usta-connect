@@ -6,7 +6,7 @@ body .teaser-banner-container {
 
 .teaser-banner {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   font-family: $font-family;
 
   .banner-right {
@@ -67,14 +67,12 @@ body .teaser-banner-container {
 
     > picture {
       > img {
-        height: 40px;
         width: 242px;
-        margin-left: -70%;
       }
     }
 
-    display: flex;
     justify-content: center;
+    display: none;
   }
 
   .banner-buttons {
