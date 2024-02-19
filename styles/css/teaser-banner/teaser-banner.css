@@ -3,7 +3,7 @@ body .teaser-banner-container {
 
 .teaser-banner {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   font-family: highway-gothic; }
 
 .teaser-banner .banner-right {
@@ -48,17 +48,15 @@ body .teaser-banner-container {
   margin-bottom: 15px; }
 
 .teaser-banner .banner-logo {
-  display: flex;
-  justify-content: center; }
+  justify-content: center;
+  display: none; }
 
 @media (max-width: 500px) {
   .teaser-banner .banner-logo {
     display: none; } }
 
 .teaser-banner .banner-logo > picture > img {
-  height: 40px;
-  width: 242px;
-  margin-left: -70%; }
+  width: 242px; }
 
 .teaser-banner .banner-buttons {
   height: 40px;
