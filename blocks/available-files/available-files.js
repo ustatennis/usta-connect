@@ -6,14 +6,18 @@ import BtnCellRenderer from './btn-cell-renderer.js';
 import userSystemCellRenderer from './user-system-cell-renderer.js';
 import { formatBytes } from '../../jslibraries/utility/utility.js';
 import { iconColorBar } from '../../scripts/helpers.js';
+import { getAWSStore } from '../../store/awsStore.js';
 
 export default async function decorate(block) {
   function formatBytesGetter(params) {
     return formatBytes(params.data.size, 0);
   }
   // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
+  const config = getAWSStore();
 
-  const files = await listFiles();
+  const downloadFiles = await listFiles(config.s3DownloadBucket, 100);
+  const scannedFiles = await listFiles(config.s3ScannedBucket, 100);
+  const files = [...downloadFiles, ...scannedFiles];
   const isHomePage = window.location.pathname === '/';
 
   const div = document.createElement('div');
