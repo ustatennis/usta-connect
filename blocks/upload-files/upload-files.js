@@ -12,7 +12,9 @@ export default async function decorate(block) {
   }
   const config = getAWSStore();
   // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
-  const files = await listFiles(config.s3ScannedBucket, 3);
+  let files = await listFiles(config.s3ScannedBucket, 1000);
+  files.sort((a, b) => b.createdTime - a.createdTime);
+  files = files.slice(0, 3);
   const isHomePage = window.location.pathname === '/';
 
   // const div = document.createElement('div');
@@ -186,4 +188,16 @@ export default async function decorate(block) {
   };
   const uploadBtn = document.getElementById('uploadBtn');
   uploadBtn.addEventListener('click', uploadFiles);
+
+  document.addEventListener('uploaded', async function (/* event */) {
+    console.log('able to listend to uploaded files');
+    await new Promise(resolve => {
+      setTimeout(() => resolve('success'), 4000);
+    });
+    files = await listFiles(config.s3ScannedBucket, 1000);
+    files.sort((a, b) => b.createdTime - a.createdTime);
+    files = files.slice(0, 3);
+    console.log(files);
+    gridOptions1.api.setRowData(files);
+  });
 }
