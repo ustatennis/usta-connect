@@ -177,6 +177,16 @@ body.page-sign-in {
   min-width: 0;
 }
 
+main.page-forgot-password {
+  margin-left: 0;
+  max-width: 1440px;
+  background: #92bfb7;
+}
+
+body.page-forgot-password {
+  min-width: 0;
+}
+
 main.page-sign-in {
   margin-left: 0;
   max-width: 1440px;
@@ -190,6 +200,7 @@ body.page-sign-up {
 main.page-sign-up {
   margin-left: 0;
   max-width: 1440px;
+  background: #92bfb7;
 }
 
 header {
