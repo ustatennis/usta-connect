@@ -15,9 +15,10 @@ export default async function decorate(block) {
   // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
   const config = getAWSStore();
 
-  const downloadFiles = await listFiles(config.s3DownloadBucket, 100);
-  const scannedFiles = await listFiles(config.s3ScannedBucket, 100);
-  const files = [...downloadFiles, ...scannedFiles];
+  let downloadFiles = await listFiles(config.s3DownloadBucket, 1000);
+  // const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
+  let files = [...downloadFiles /* , ...scannedFiles */];
+  files.sort((a, b) => b.createdTime - a.createdTime);
   const isHomePage = window.location.pathname === '/';
 
   const div = document.createElement('div');
@@ -143,5 +144,18 @@ export default async function decorate(block) {
     gridOptions1.api.setQuickFilter(
       document.getElementById('filter-text-box').value,
     );
+  });
+
+  document.addEventListener('uploaded', async function (/* event */) {
+    console.log('able to listend to uploaded files');
+    await new Promise(resolve => {
+      setTimeout(() => resolve('success'), 4000);
+    });
+    downloadFiles = await listFiles(config.s3DownloadBucket, 1000);
+    // const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
+    files = [...downloadFiles /* , ...scannedFiles */];
+    files.sort((a, b) => b.createdTime - a.createdTime);
+    console.log(files);
+    gridOptions1.api.setRowData(files);
   });
 }
