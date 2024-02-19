@@ -16,8 +16,8 @@ export default async function decorate(block) {
   const config = getAWSStore();
 
   let downloadFiles = await listFiles(config.s3DownloadBucket, 1000);
-  // const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
-  let files = [...downloadFiles  , ...scannedFiles ];
+  const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
+  let files = [...downloadFiles, ...scannedFiles];
   files.sort((a, b) => b.createdTime - a.createdTime);
   const isHomePage = window.location.pathname === '/';
 
@@ -153,7 +153,7 @@ export default async function decorate(block) {
     });
     downloadFiles = await listFiles(config.s3DownloadBucket, 1000);
     // const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
-    files = [...downloadFiles  , ...scannedFiles ];
+    files = [...downloadFiles, ...scannedFiles];
     files.sort((a, b) => b.createdTime - a.createdTime);
     console.log(files);
     gridOptions1.api.setRowData(files);
