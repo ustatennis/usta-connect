@@ -96,10 +96,15 @@ export default async function decorate(block) {
       field: 'fileName',
       headerName: 'FILE NAME',
       sortable: true,
-      minWidth: 380,
+      minWidth: 280,
       cellRenderer: iconNameAndDateRenderer,
     },
-    { field: 'modifiedTime', headerName: 'DATE ADDED', sortable: true },
+    {
+      field: 'modifiedTime',
+      headerName: 'DATE ADDED',
+      sortable: true,
+      minWidth: 100,
+    },
     // { field: 'modifiedTime', headerName: 'USER / SYSTEM', sortable: true },
     {
       field: 'size',
