@@ -2,7 +2,8 @@ class userSystemCellRenderer {
   init(params) {
     this.params = params;
     this.eGui = document.createElement('div');
-    this.eGui.id = Math.round(Math.random()) === 1 ? 'btn-system' : 'btn-user';
+    this.eGui.id =
+      this.params.data.owner === 'SYSTEM' ? 'btn-system' : 'btn-user';
   }
 
   getGui() {
