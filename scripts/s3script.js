@@ -86,13 +86,14 @@ async function fetchFilestoObject(s3Client, config, objects, bucketName, max) {
 
 export async function listFiles(bucket, max) {
   const s3Client = await createS3Client();
-  const objects = [];
+  let objects = [];
   const config = getAWSStore();
   try {
     await fetchFilestoObject(s3Client, config, objects, bucket, max);
   } catch (errr) {
     console.error('Exception occurred while fetching files.');
   }
+  objects = objects.filter(obj => !obj.Key.endsWith('/'));
   return objects;
 }
 
