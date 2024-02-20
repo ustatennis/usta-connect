@@ -17,7 +17,15 @@ export default async function decorate(block) {
 
   let downloadFiles = await listFiles(config.s3DownloadBucket, 1000);
   const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
-  let files = [...downloadFiles, ...scannedFiles];
+  // let files = [...downloadFiles, ...scannedFiles];
+  let files = [
+    ...downloadFiles.map(obj => {
+      return { ...obj, owner: 'SYSTEM' };
+    }),
+    ...scannedFiles.map(obj => {
+      return { ...obj, owner: 'USER' };
+    }),
+  ];
   files.sort((a, b) => b.createdTime - a.createdTime);
   const isHomePage = window.location.pathname === '/';
 
@@ -76,7 +84,7 @@ export default async function decorate(block) {
     },
     { field: 'modifiedTime', headerName: 'DATE ADDED', sortable: true },
     {
-      field: 'modifiedTime',
+      field: 'userfiles',
       headerName: 'USER / SYSTEM',
       cellRenderer: userSystemCellRenderer,
       sortable: true,
