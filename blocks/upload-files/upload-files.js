@@ -10,11 +10,16 @@ export default async function decorate(block) {
   function formatBytesGetter(params) {
     return formatBytes(params.data.size, 0);
   }
-  const config = getAWSStore();
+  async function fetchFiles() {
+    const config = getAWSStore();
+    let files = await listFiles(config.s3ScannedBucket, 1000);
+    files.sort((a, b) => b.createdTime - a.createdTime);
+    files = files.slice(0, 3);
+    return files;
+  }
+
   // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
-  let files = await listFiles(config.s3ScannedBucket, 1000);
-  files.sort((a, b) => b.createdTime - a.createdTime);
-  files = files.slice(0, 3);
+  let files = await fetchFiles();
   const isHomePage = window.location.pathname === '/';
 
   // const div = document.createElement('div');
@@ -197,11 +202,9 @@ export default async function decorate(block) {
   document.addEventListener('uploaded', async function (/* event */) {
     console.log('able to listend to uploaded files');
     await new Promise(resolve => {
-      setTimeout(() => resolve('success'), 4000);
+      setTimeout(() => resolve('success'), 2000);
     });
-    files = await listFiles(config.s3ScannedBucket, 1000);
-    files.sort((a, b) => b.createdTime - a.createdTime);
-    files = files.slice(0, 3);
+    files = await fetchFiles();
     console.log(files);
     gridOptions1.api.setRowData(files);
   });

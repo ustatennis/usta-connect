@@ -12,21 +12,27 @@ export default async function decorate(block) {
   function formatBytesGetter(params) {
     return formatBytes(params.data.size, 0);
   }
-  // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
-  const config = getAWSStore();
 
-  let downloadFiles = await listFiles(config.s3DownloadBucket, 1000);
-  const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
-  // let files = [...downloadFiles, ...scannedFiles];
-  let files = [
-    ...downloadFiles.map(obj => {
-      return { ...obj, owner: 'SYSTEM' };
-    }),
-    ...scannedFiles.map(obj => {
-      return { ...obj, owner: 'USER' };
-    }),
-  ];
-  files.sort((a, b) => b.createdTime - a.createdTime);
+  async function fetchFiles() {
+    const config = getAWSStore();
+    const downloadFiles = await listFiles(config.s3DownloadBucket, 1000);
+    const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
+    const files = [
+      ...downloadFiles.map(obj => {
+        return { ...obj, owner: 'SYSTEM' };
+      }),
+      ...scannedFiles.map(obj => {
+        return { ...obj, owner: 'USER' };
+      }),
+    ];
+    files.sort((a, b) => b.createdTime - a.createdTime);
+    return files;
+  }
+
+  // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
+
+  let files = await fetchFiles();
+
   const isHomePage = window.location.pathname === '/';
 
   const div = document.createElement('div');
@@ -157,12 +163,9 @@ export default async function decorate(block) {
   document.addEventListener('uploaded', async function (/* event */) {
     console.log('able to listend to uploaded files');
     await new Promise(resolve => {
-      setTimeout(() => resolve('success'), 4000);
+      setTimeout(() => resolve('success'), 2000);
     });
-    downloadFiles = await listFiles(config.s3DownloadBucket, 1000);
-    // const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
-    files = [...downloadFiles, ...scannedFiles];
-    files.sort((a, b) => b.createdTime - a.createdTime);
+    files = await fetchFiles();
     console.log(files);
     gridOptions1.api.setRowData(files);
   });
