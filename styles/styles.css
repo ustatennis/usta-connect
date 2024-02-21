@@ -209,7 +209,7 @@ header {
 
 .role-admin main,
 .role-user main {
-  min-height: 2000px;
+  min-height: 1500px;
 }
 
 main {
