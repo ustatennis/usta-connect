@@ -38,8 +38,8 @@ export default async function decorate(block) {
   const div = document.createElement('div');
   div.id = 'available-files-grid';
   div.style = isHomePage
-    ? 'height: 800px; width:100%;font-size:12px'
-    : 'height: 800px; width:100%;font-size:12px';
+    ? 'height: 600px; width:100%;font-size:12px'
+    : 'height: 600px; width:100%;font-size:12px';
   div.className = 'ag-theme-alpine';
 
   const divheader = document.createElement('div');
@@ -90,10 +90,14 @@ export default async function decorate(block) {
     },
     { field: 'modifiedTime', headerName: 'DATE ADDED', sortable: true },
     {
-      field: 'userfiles',
+      field: 'owner',
       headerName: 'USER / SYSTEM',
       cellRenderer: userSystemCellRenderer,
       sortable: true,
+      comparator: (valueA, valueB) => {
+        if (valueA === valueB) return 0;
+        return valueA > valueB ? 1 : -1;
+      },
     },
     {
       field: 'size',
