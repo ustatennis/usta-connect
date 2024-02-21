@@ -61,7 +61,7 @@ export default async function decorate(block) {
     <div id="output"></div>
     </div>
     <div class='column'>
-        <div id="upload-files-grid" class="ag-theme-alpine" style="height:500px; width: 100%; font-size: 12px; --ag-line-height: 60px">
+        <div id="upload-files-grid" class="ag-theme-alpine" style="height:250px; width: 100%; font-size: 12px; --ag-line-height: 60px">
         </div>
     </div>
     `;
