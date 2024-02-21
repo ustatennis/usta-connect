@@ -104,6 +104,10 @@ export default async function decorate(block) {
       valueGetter: formatBytesGetter,
       headerName: 'SIZE',
       sortable: true,
+      comparator: (valueA, valueB, nodeA, nodeB) => {
+        if (nodeA.data.size === nodeB.data.size) return 0;
+        return nodeA.data.size > nodeB.data.size ? 1 : -1;
+      },
     },
     {
       field: 'action',
