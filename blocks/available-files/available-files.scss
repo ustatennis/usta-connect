@@ -57,11 +57,39 @@
 }
 
 #btn-download {
+  position: absolute;
   background-image: url('/icons/icon_download.png');
   height: 27px;
   width: 21px;
   margin-left: 25px;
   margin-top: 5px;
+}
+
+#btn-download:hover::after {
+  content: 'DOWNLOAD FILE';
+  position: absolute;
+  font-size: 12px;
+  top: 2em;
+  left: 0;
+  min-width: 130px;
+  padding: 4px;
+  color: black;
+  margin-left: -4em;
+  background-color: #ddd;
+  z-index: 1;
+  font-weight: bold;
+  font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
+}
+
+#btn-download:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #ddd;
 }
 
 #btn-user {
