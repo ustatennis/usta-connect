@@ -39,8 +39,8 @@ export async function createS3Client() {
   return s3Client;
 }
 
-export function getObject(details) {
-  const s3Client = createS3Client();
+export async function getObject(details) {
+  const s3Client = await createS3Client();
   // const bucketName = config.
   try {
     return s3Client
