@@ -71,7 +71,7 @@ export default async function decorate(block) {
         clr,
       )}<div class="gridNameDate"><div class="gridItemFileName"><u>${fileName?.toUpperCase()}</u></div>
       <div class="gridItemCreatedTime">
-      ${Date(createdTime) || ''}</div></div>`;
+      ${createdTime.toString() || ''}</div></div>`;
     }
 
     getGui() {
