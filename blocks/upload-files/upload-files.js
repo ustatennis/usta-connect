@@ -88,7 +88,7 @@ export default async function decorate(block) {
       const { fileName, createdTime } = params.data;
       this.eGui.innerHTML = `<div class="gridItemFileName">${fileName?.toUpperCase()}</div>
       <div class="gridItemCreatedTime">
-      ${Date(createdTime) || ''}</div>`;
+      ${createdTime.toString() || ''}</div>`;
     }
 
     getGui() {
