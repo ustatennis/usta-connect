@@ -4,7 +4,7 @@ import { decorateIcons } from '../../scripts/lib-franklin.js';
 export default async function decorate(block) {
   const user = getUser();
 
-  const userName = user.UserAttributes.find(o => o.Name === 'name').Value;
+  const userName = user.UserAttributes.find(o => o.Name === 'name')?.Value;
   const userDayInfoPath = '/user-day-info';
   const weatherAlertPath = '/weather-alert';
   const resp = await fetch(
