@@ -4,6 +4,19 @@ header {
   margin: 0 auto;
   font-size: var(--body-font-size-s); }
 
+.page-main header .header {
+  height: 21px;
+  background-image: none; }
+
+.teaser-banner .banner-title {
+  text-align: left;
+  height: 210px;
+  font: normal normal bold 30px/39px Graphik, sans-serif;
+  letter-spacing: 1px;
+  color: black;
+  text-transform: none;
+  opacity: 1; }
+
 header .header {
   max-width: 1440px;
   background: #92bfb7 url("https://www.usta.com/content/dam/usta-connect/USTA_CONNECT_LOGO.png") no-repeat center left;
