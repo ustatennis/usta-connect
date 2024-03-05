@@ -4,10 +4,10 @@ footer {
   background-color: #000;
   font-size: var(--body-font-size-s);
   border-top: solid 14px #92BFB7 ;
+  position:relative;
+  z-index:1;
 
   .footer {
-    max-width: 1200px;
-
     p,
     ul {
       margin: 0;
@@ -63,7 +63,7 @@ footer {
             }
 
             &:nth-child(2) {
-              color: #858a83;
+              color: #fff;
               font-size: 12px;
               font-weight: 500;
 
