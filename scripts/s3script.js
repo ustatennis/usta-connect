@@ -64,6 +64,7 @@ function extractFileMetatadata(values, objects, bucket) {
       Bucket: bucket,
       size: file?.Size,
       downloadLink: file?.webContentLink,
+      md5: file?.ETag.replace(/"/g, ''),
       viewLink: file?.webViewLink,
       modifiedTime: formatDateTime(file?.LastModified),
       createdTime: file?.LastModified,
