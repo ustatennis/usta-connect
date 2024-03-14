@@ -88,7 +88,12 @@ export default async function decorate(block) {
       cellRenderer: iconNameAndDateRenderer,
       cellClass: 'fileName',
     },
-    { field: 'modifiedTime', headerName: 'DATE ADDED', sortable: true },
+    {
+      field: 'modifiedTime',
+      headerName: 'DATE ADDED',
+      sortable: true,
+      minWidth: 150,
+    },
     {
       field: 'owner',
       headerName: 'USER / SYSTEM',
@@ -97,6 +102,17 @@ export default async function decorate(block) {
       comparator: (valueA, valueB) => {
         if (valueA === valueB) return 0;
         return valueA > valueB ? 1 : -1;
+      },
+      minWidth: 160,
+    },
+    {
+      field: 'md5',
+      headerName: 'MD5',
+      sortable: false,
+      minWidth: 280,
+      comparator: (valueA, valueB, nodeA, nodeB) => {
+        if (nodeA.data.etag === nodeB.data.etag) return 0;
+        return nodeA.data.etag > nodeB.data.etag ? 1 : -1;
       },
     },
     {
@@ -108,6 +124,7 @@ export default async function decorate(block) {
         if (nodeA.data.size === nodeB.data.size) return 0;
         return nodeA.data.size > nodeB.data.size ? 1 : -1;
       },
+      minWidth: 120,
     },
     {
       field: 'action',
@@ -118,7 +135,7 @@ export default async function decorate(block) {
           // console.log(this)
         },
       },
-      minWidth: 150,
+      minWidth: 120,
     },
   ];
 
@@ -133,6 +150,8 @@ export default async function decorate(block) {
       sortDescending: '<i class="icon-sort-down"/>',
       sortUnSort: '<i class="icon-sort"/>',
     },
+    enableCellTextSelection: true,
+    ensureDomOrder: true,
   };
   gridOptions1.unSortIcon = true;
 
