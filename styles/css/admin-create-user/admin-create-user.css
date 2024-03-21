@@ -15,7 +15,7 @@
   text-align: center;
   white-space: nowrap;
   border: 1px solid transparent;
-  border-radius: 5px;
+  border-radius: 3px;
   position: relative; }
 
 .admin-create-user .modal-button-wrapper button:hover {
@@ -161,7 +161,7 @@
 .admin-create-user .modal-container .modal-wrapper > div .modal .form .password-wrapper .password-input-wrapper .show-password-button {
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 0 5px 5px 0; }
+  border-radius: 0 3px 3px 0; }
 
 .admin-create-user .modal-container .modal-wrapper > div .modal .form .username-wrapper .password-input-wrapper .show-password-button:hover,
 .admin-create-user .modal-container .modal-wrapper > div .modal .form .password-wrapper .password-input-wrapper .show-password-button:hover {
@@ -198,7 +198,7 @@
   text-align: center;
   white-space: nowrap;
   border: 1px solid transparent;
-  border-radius: 5px;
+  border-radius: 3px;
   position: relative;
   min-width: 100px; }
 
