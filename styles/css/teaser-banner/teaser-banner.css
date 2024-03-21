@@ -4,7 +4,7 @@ body .teaser-banner-container {
 .teaser-banner {
   display: flex;
   justify-content: left;
-  font-family: highway-gothic; }
+  font-family: Graphik-Regular; }
 
 .teaser-banner .banner-right {
   width: 55%; }
@@ -30,8 +30,7 @@ body .teaser-banner-container {
 .teaser-banner .banner-title {
   text-align: left;
   height: 210px;
-  font: normal normal bold 100px/100px highway-gothic, sans-serif;
-  font: normal normal bold 30px / 39px Graphik, sans-serif;
+  font: normal normal bold 30px / 39px Graphik-Regular, sans-serif;
   letter-spacing: 1px;
   color: black;
   opacity: 1; }
@@ -43,7 +42,7 @@ body .teaser-banner-container {
 
 .teaser-banner .banner-info {
   text-align: left;
-  font: normal normal normal 38px/30px highway-gothic, sans-serif;
+  font: normal normal normal 38px/30px Graphik-Regular, sans-serif;
   opacity: 1;
   margin-bottom: 15px; }
 
@@ -65,7 +64,7 @@ body .teaser-banner-container {
   margin-bottom: 20px; }
 
 .teaser-banner .banner-buttons > button {
-  border-radius: 10px;
+  border-radius: 3px;
   width: 190px;
   text-align: center;
   font-size: 17px;
@@ -75,7 +74,7 @@ body .teaser-banner-container {
 .teaser-banner .banner-buttons > button > a {
   text-decoration: none;
   color: #fff;
-  font-family: highway-gothic; }
+  font-family: Graphik-Semibold; }
 
 .teaser-banner .banner-button-info {
   display: flex;
@@ -89,5 +88,6 @@ body .teaser-banner-container {
   width: 190px; }
 
 .teaser-banner .banner-button-info .reg-users {
-  margin-left: 10%;
+  margin-left: 1em;
+  text-align: center;
   width: 190px; }

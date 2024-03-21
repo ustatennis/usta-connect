@@ -91,7 +91,7 @@ header {
   text-align: center;
   white-space: nowrap;
   border: 1px solid transparent;
-  border-radius: 5px;
+  border-radius: 3px;
   position: relative; }
 
 .initial-auth-container .initial-auth-wrapper .initial-auth .modal .form .send-button-wrapper button:hover {

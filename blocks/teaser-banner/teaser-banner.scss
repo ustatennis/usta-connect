@@ -1,4 +1,4 @@
-$font-family: 'highway-gothic';
+$font-family: 'Graphik-Regular';
 
 body .teaser-banner-container {
   background-color: white;
@@ -41,8 +41,7 @@ body .teaser-banner-container {
   .banner-title {
     text-align: left;
     height: 210px;
-    font: normal normal bold 100px/100px highway-gothic, sans-serif;
-    font: normal normal bold 30px / 39px Graphik, sans-serif;
+    font: normal normal bold 30px / 39px Graphik-Regular, sans-serif;
     letter-spacing: 1px;
     color: black;
     opacity: 1;
@@ -55,7 +54,7 @@ body .teaser-banner-container {
 
   .banner-info {
     text-align: left;
-    font: normal normal normal 38px/30px highway-gothic, sans-serif;
+    font: normal normal normal 38px/30px Graphik-Regular, sans-serif;
     opacity: 1;
     margin-bottom: 15px;
   }
@@ -82,7 +81,7 @@ body .teaser-banner-container {
     margin-bottom: 20px;
 
     > button {
-      border-radius: 10px;
+      border-radius: 3px;
       width: 190px;
       text-align: center;
       font-size: 17px;
@@ -92,7 +91,7 @@ body .teaser-banner-container {
       > a {
         text-decoration: none;
         color: #fff;
-        font-family: $font-family;
+        font-family: Graphik-Semibold;
       }
     }
   }
@@ -110,7 +109,8 @@ body .teaser-banner-container {
     }
 
     .reg-users {
-      margin-left: 10%;
+      margin-left: 1em;
+      text-align: center;
       width: 190px;
     }
   }
