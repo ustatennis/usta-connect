@@ -64,6 +64,17 @@
   src: url('./fonts/icomoon/icomoon.ttf');
 }
 
+@font-face {
+  font-family: Graphik-Regular;
+  src: url('https://www.usta.com/etc.clientlibs/usta/clientlibs/clientlib-site/resources/fonts/Graphik-Regular-App.woff2');
+}
+
+
+@font-face {
+  font-family: Graphik-Semibold;
+  src: url('https://www.usta.com/etc.clientlibs/usta/clientlibs/clientlib-site/resources/fonts/Graphik-Semibold-App.woff2');
+}
+
 [class^='icon-'],
 [class*=' icon-'] {
   /* use !important to prevent issues with browser extensions that change fonts */

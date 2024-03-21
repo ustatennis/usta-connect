@@ -80,7 +80,7 @@ header {
   text-align: center;
   white-space: nowrap;
   border: 1px solid transparent;
-  border-radius: 5px;
+  border-radius: 3px;
   position: relative; }
 
 .sign-up-container .sign-up-wrapper .sign-up .modal .sign-up-button-wrapper button:hover {
