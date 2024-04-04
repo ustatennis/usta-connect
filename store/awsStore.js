@@ -9,6 +9,7 @@ export function setAWSStore() {
   const s3UploadBucket = window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET;
   const s3DownloadBucket = window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET;
   const s3ScannedBucket = window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET;
+  debugger;
   awsStore.saveData('config', {
     identityPoolId,
     userPoolId,

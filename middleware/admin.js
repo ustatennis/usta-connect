@@ -5,6 +5,7 @@ import { getAWSStore } from '../store/awsStore.js';
 import { getUser, setUserRole } from '../store/userStore.js';
 
 export async function getAdminUser() {
+
   const { userPoolId } = getAWSStore();
   const user = getUser();
   if (!user) {
@@ -55,6 +56,7 @@ export async function getUsersList(num) {
   let count = num > 0 ? num : 999999;
   const pageSize = num < 50 ? num : 50;
   const { userPoolId } = getAWSStore();
+  debugger;
   if (!AWS.config.credentials) {
     return;
   }
@@ -75,6 +77,7 @@ export async function getUsersList(num) {
       }
       response = response.concat(res.Users);
     } while (res.PaginationToken !== undefined && count > 0);
+    debugger;
     return response;
   } catch (e) {
     console.error(e);
