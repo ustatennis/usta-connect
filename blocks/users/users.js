@@ -61,7 +61,7 @@ export default async function decorate(block) {
       headerName: 'ACTIONS',
       cellRenderer: DeleteBtnCellRenderer,
       cellRendererParams: {
-        clicked() { },
+        clicked() {},
       },
       minWidth: 150,
     },
