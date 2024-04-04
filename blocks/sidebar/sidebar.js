@@ -144,13 +144,13 @@ export default async function decorate(block) {
     if (isAdminUser()) bodytag.className += ' role-admin';
     else bodytag.className += ' role-user';
 
-    /// const nnn = nav.querySelectorAll('a[href*="/users"]');
-    // if (!isAdminUser()) {
-    //   nnn[0].parentElement.parentElement.className += 'disabled';
-    //   nnn.forEach((l, i) => {
-    //     nnn[i].className = 'disabled';
-    //   });
-    // }
+    const nnn = nav.querySelectorAll('a[href*="/users"]');
+    if (!isAdminUser() && nnn.length > 0) {
+      nnn[0].parentElement.parentElement.className += 'disabled';
+      nnn.forEach((l, i) => {
+        nnn[i].className = 'disabled';
+      });
+    }
 
     const classes = ['brand', 'sections', 'auth', 'tools'];
     classes.forEach((c, i) => {

@@ -9,17 +9,16 @@ export default async function decorate(block) {
   const isHomePage = window.location.pathname === '/';
 
   const Users = isHomePage ? await getUsersList(10) : await getUsersList(0);
-
   const divheader = document.createElement('div');
   if (isHomePage) {
     divheader.innerHTML = `<div class='grid-header'>
-    <div class='grid-header-left'>New Users</div>
+    <div class='grid-header-left'>New Partners</div>
     <div class='grid-header-denter'>&nbsp;</div>
     <a href='/users' class='grid-header-right button primary'>View All Users</a>
     </div>`;
   } else {
     divheader.innerHTML = `<div class='grid-header'>
-    <div class='grid-header-left'>Users</div>
+    <div class='grid-header-left'>Partners</div>
     <div class='grid-header-denter'>&nbsp;</div>
     </div>`;
   }
@@ -37,38 +36,11 @@ export default async function decorate(block) {
   // divheader.appendchild(div);
   // block.append(divheader);
 
-  class nameAndCountryRenderer {
-    init(params) {
-      this.eGui = document.createElement('div');
-      const username = params.data.name;
-      const country = params.data['custom:country'];
-      this.eGui.innerHTML = `<div class="gridItemUser">${username?.toUpperCase()}</div>
-      <div class="gridItemCountry">
-      COUNTRY: ${country?.toUpperCase() || ''}</div>`;
-    }
-
-    getGui() {
-      return this.eGui;
-    }
-  }
   const columnDefs = [
     {
-      field: 'name',
+      field: 'Username',
       headerName: 'NAME',
       sortable: true,
-      cellRenderer: nameAndCountryRenderer,
-    },
-    {
-      field: 'custom:country',
-      headerName: 'Country',
-      sortable: true,
-      hide: true,
-    },
-    {
-      field: 'custom:affiliation',
-      headerName: 'AFFILIATION',
-      sortable: true,
-      hide: isHomePage,
     },
     { field: 'email', headerName: 'EMAIL', sortable: true, hide: isHomePage },
     {
@@ -112,6 +84,7 @@ export default async function decorate(block) {
     user.Attributes.forEach(attr => {
       singleRow[attr.Name] = attr.Value;
     });
+    singleRow.Username = user.Username;
     rowData.push(singleRow);
   });
 
