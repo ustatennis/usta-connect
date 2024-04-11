@@ -1,9 +1,8 @@
 import { getUsersList } from '../../middleware/admin.js';
 import { isAdminUser } from '../../store/userStore.js';
-import { uploadS3Objects } from '../../scripts/s3script.js';
+import { uploadS3Objects, listFiles } from '../../scripts/s3script.js';
 import '../../jslibraries/ag-grid-community.min.js';
 import { getAWSStore } from '../../store/awsStore.js';
-import { listFiles } from '../../scripts/s3script.js';
 import BtnCellRenderer from '../available-files/btn-cell-renderer.js';
 import userSystemCellRenderer from '../available-files/user-system-cell-renderer.js';
 import { formatBytes } from '../../jslibraries/utility/utility.js';
@@ -17,7 +16,6 @@ export default async function decorate(block) {
 
   const Users = isHomePage ? await getUsersList(10) : await getUsersList(0);
 
- 
   const usersData = [];
   Users.forEach(user => {
     const singleRow = {};
@@ -30,18 +28,18 @@ export default async function decorate(block) {
 
   // Function to create and populate a dropdown
   function createUsersDropdown(users) {
-    var dropdown = document.createElement('select');
+    const dropdown = document.createElement('select');
     dropdown.className = 'dropdown'; // Adding class name "dropdown"
     // Add an empty option
-    var emptyOption = document.createElement('option');
+    const emptyOption = document.createElement('option');
     emptyOption.value = ''; // You can set it to any value you want
     emptyOption.textContent = '-- Select a user --'; // Text for the empty option
     dropdown.appendChild(emptyOption);
     // Add an option for each user
-    users.forEach(function(user) {
-      var option = document.createElement('option');
+    users.forEach(function (user) {
+      const option = document.createElement('option');
       option.value = user.sub; // You can use any unique identifier here
-      option.textContent = user.Username + " | " + user.email ;
+      option.textContent = `${user.Username} | ${user.email}`;
       dropdown.appendChild(option);
     });
     return dropdown;
@@ -57,34 +55,32 @@ export default async function decorate(block) {
   fileInput.disabled = true; // Initially disabled
   fileInput.title = 'Please select a user';
 
-  //upload button
+  // upload button
   const uploadButton = document.createElement('button');
   uploadButton.textContent = 'Upload';
   uploadButton.disabled = true; // Initially disabled
   uploadButton.title = 'Please select a user';
-  uploadButton.onclick = function() {
-    let selectedUser = usersData.find(item => item.sub === usersDropdown.value);
-    const files = document.getElementById('fileInput').files;
+  uploadButton.onclick = function () {
+    selectedUser = usersData.find(item => item.sub === usersDropdown.value);
+    const { files } = document.getElementById('fileInput');
     if (selectedUser && files) {
       const config = getAWSStore();
       uploadS3Objects(files, config.s3DownloadBucket, selectedUser);
       // Perform upload action here
-      //console.log('Uploading file:', selectedFile.name, 'for user:', selectedUser);
+      // console.log('Uploading file:', selectedFile.name, 'for user:', selectedUser);
     } else {
       alert('Please select a user and choose a file to upload.');
     }
   };
 
-
   // div element for file upload status
-  let outputDiv = document.createElement('div'); // Create a new div element
+  const outputDiv = document.createElement('div'); // Create a new div element
   outputDiv.id = 'output'; // Set the id attribute of the div
   // Append the dropdown to the block
-  block.append(usersDropdown)
+  block.append(usersDropdown);
   block.append(fileInput);
   block.append(uploadButton);
   block.append(outputDiv); // Append the div to the body of the HTML document
-
 
   const divheader = document.createElement('div');
   if (isHomePage) {
@@ -94,13 +90,13 @@ export default async function decorate(block) {
     <a href='/users' class='grid-header-right button primary'>View All Users</a>
     </div>`;
   } else {
-    //TODO - Commenting out partners header
+    // TODO - Commenting out partners header
     // divheader.innerHTML = `<div class='grid-header'>
     // <div class='grid-header-left'>Partners</div>
     // <div class='grid-header-denter'>&nbsp;</div>
     // </div>`;
   }
- 
+
   class iconNameAndDateRenderer {
     init(params) {
       this.eGui = document.createElement('div');
@@ -122,7 +118,6 @@ export default async function decorate(block) {
     return formatBytes(params.data.size, 0);
   }
 
-
   const div = document.createElement('div');
   div.id = 'userGrid';
   div.style = isHomePage
@@ -132,12 +127,12 @@ export default async function decorate(block) {
 
   div.innerHTML = '';
 
-  //block.textContent = '';
-  
-   divheader.appendChild(div);
-   block.appendChild(divheader);
-  
-   const columnDefs = [
+  // block.textContent = '';
+
+  divheader.appendChild(div);
+  block.appendChild(divheader);
+
+  const columnDefs = [
     {
       field: 'fileName',
       headerName: 'FILE NAME',
@@ -206,10 +201,10 @@ export default async function decorate(block) {
       sortUnSort: '<i class="icon-sort"/>',
     },
   };
-  
+
   async function fetchFiles(user) {
     const config = getAWSStore();
-    if(!user) return [];
+    if (!user) return [];
     const downloadFiles = await listFiles(config.s3DownloadBucket, 1000, user);
     const scannedFiles = await listFiles(config.s3ScannedBucket, 1000, user);
     const files = [
@@ -236,25 +231,24 @@ export default async function decorate(block) {
     rowData: files,
   };
 
-  //block.textContent = '';
+  // block.textContent = '';
   if (isHomePage) {
     block.append(divheader, div);
   } else {
-    //TODO - disabling input search box
+    // TODO - disabling input search box
     block.appendChild(divheader, div);
   }
 
-  // listing files for selected user 
+  // listing files for selected user
   const gridDiv = document.querySelector('#userGrid');
   gridDiv.style.setProperty('height', 800);
   // eslint-disable-next-line
   
-  //TODO - disabling users list
+  // TODO - disabling users list
   const userGrid = new agGrid.Grid(gridDiv, gridOptions);
   if (!isHomePage) gridOptions.api.sizeColumnsToFit();
   gridOptions.api.sizeColumnsToFit();
   gridOptions.api.setDomLayout('autoHeight');
-  
 
   // Function to enable/disable file input and upload button based on dropdown selection
   async function toggleFileInputAndButton() {
@@ -269,11 +263,11 @@ export default async function decorate(block) {
       fileInput.classList.remove('disabled');
       uploadButton.classList.remove('disabled');
       files = await fetchFiles(selectedUser);
-      //console.log(files);
+      // console.log(files);
       gridOptions.api.setRowData(files);
     }
   }
-    // Add event listener to dropdown
+  // Add event listener to dropdown
   usersDropdown.addEventListener('change', toggleFileInputAndButton);
 
   document.addEventListener('uploaded', async function (/* event */) {
@@ -282,7 +276,7 @@ export default async function decorate(block) {
       setTimeout(() => resolve('success'), 2000);
     });
     files = await fetchFiles(selectedUser);
-    //console.log(files);
+    // console.log(files);
     gridOptions.api.setRowData(files);
   });
 }

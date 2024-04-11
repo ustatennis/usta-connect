@@ -13,11 +13,13 @@ export default async function decorate(block) {
   }
   async function fetchFiles() {
     const config = getAWSStore();
-    let user = getUser()
+    const user = getUser();
     let files = await listFiles(config.s3ScannedBucket, 1000, user);
     files.sort((a, b) => b.createdTime - a.createdTime);
     files = files.slice(0, 3);
-    files.forEach(f => f.fileName = f.fileName.split('/').pop())
+    files.forEach(f => {
+      f.fileName = f.fileName.split('/').pop();
+    });
     return files;
   }
 
@@ -195,7 +197,7 @@ export default async function decorate(block) {
     const fileInput = document.getElementById('uploadedFile');
     // output for progress
     const config = getAWSStore();
-    const user  = getUser();
+    const user = getUser();
     uploadS3Objects(fileInput.files, config.s3UploadBucket, user);
   };
   const uploadBtn = document.getElementById('uploadBtn');

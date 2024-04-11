@@ -59,7 +59,7 @@ export async function getObject(details) {
 function extractFileMetatadata(values, objects, bucket) {
   values.Contents.forEach(file => {
     objects.push({
-      //fileName: file.Key.split('/').pop(),
+      // fileName: file.Key.split('/').pop(),
       fileName: file.Key,
       Key: file.Key,
       Bucket: bucket,
@@ -74,7 +74,14 @@ function extractFileMetatadata(values, objects, bucket) {
   });
 }
 
-async function fetchFilestoObject(s3Client, config, objects, bucketName, max, user) {
+async function fetchFilestoObject(
+  s3Client,
+  config,
+  objects,
+  bucketName,
+  max,
+  user,
+) {
   const values = await s3Client
     .listObjectsV2({
       Bucket: bucketName,
@@ -101,9 +108,7 @@ export async function listFiles(bucket, max, user) {
 
 function constructFileKey(fileName, pUser) {
   const user = !pUser ? getUser() : pUser;
-  let uploadFileKey = `private/${user.sub}/${
-    user.Username
-  }/`;
+  let uploadFileKey = `private/${user.sub}/${user.Username}/`;
   const currDateStr = `_${new Date().getTime()}`;
   const fileExtIndex = fileName.search(/\.\w{3}$/g);
   if (fileExtIndex >= 0) {
@@ -127,7 +132,6 @@ export function triggerUpdate() {
 
 export async function uploadS3Objects(files, bucket, user) {
   const s3Client = await createS3Client();
-  const config = getAWSStore();
   const output = document.getElementById('output');
   output.innerHTML = '';
   for (let i = 0; i < files.length; i++) {

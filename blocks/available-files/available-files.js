@@ -28,7 +28,9 @@ export default async function decorate(block) {
       }),
     ];
     files.sort((a, b) => b.createdTime - a.createdTime);
-    files.forEach(f => f.fileName = f.fileName.split('/').pop())
+    files.forEach(f => {
+      f.fileName = f.fileName.split('/').pop();
+    });
     return files;
   }
 
