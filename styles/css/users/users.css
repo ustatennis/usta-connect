@@ -69,3 +69,6 @@
   padding-right: 25px;
   margin-top: 15px;
   font-size: 13px; }
+
+.disabled {
+  cursor: not-allowed; }
