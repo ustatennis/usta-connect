@@ -16,6 +16,7 @@ export default async function decorate(block) {
   const isHomePage = window.location.pathname === '/';
 
   const Users = isHomePage ? await getUsersList(10) : await getUsersList(0);
+
  
   const usersData = [];
   Users.forEach(user => {
@@ -224,6 +225,7 @@ export default async function decorate(block) {
   }
 
   // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
+
 
   let files = [];
 
