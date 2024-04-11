@@ -7,6 +7,7 @@ import userSystemCellRenderer from './user-system-cell-renderer.js';
 import { formatBytes } from '../../jslibraries/utility/utility.js';
 import { iconColorBar } from '../../scripts/helpers.js';
 import { getAWSStore } from '../../store/awsStore.js';
+import { getUser } from '../../store/userStore.js';
 
 export default async function decorate(block) {
   function formatBytesGetter(params) {
@@ -15,8 +16,9 @@ export default async function decorate(block) {
 
   async function fetchFiles() {
     const config = getAWSStore();
-    const downloadFiles = await listFiles(config.s3DownloadBucket, 1000);
-    const scannedFiles = await listFiles(config.s3ScannedBucket, 1000);
+    const user = getUser();
+    const downloadFiles = await listFiles(config.s3DownloadBucket, 1000, user);
+    const scannedFiles = await listFiles(config.s3ScannedBucket, 1000, user);
     const files = [
       ...downloadFiles.map(obj => {
         return { ...obj, owner: 'SYSTEM' };
@@ -26,6 +28,7 @@ export default async function decorate(block) {
       }),
     ];
     files.sort((a, b) => b.createdTime - a.createdTime);
+    files.forEach(f => f.fileName = f.fileName.split('/').pop())
     return files;
   }
 

@@ -4,6 +4,11 @@ import { USER_ROLES } from '../constants/user.js';
 const userStore = createStore();
 
 export function setUser(data) {
+  if(data.UserAttributes){
+    data.UserAttributes.forEach(attr => {
+      data[attr.Name] = attr.Value;
+    });
+  }
   userStore.saveData('user', data);
 }
 

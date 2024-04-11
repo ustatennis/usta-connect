@@ -5,6 +5,7 @@ import '../../jslibraries/ag-grid-community.min.js';
 import { formatBytes } from '../../jslibraries/utility/utility.js';
 import { uploadS3Objects, listFiles } from '../../scripts/s3script.js';
 import { getAWSStore } from '../../store/awsStore.js';
+import { getUser } from '../../store/userStore.js';
 
 export default async function decorate(block) {
   function formatBytesGetter(params) {
@@ -12,9 +13,11 @@ export default async function decorate(block) {
   }
   async function fetchFiles() {
     const config = getAWSStore();
-    let files = await listFiles(config.s3ScannedBucket, 1000);
+    let user = getUser()
+    let files = await listFiles(config.s3ScannedBucket, 1000, user);
     files.sort((a, b) => b.createdTime - a.createdTime);
     files = files.slice(0, 3);
+    files.forEach(f => f.fileName = f.fileName.split('/').pop())
     return files;
   }
 
@@ -191,7 +194,9 @@ export default async function decorate(block) {
   const uploadFiles = () => {
     const fileInput = document.getElementById('uploadedFile');
     // output for progress
-    uploadS3Objects(fileInput.files);
+    const config = getAWSStore();
+    const user  = getUser();
+    uploadS3Objects(fileInput.files, config.s3UploadBucket, user);
   };
   const uploadBtn = document.getElementById('uploadBtn');
   uploadBtn.addEventListener('click', uploadFiles);
@@ -202,7 +207,6 @@ export default async function decorate(block) {
       setTimeout(() => resolve('success'), 2000);
     });
     files = await fetchFiles();
-    console.log(files);
     gridOptions1.api.setRowData(files);
   });
 }
