@@ -221,7 +221,6 @@ export default async function decorate(block) {
 
   // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
 
-
   let files = [];
 
   // let the grid know which columns and what data to use
