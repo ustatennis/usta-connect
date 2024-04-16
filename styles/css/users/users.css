@@ -1,3 +1,12 @@
+.users button.selectFileForUser:enabled {
+  background-color: #cfff05; }
+
+.users button {
+  border-radius: 10px;
+  border-width: thin;
+  width: 115px;
+  height: 23px; }
+
 .users .grid-header {
   height: 60px;
   width: calc(100% - 44px);
@@ -17,6 +26,9 @@
 
 .users li {
   margin-bottom: 20px; }
+
+.users .selectFile, .users .dropdownlabel {
+  font-size: var(--body-font-size-xs); }
 
 #users {
   float: left;
@@ -59,6 +71,12 @@
 .user-container {
   padding: 0 32px !important; }
 
+#user-grid {
+  margin-top: 50px; }
+
+#output .upload-status {
+  display: none; }
+
 .btn-delete-user {
   background: black;
   color: white;
@@ -72,3 +90,87 @@
 
 .disabled {
   cursor: not-allowed; }
+
+#btn-view,
+#btn-download {
+  border: none;
+  background-color: transparent; }
+
+#btn-view {
+  background-image: url("/icons/icon_view.png");
+  height: 22px;
+  width: 40px;
+  margin-top: 5px; }
+
+#btn-download {
+  position: absolute;
+  background-image: url("/icons/icon_download.png");
+  height: 27px;
+  width: 21px;
+  margin-left: 25px;
+  margin-top: 5px; }
+
+#btn-download:hover::after {
+  content: 'DOWNLOAD FILE';
+  position: absolute;
+  font-size: 12px;
+  top: 2em;
+  left: 0;
+  min-width: 130px;
+  padding: 4px;
+  color: black;
+  margin-left: -4em;
+  background-color: #ddd;
+  z-index: 1;
+  font-weight: bold;
+  font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif; }
+
+#btn-download:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 0%;
+  left: 50%;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #ddd; }
+
+#btn-user {
+  background-image: url("/icons/icon_user.png");
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  margin-left: 25px;
+  margin-top: 5px; }
+
+#btn-system {
+  background-image: url("/icons/icon_system.png");
+  display: inline-block;
+  height: 26px;
+  width: 26px;
+  margin-left: 25px;
+  margin-top: 5px; }
+
+#btn-legend {
+  position: relative;
+  top: -8px;
+  left: 6px; }
+
+.gridItemFileName {
+  line-height: 10px;
+  margin-top: 16px;
+  font-size: 12px; }
+
+.gridItemCreatedTime {
+  line-height: 22px;
+  font-size: 10px; }
+
+.cellIconWrapper {
+  display: flex;
+  background-image: url("/icons/icon_file.png");
+  background-repeat: no-repeat;
+  background-position-y: 10px; }
+
+.gridNameDate {
+  padding-left: 35px;
+  margin-top: -5px; }

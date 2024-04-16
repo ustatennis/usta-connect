@@ -30,6 +30,7 @@ export default async function decorate(block) {
   function createUsersDropdown(users) {
     const dropdown = document.createElement('select');
     dropdown.className = 'dropdown'; // Adding class name "dropdown"
+    dropdown.id = 'dropdown';
     // Add an empty option
     const emptyOption = document.createElement('option');
     emptyOption.value = ''; // You can set it to any value you want
@@ -47,11 +48,21 @@ export default async function decorate(block) {
 
   // Create the dropdown
   const usersDropdown = createUsersDropdown(usersData);
+  const dropdownlabel = document.createElement('label');
+  dropdownlabel.className = 'dropdownlabel';
+  dropdownlabel.htmlFor = 'dropdown';
+  dropdownlabel.innerText = 'Select user|email : ';
 
   // Add file upload input and upload button
+  const labelForInput = document.createElement('label');
+  labelForInput.htmlFor = 'fileInput';
+  labelForInput.innerText = 'Select a File:';
+  labelForInput.className = 'selectFile';
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
   fileInput.id = 'fileInput';
+  fileInput.className = 'fileInput';
+  // fileInput.multiple = true;
   fileInput.disabled = true; // Initially disabled
   fileInput.title = 'Please select a user';
 
@@ -60,6 +71,8 @@ export default async function decorate(block) {
   uploadButton.textContent = 'Upload';
   uploadButton.disabled = true; // Initially disabled
   uploadButton.title = 'Please select a user';
+  uploadButton.className = 'selectFileForUser';
+  uploadButton.id = 'selectFileForUser';
   uploadButton.onclick = function () {
     selectedUser = usersData.find(item => item.sub === usersDropdown.value);
     const { files } = document.getElementById('fileInput');
@@ -77,9 +90,15 @@ export default async function decorate(block) {
   const outputDiv = document.createElement('div'); // Create a new div element
   outputDiv.id = 'output'; // Set the id attribute of the div
   // Append the dropdown to the block
+  block.append(dropdownlabel);
   block.append(usersDropdown);
-  block.append(fileInput);
-  block.append(uploadButton);
+  const uploadDiv = document.createElement('div');
+  uploadDiv.appendChild(labelForInput);
+  uploadDiv.appendChild(fileInput);
+  uploadDiv.appendChild(uploadButton);
+  block.append(uploadDiv);
+  // block.append(fileInput);
+  // block.append(uploadButton);
   block.append(outputDiv); // Append the div to the body of the HTML document
 
   const divheader = document.createElement('div');
@@ -119,7 +138,7 @@ export default async function decorate(block) {
   }
 
   const div = document.createElement('div');
-  div.id = 'userGrid';
+  div.id = 'user-grid';
   div.style = isHomePage
     ? 'height: 800px; width:100%;font-size:17px'
     : 'height: 800px; width:100%;font-size:17px';
@@ -216,6 +235,9 @@ export default async function decorate(block) {
       }),
     ];
     files.sort((a, b) => b.createdTime - a.createdTime);
+    files.forEach(f => {
+      f.fileName = f.fileName.split('/').pop();
+    });
     return files;
   }
 
@@ -240,8 +262,9 @@ export default async function decorate(block) {
   const gridDiv = document.querySelector('#userGrid');
   gridDiv.style.setProperty('height', 800);
   // eslint-disable-next-line
-  
+
   // TODO - disabling users list
+  // eslint-disable-next-line
   const userGrid = new agGrid.Grid(gridDiv, gridOptions);
   if (!isHomePage) gridOptions.api.sizeColumnsToFit();
   gridOptions.api.sizeColumnsToFit();
@@ -272,7 +295,9 @@ export default async function decorate(block) {
     await new Promise(resolve => {
       setTimeout(() => resolve('success'), 2000);
     });
+    uploadButton.focus = false;
     files = await fetchFiles(selectedUser);
+
     // console.log(files);
     gridOptions.api.setRowData(files);
   });
