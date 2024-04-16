@@ -259,13 +259,15 @@ export default async function decorate(block) {
   }
 
   // listing files for selected user
-  const gridDiv = document.querySelector('#userGrid');
+  const gridDiv = document.getElementById('user-grid');
+  // eslint-disable-next-line
+  const userGrid = new agGrid.Grid(gridDiv, gridOptions);
+
   gridDiv.style.setProperty('height', 800);
   // eslint-disable-next-line
 
   // TODO - disabling users list
-  // eslint-disable-next-line
-  const userGrid = new agGrid.Grid(gridDiv, gridOptions);
+
   if (!isHomePage) gridOptions.api.sizeColumnsToFit();
   gridOptions.api.sizeColumnsToFit();
   gridOptions.api.setDomLayout('autoHeight');
