@@ -258,7 +258,6 @@ export default async function decorate(block) {
     block.appendChild(divheader, div);
   }
 
-
   // listing files for selected user
   const gridDiv = document.getElementById('user-grid');
   // eslint-disable-next-line
