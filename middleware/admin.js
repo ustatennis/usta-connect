@@ -95,7 +95,7 @@ export async function adminConfirmSignUp(username) {
   }
 }
 
-export async function adminCreateUser(username, temporaryPassword) {
+export async function adminCreateUser(username, email, temporaryPassword) {
   const { userPoolId } = getAWSStore();
   const reqData = {
     UserPoolId: userPoolId,
@@ -105,7 +105,7 @@ export async function adminCreateUser(username, temporaryPassword) {
     UserAttributes: [
       {
         Name: 'email',
-        Value: username,
+        Value: email,
       },
     ],
   };

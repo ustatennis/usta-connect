@@ -11,6 +11,34 @@ function createUsernameInput() {
   usernameWrapper.classList.add('username-wrapper');
 
   const usernameLabel = document.createElement('label');
+  usernameLabel.setAttribute('for', 'username');
+  usernameLabel.innerText = 'Username';
+  usernameWrapper.appendChild(usernameLabel);
+
+  const inputDescription = document.createElement('div');
+  inputDescription.classList = 'input-description';
+  const span = document.createElement('span');
+  span.innerText = 'Provide a valid username';
+  inputDescription.appendChild(span);
+
+  const usernameDiv = document.createElement('div');
+  usernameDiv.classList.add('username-input-wrapper');
+  usernameLabel.append(inputDescription, usernameDiv);
+
+  const usernameInput = document.createElement('input');
+  usernameInput.setAttribute('name', 'username');
+  usernameInput.setAttribute('placeholder', 'username');
+  usernameInput.required = true;
+  usernameDiv.appendChild(usernameInput);
+
+  return usernameWrapper;
+}
+
+function createEmailAddressInput() {
+  const usernameWrapper = document.createElement('div');
+  usernameWrapper.classList.add('username-wrapper');
+
+  const usernameLabel = document.createElement('label');
   usernameLabel.setAttribute('for', 'email');
   usernameLabel.innerText = 'Email address';
   usernameWrapper.appendChild(usernameLabel);
@@ -130,10 +158,12 @@ function createPasswordInput() {
 }
 
 async function onCreateUserClick() {
-  const username = document.querySelector('input[name="email"]');
+  const username = document.querySelector('input[name="username"]');
+  const email = document.querySelector('input[name="email"]');
   const password = document.querySelector('input[name="password"]');
 
   if (!username.reportValidity()) return;
+  if (!email.reportValidity()) return;
   if (!password.reportValidity()) return;
 
   const createUserButton = document.querySelector('#createUserButton');
@@ -142,7 +172,7 @@ async function onCreateUserClick() {
   createUserButton.classList.add('loading');
 
   try {
-    await adminCreateUser(username.value, password.value);
+    await adminCreateUser(username.value, email.value, password.value);
     window.location.reload();
   } catch (err) {
     const errorMessage = document.querySelector('.create-user-err-msg');
@@ -203,11 +233,13 @@ function createOpenModalButton(text) {
 }
 
 function removeData() {
-  const username = document.querySelector('input[name="email"]');
+  const email = document.querySelector('input[name="email"]');
+  const username = document.querySelector('input[name="username"]');
   const password = document.querySelector('input[name="password"]');
 
-  if (username && password) {
+  if (username && email && password) {
     username.value = '';
+    email.value = '';
     password.value = '';
   }
   const messageDiv = document.querySelector('.create-user-pass-message');
@@ -252,11 +284,17 @@ export default async function decorate(block) {
   form.className = 'form';
 
   const usernameInput = createUsernameInput();
+  const emailAddressInput = createEmailAddressInput();
   const passwordInput = createPasswordInput();
   const passwordValidationMessage = createPasswordValidationMessage();
   const createUserButton = adminCreateUserButton();
 
-  form.append(usernameInput, passwordInput, passwordValidationMessage);
+  form.append(
+    usernameInput,
+    emailAddressInput,
+    passwordInput,
+    passwordValidationMessage,
+  );
   modal.append(form, createUserButton);
 
   const signInTitle = adminCreateUserTitle();

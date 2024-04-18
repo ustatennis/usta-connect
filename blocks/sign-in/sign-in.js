@@ -54,7 +54,7 @@ function createUsernameInput() {
 
   const usernameLabel = document.createElement('label');
   usernameLabel.setAttribute('for', 'email');
-  usernameLabel.innerText = 'Email';
+  usernameLabel.innerText = 'Username';
   usernameWrapper.appendChild(usernameLabel);
 
   const usernameDiv = document.createElement('div');
@@ -155,7 +155,7 @@ function createForgotPasswordLink() {
 
 function createSignInTitle() {
   const span = document.createElement('span');
-  span.textContent = 'Sign in with your email and password';
+  span.textContent = 'Sign in with your username and password';
 
   const div = document.createElement('div');
   div.classList.add('sign-in-title');
