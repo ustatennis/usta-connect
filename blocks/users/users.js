@@ -28,21 +28,26 @@ export default async function decorate(block) {
 
   // Function to create and populate a dropdown
   function createUsersDropdown(users) {
-    const dropdown = document.createElement('select');
-    dropdown.className = 'dropdown'; // Adding class name "dropdown"
+    const dropdown = document.createElement('input');
+    dropdown.className = 'awesomplete'; // Adding class name "dropdown"
     dropdown.id = 'dropdown';
+    dropdown.setAttribute('list', 'userList');
+    const datalist = document.createElement('datalist');
+    datalist.id = 'userList';
+
     // Add an empty option
     const emptyOption = document.createElement('option');
-    emptyOption.value = ''; // You can set it to any value you want
+    emptyOption.value = ''; // You can set it to any value you wantconst
     emptyOption.textContent = '-- Select a user --'; // Text for the empty option
-    dropdown.appendChild(emptyOption);
+    datalist.appendChild(emptyOption);
     // Add an option for each user
-    users.forEach(function (user) {
+    users.forEach(user => {
       const option = document.createElement('option');
-      option.value = user.sub; // You can use any unique identifier here
-      option.textContent = `${user.Username} | ${user.email}`;
-      dropdown.appendChild(option);
+      // option.value = user.sub; // You can use any unique identifier here
+      option.textContent = `${user.Username}`;
+      datalist.appendChild(option);
     });
+    dropdown.append(datalist);
     return dropdown;
   }
 
@@ -51,7 +56,7 @@ export default async function decorate(block) {
   const dropdownlabel = document.createElement('label');
   dropdownlabel.className = 'dropdownlabel';
   dropdownlabel.htmlFor = 'dropdown';
-  dropdownlabel.innerText = 'Select user|email : ';
+  dropdownlabel.innerText = 'Select user : ';
 
   // Add file upload input and upload button
   const labelForInput = document.createElement('label');
@@ -74,7 +79,9 @@ export default async function decorate(block) {
   uploadButton.className = 'selectFileForUser';
   uploadButton.id = 'selectFileForUser';
   uploadButton.onclick = function () {
-    selectedUser = usersData.find(item => item.sub === usersDropdown.value);
+    selectedUser = usersData.find(
+      item => item.Username === usersDropdown.value,
+    );
     const { files } = document.getElementById('fileInput');
     if (selectedUser && files) {
       const config = getAWSStore();
@@ -274,7 +281,9 @@ export default async function decorate(block) {
 
   // Function to enable/disable file input and upload button based on dropdown selection
   async function toggleFileInputAndButton() {
-    selectedUser = usersData.find(item => item.sub === usersDropdown.value);
+    selectedUser = usersData.find(
+      item => item.Username === usersDropdown.value,
+    );
     fileInput.disabled = !selectedUser;
     uploadButton.disabled = !selectedUser;
     // Toggle disabled class based on selected user
