@@ -108,7 +108,8 @@
   height: 27px;
   width: 21px;
   margin-left: 25px;
-  margin-top: 5px; }
+  margin-top: 5px;
+  border-radius: 0; }
 
 #btn-download:hover::after {
   content: 'DOWNLOAD FILE';
