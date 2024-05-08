@@ -1,9 +1,14 @@
 import { createStore } from '../scripts/helpers.js';
-// import { USER_ROLES } from '../constants/user.js';
+import { USER_ROLES } from '../constants/user.js';
 
 const userStore = createStore();
 
 export function setUser(data) {
+  if (data.UserAttributes) {
+    data.UserAttributes.forEach(attr => {
+      data[attr.Name] = attr.Value;
+    });
+  }
   userStore.saveData('user', data);
 }
 
@@ -28,6 +33,6 @@ export function removeUserRole() {
 }
 
 export function isAdminUser() {
-  return false;
-  // return userStore.getData('role').role === USER_ROLES.admin;
+  if (!userStore.getData('role')) return USER_ROLES.user;
+  return userStore.getData('role').role === USER_ROLES.admin;
 }

@@ -59,7 +59,8 @@ export async function getObject(details) {
 function extractFileMetatadata(values, objects, bucket) {
   values.Contents.forEach(file => {
     objects.push({
-      fileName: file.Key.split('/').pop(),
+      // fileName: file.Key.split('/').pop(),
+      fileName: file.Key,
       Key: file.Key,
       Bucket: bucket,
       size: file?.Size,
@@ -73,11 +74,18 @@ function extractFileMetatadata(values, objects, bucket) {
   });
 }
 
-async function fetchFilestoObject(s3Client, config, objects, bucketName, max) {
+async function fetchFilestoObject(
+  s3Client,
+  config,
+  objects,
+  bucketName,
+  max,
+  user,
+) {
   const values = await s3Client
     .listObjectsV2({
       Bucket: bucketName,
-      Prefix: `private/${getFederationId(config.identityPoolId)}/`,
+      Prefix: `private/${user.sub}/${user.Username}`,
       MaxKeys: max,
     })
     .promise();
@@ -85,12 +93,12 @@ async function fetchFilestoObject(s3Client, config, objects, bucketName, max) {
   extractFileMetatadata(values, objects, bucketName);
 }
 
-export async function listFiles(bucket, max) {
+export async function listFiles(bucket, max, user) {
   const s3Client = await createS3Client();
   let objects = [];
   const config = getAWSStore();
   try {
-    await fetchFilestoObject(s3Client, config, objects, bucket, max);
+    await fetchFilestoObject(s3Client, config, objects, bucket, max, user);
   } catch (errr) {
     console.error('Exception occurred while fetching files.');
   }
@@ -98,12 +106,9 @@ export async function listFiles(bucket, max) {
   return objects;
 }
 
-function constructFileKey(fileName) {
-  const user = getUser();
-  const config = getAWSStore();
-  let uploadFileKey = `private/${getFederationId(config.identityPoolId)}/${
-    user.Username
-  }/`;
+function constructFileKey(fileName, pUser) {
+  const user = !pUser ? getUser() : pUser;
+  let uploadFileKey = `private/${user.sub}/${user.Username}/`;
   const currDateStr = `_${new Date().getTime()}`;
   const fileExtIndex = fileName.search(/\.\w{3}$/g);
   if (fileExtIndex >= 0) {
@@ -125,9 +130,8 @@ export function triggerUpdate() {
   document.dispatchEvent(customEvent);
 }
 
-export async function uploadS3Objects(files) {
+export async function uploadS3Objects(files, bucket, user) {
   const s3Client = await createS3Client();
-  const config = getAWSStore();
   const output = document.getElementById('output');
   output.innerHTML = '';
   for (let i = 0; i < files.length; i++) {
@@ -158,8 +162,8 @@ export async function uploadS3Objects(files) {
     // console.log(getUser());
     const params = {
       // TODO - bucketchange - 's3upload-ui-bucket-stage'
-      Bucket: config.s3UploadBucket,
-      Key: constructFileKey(file.name),
+      Bucket: bucket,
+      Key: constructFileKey(file.name, user),
       Body: file,
       ACL: 'private', // Adjust ACL permissions as needed
     };

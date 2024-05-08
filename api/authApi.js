@@ -9,7 +9,6 @@ class AuthApi {
   async signIn(req) {
     const cognito = new AWS.CognitoIdentityServiceProvider();
     const data = await cognito.initiateAuth(req).promise();
-
     if (data?.AuthenticationResult?.AccessToken) {
       setLocalStorage('access_token', data?.AuthenticationResult?.AccessToken);
       setLocalStorage(
