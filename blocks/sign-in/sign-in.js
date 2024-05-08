@@ -63,7 +63,7 @@ function createUsernameInput() {
 
   const usernameInput = document.createElement('input');
   usernameInput.setAttribute('name', 'email');
-  //usernameInput.setAttribute('placeholder', 'name@host.com');
+  //  usernameInput.setAttribute('placeholder', 'name@host.com');
   usernameInput.required = true;
   usernameDiv.appendChild(usernameInput);
 
