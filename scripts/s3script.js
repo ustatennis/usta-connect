@@ -47,6 +47,7 @@ export async function createS3Client() {
     });
   } catch (e) {
     console.error(e);
+    await logOut();
   }
   return s3Client;
 }
