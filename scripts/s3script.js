@@ -1,6 +1,17 @@
 import { getAWSStore } from '../store/awsStore.js';
 import { getValueFromLocalStorage, formatDateTime } from './helpers.js';
 import { getUser } from '../store/userStore.js';
+import { logOut  } from '../middleware/auth.js';
+
+// Checks user object data is not found will logout.
+async function isUserValid(){
+  const user = getUser();
+  if(user && user.sub){
+    return;
+  }
+  await logOut();
+}
+
 
 export function getFederationId(identityPoolId) {
   // fedeation Id = aws.cognito.identity-id.us-east-1:a5df722d-28a6-408b-a10c-8a391051bfb5
@@ -14,6 +25,7 @@ export function getUserPoolIDP(identityPoolId) {
 }
 
 export async function createS3Client() {
+  await isUserValid();
   const config = getAWSStore();
   // Get the identity pool ID.
   const { identityPoolId } = config;
@@ -35,6 +47,7 @@ export async function createS3Client() {
     });
   } catch (e) {
     console.error(e);
+    await logOut();
   }
   return s3Client;
 }
