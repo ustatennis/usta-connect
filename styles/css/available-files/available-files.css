@@ -1,12 +1,14 @@
 .available-files-wrapper {
   box-shadow: 0 3px 6px #0000001A;
-  border: 1px solid #DBDBDB; }
+  border: 1px solid #DBDBDB;
+}
 
 #available-files-grid {
   height: 500px;
   width: 100%;
   font-size: 12px;
-  overflow-y: scroll; }
+  overflow-y: scroll;
+}
 
 .grid-header {
   height: 60px;
@@ -18,22 +20,26 @@
   padding-left: 22px;
   padding-right: 22px;
   display: flex;
-  justify-content: space-between; }
+  justify-content: space-between;
+}
 
 .available-files .grid-header .grid-header-right {
   font-size: 14px;
-  margin: 14px 0; }
+  margin: 14px 0;
+}
 
 #btn-view,
 #btn-download {
   border: none;
-  background-color: transparent; }
+  background-color: transparent;
+}
 
 #btn-view {
   background-image: url("/icons/icon_view.png");
   height: 22px;
   width: 40px;
-  margin-top: 5px; }
+  margin-top: 5px;
+}
 
 #btn-download {
   position: absolute;
@@ -41,7 +47,8 @@
   height: 27px;
   width: 21px;
   margin-left: 25px;
-  margin-top: 5px; }
+  margin-top: 5px;
+}
 
 #btn-download:hover::after {
   content: 'DOWNLOAD FILE';
@@ -56,7 +63,8 @@
   background-color: #ddd;
   z-index: 1;
   font-weight: bold;
-  font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif; }
+  font-family: 'helvetica neue', helvetica, ubuntu, roboto, noto, sans-serif;
+}
 
 #btn-download:hover::before {
   content: '';
@@ -66,7 +74,8 @@
   margin-left: -10px;
   border-width: 10px;
   border-style: solid;
-  border-color: transparent transparent #ddd; }
+  border-color: transparent transparent #ddd;
+}
 
 #btn-user {
   background-image: url("/icons/icon_user.png");
@@ -74,7 +83,8 @@
   height: 25px;
   width: 25px;
   margin-left: 25px;
-  margin-top: 5px; }
+  margin-top: 5px;
+}
 
 #btn-system {
   background-image: url("/icons/icon_system.png");
@@ -82,54 +92,83 @@
   height: 26px;
   width: 26px;
   margin-left: 25px;
-  margin-top: 5px; }
+  margin-top: 5px;
+}
+
+#btn-success {
+  background-image: url("/icons/icon_success.png");
+  display: inline-block;
+  height: 26px;
+  width: 26px;
+  margin-left: 25px;
+  margin-top: 5px;
+}
+
+#btn-failed {
+  background-image: url("/icons/icon_fail.png");
+  display: inline-block;
+  height: 26px;
+  width: 26px;
+  margin-left: 25px;
+  margin-top: 5px;
+}
 
 #btn-legend {
   position: relative;
   top: -8px;
-  left: 6px; }
+  left: 6px;
+}
 
 .gridItemFileName {
   line-height: 10px;
   margin-top: 16px;
-  font-size: 12px; }
+  font-size: 12px;
+}
 
 .gridItemCreatedTime {
   line-height: 22px;
-  font-size: 10px; }
+  font-size: 10px;
+}
 
 .cellIconWrapper {
   display: flex;
   background-image: url("/icons/icon_file.png");
   background-repeat: no-repeat;
-  background-position-y: 10px; }
+  background-position-y: 10px;
+}
 
 .gridNameDate {
   padding-left: 35px;
-  margin-top: -5px; }
+  margin-top: -5px;
+}
 
 .gridNameDate u {
   color: #4558b2;
-  text-decoration-color: #4558b2; }
+  text-decoration-color: #4558b2;
+}
 
 progress {
   border: 0;
   height: 8px;
-  border-radius: 5px; }
+  border-radius: 5px;
+}
 
 progress::-webkit-progress-bar {
   border: 0;
   height: 8px;
   border-radius: 5px;
-  background-color: green; }
+  background-color: green;
+}
 
 progress::-webkit-progress-value {
   border: 0;
   height: 8px;
   border-radius: 5px;
-  background-color: #02a2fa; }
+  background-color: #02a2fa;
+}
 
 progress::-moz-progress-bar {
   border: 0;
   height: 10px;
-  border-radius: 5px; }
+  border-radius: 5px;
+}

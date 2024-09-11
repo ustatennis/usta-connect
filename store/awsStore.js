@@ -9,6 +9,12 @@ export function setAWSStore() {
   const s3UploadBucket = window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET;
   const s3DownloadBucket = window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET;
   const s3ScannedBucket = window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET;
+  const appFileStatusEndpoint = window.hlx.APP_FILE_STATUS_API_ENDPOINT;
+  const appAuthorizationEndpoint = window.hlx.APP_AUTHORIZATION_API_ENDPOINT;
+  const appFileStatusClientId = window.hlx.APP_FILE_STATUS_API_CLIENT_ID;
+  const appFileStatusClientSecret =
+    window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET;
+
   awsStore.saveData('config', {
     identityPoolId,
     userPoolId,
@@ -16,6 +22,10 @@ export function setAWSStore() {
     s3UploadBucket,
     s3DownloadBucket,
     s3ScannedBucket,
+    appFileStatusEndpoint,
+    appAuthorizationEndpoint,
+    appFileStatusClientId,
+    appFileStatusClientSecret,
   });
 }
 
