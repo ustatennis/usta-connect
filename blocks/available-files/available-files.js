@@ -1,7 +1,7 @@
 // import { FOLDER_IDS } from '../../constants/googleDrive.js';
 import '../../jslibraries/ag-grid-community.min.js';
 // import { getDataFromFolder } from '../../middleware/googleDrive.js';
-import { listFiles } from '../../scripts/s3script.js';
+import { listFiles, getFileStatuses } from '../../scripts/s3script.js';
 import BtnCellRenderer from './btn-cell-renderer.js';
 import userSystemCellRenderer from './user-system-cell-renderer.js';
 import { formatBytes } from '../../jslibraries/utility/utility.js';
@@ -17,20 +17,28 @@ export default async function decorate(block) {
   async function fetchFiles() {
     const config = getAWSStore();
     const user = getUser();
+    if (!user) return;
     const downloadFiles = await listFiles(config.s3DownloadBucket, 1000, user);
     const scannedFiles = await listFiles(config.s3ScannedBucket, 1000, user);
+    const filesStatuses = (await getFileStatuses(user)) || [];
     const files = [
       ...downloadFiles.map(obj => {
-        return { ...obj, owner: 'SYSTEM' };
+        return { ...obj, owner: 'SYSTEM', fileStatus: 'Success' };
       }),
       ...scannedFiles.map(obj => {
-        return { ...obj, owner: 'USER' };
+        return { ...obj, owner: 'USER', fileStatus: null };
       }),
     ];
     files.sort((a, b) => b.createdTime - a.createdTime);
     files.forEach(f => {
       f.fileName = f.fileName.split('/').pop();
+      filesStatuses.forEach(s => {
+        if (f.fileName === s.fileName) {
+          f.fileStatus = s.fileStatus;
+        }
+      });
     });
+
     return files;
   }
 
@@ -97,6 +105,26 @@ export default async function decorate(block) {
       field: 'modifiedTime',
       headerName: 'DATE ADDED',
       sortable: true,
+      minWidth: 150,
+    },
+    {
+      field: 'fileStatus',
+      headerName: 'PROCESSED',
+      cellRenderer: params => {
+        const divElement = document.createElement('div');
+        if (params.data.fileStatus === 'Failed') {
+          divElement.id = 'btn-failed';
+        } else if (params.data.fileStatus === 'Success') {
+          divElement.id = 'btn-success';
+        }
+
+        return divElement;
+      },
+      sortable: true,
+      comparator: (a, b) => {
+        if (a === b) return 0;
+        return a > b ? 1 : -1;
+      },
       minWidth: 150,
     },
     {

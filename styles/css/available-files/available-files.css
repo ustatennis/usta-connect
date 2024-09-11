@@ -84,6 +84,22 @@
   margin-left: 25px;
   margin-top: 5px; }
 
+#btn-success {
+  background-image: url("/icons/icon_success.png");
+  display: inline-block;
+  height: 26px;
+  width: 26px;
+  margin-left: 25px;
+  margin-top: 5px; }
+
+#btn-failed {
+  background-image: url("/icons/icon_fail.png");
+  display: inline-block;
+  height: 26px;
+  width: 26px;
+  margin-left: 25px;
+  margin-top: 5px; }
+
 #btn-legend {
   position: relative;
   top: -8px;
@@ -107,10 +123,9 @@
 .gridNameDate {
   padding-left: 35px;
   margin-top: -5px; }
-
-.gridNameDate u {
-  color: #4558b2;
-  text-decoration-color: #4558b2; }
+  .gridNameDate u {
+    color: #4558b2;
+    text-decoration-color: #4558b2; }
 
 progress {
   border: 0;
