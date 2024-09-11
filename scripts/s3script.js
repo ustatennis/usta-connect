@@ -1,5 +1,5 @@
 import { getAWSStore } from '../store/awsStore.js';
-import { getValueFromLocalStorage, formatDateTime } from './helpers.js';
+import { getValueFromLocalStorage, formatDateTime, setLocalStorage } from './helpers.js';
 import { getUser } from '../store/userStore.js';
 import { logOut  } from '../middleware/auth.js';
 
@@ -113,7 +113,7 @@ export async function listFiles(bucket, max, user) {
   try {
     await fetchFilestoObject(s3Client, config, objects, bucket, max, user);
   } catch (errr) {
-    console.error('Exception occurred while fetching files.');
+    console.log('Exception occurred while fetching files.');
   }
   objects = objects.filter(obj => !obj.Key.endsWith('/'));
   return objects;
@@ -207,6 +207,71 @@ export async function uploadS3Objects(files, bucket, user) {
         triggerUpdate();
       }
     });
+  }
+}
+
+export async function getFileStatuses(user, retry = 3) {
+  const config = getAWSStore();
+  if (!getValueFromLocalStorage('api_file_status_token')) {
+    await authenticateFileStatusEndpoint();
+  }
+  let authToken = getValueFromLocalStorage('api_file_status_token');
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${authToken}`);
+
+  const raw = JSON.stringify({
+    "username": user.Username
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow"
+  };
+  try{
+    let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-connect/file/status", requestOptions)
+    if(response.status === 404){
+      if(retry > 0){
+        await authenticateFileStatusEndpoint();
+        return await getFileStatuses(user, retry - 1);
+      }
+    }else{
+      response = await response.json();
+      return response.files;
+    } 
+  }catch(e){
+    console.log("unable to fetch files status, retrying ", retry - 3 )
+    if(retry > 0){
+      await authenticateFileStatusEndpoint();
+      return await getFileStatuses(user, retry - 1);
+    }
+  }
+  return [];
+}
+
+async function authenticateFileStatusEndpoint() {
+  let config = getAWSStore();
+  const myHeaders = new Headers();
+  const encodedCred = btoa(`${config.appFileStatusClientId}:${config.appFileStatusClientSecret}`);
+  myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  myHeaders.append("Authorization", `Basic ${encodedCred}`);
+  const urlencoded = new URLSearchParams();
+  urlencoded.append("grant_type", "client_credentials");
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: urlencoded,
+    redirect: "follow"
+  };
+  try {
+    let response = await fetch(config.appAuthorizationEndpoint + "/oauth2/token", requestOptions);
+    response = await response.json();
+    setLocalStorage("api_file_status_token", response.access_token);
+  } catch (e) {
+    console.log("File Status Authentication Failed");
   }
 }
 
