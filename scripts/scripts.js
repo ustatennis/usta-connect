@@ -49,6 +49,10 @@ function setProductionPoolConfig() {
   window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET = 's3upload-ui-upload-prod';
   window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET = 's3upload-ui-download-prod';
   window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned-prod';
+  window.hlx.APP_AUTHORIZATION_API_ENDPOINT = 'https://account-ustaconnect.usta.com';
+  window.hlx.APP_FILE_STATUS_API_ENDPOINT = 'https://api-ustaconnect.usta.com';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_ID = 'mqbfp0hi06g6jp2voj8um8hpo';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET ='1vec4qunko1hg0ot1avo68uot2p111funh2khalkvg44nn1s0vn3';
 }
 function setDevPoolConfig() {
   window.hlx.RUM_GENERATION = 'usta-connect'; // add your RUM generation information here
