@@ -82,7 +82,7 @@ export default async function decorate(block) {
       const clr = 'red';
       this.eGui.innerHTML = `${iconColorBar(
         clr,
-      )}<div class="gridNameDate"><div class="gridItemFileName"><u>${fileName?.toUpperCase()}</u></div>
+      )}<div class="gridNameDate"><div class="gridItemFileName">${fileName?.toUpperCase()}</div>
       <div class="gridItemCreatedTime">
       ${createdTime.toString() || ''}</div></div>`;
     }
@@ -139,14 +139,15 @@ export default async function decorate(block) {
       minWidth: 160,
     },
     {
-      field: 'md5',
-      headerName: 'MD5',
-      sortable: false,
-      minWidth: 280,
-      comparator: (valueA, valueB, nodeA, nodeB) => {
-        if (nodeA.data.etag === nodeB.data.etag) return 0;
-        return nodeA.data.etag > nodeB.data.etag ? 1 : -1;
+      field: 'action',
+      headerName: 'DOWNLOAD',
+      cellRenderer: BtnCellRenderer,
+      cellRendererParams: {
+        clicked() {
+          // console.log(this)
+        },
       },
+      minWidth: 120,
     },
     {
       field: 'size',
@@ -160,15 +161,14 @@ export default async function decorate(block) {
       minWidth: 120,
     },
     {
-      field: 'action',
-      headerName: 'DOWNLOAD',
-      cellRenderer: BtnCellRenderer,
-      cellRendererParams: {
-        clicked() {
-          // console.log(this)
-        },
+      field: 'md5',
+      headerName: 'MD5',
+      sortable: false,
+      minWidth: 280,
+      comparator: (valueA, valueB, nodeA, nodeB) => {
+        if (nodeA.data.etag === nodeB.data.etag) return 0;
+        return nodeA.data.etag > nodeB.data.etag ? 1 : -1;
       },
-      minWidth: 120,
     },
   ];
 
