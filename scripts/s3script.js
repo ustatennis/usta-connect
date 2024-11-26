@@ -212,13 +212,7 @@ export async function uploadS3Objects(files, bucket, user) {
 
 export async function getFileStatuses(user, retry = 3) {
   const config = getAWSStore();
-  if (!getValueFromLocalStorage('api_file_status_token')) {
-    await authenticateFileStatusEndpoint();
-  }
-  let authToken = getValueFromLocalStorage('api_file_status_token');
-  const myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Authorization", `Bearer ${authToken}`);
+  const myHeaders = await getAuthHeaders();
 
   const raw = JSON.stringify({
     "username": user.Username
@@ -249,6 +243,127 @@ export async function getFileStatuses(user, retry = 3) {
     }
   }
   return [];
+}
+
+export async function fetchFacilities(state, text){
+  const config = getAWSStore();
+  const headers = getAuthHeaders();
+
+  const raw = JSON.stringify({
+    "state": state || "",
+    "text": text || ""
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: headers,
+    body: raw
+  };
+
+  try{
+    let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-connect/facilities/lookup", requestOptions);
+    if(response.status != 200){
+      //Handle error status.
+    }
+    response = await response.json();
+    return response.data;
+  }catch(e){
+    console.log(e)
+  }
+  return [];
+}
+
+export async function fetchFacilityById(facilityId){
+  const headers = getAuthHeaders();
+  const config = getAWSStore();
+  const requestOptions = {
+    method: "GET",
+    headers: headers
+  };
+  try{
+    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities/" + facilityId, requestOptions);
+    if(response.status != 200){
+      //Handle error status.
+    }
+    response = await response.json();
+    return response;
+  }catch(e){
+    console.log(e)
+  }
+  return {}; 
+}
+
+export async function createOrUpdateFacility(facility){
+  const headers = getAuthHeaders();
+  const config = getAWSStore();
+  const requestOptions = {
+    method: "POST",
+    headers: headers,
+    body: raw,
+  };
+  try{
+    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities", requestOptions);
+    if(response.status != 200){
+      //Handle error status.
+    }
+    response = await response.json();
+    return response;
+  }catch(e){
+    console.log(e)
+  }
+  return {}; 
+}
+
+export async function fetchReferenceCategories(){
+  const headers = getAuthHeaders();
+  const config = getAWSStore();
+  const requestOptions = {
+    method: "GET",
+    headers: headers
+  };
+  try{
+    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities/reference/category-types", requestOptions);
+    if(response.status != 200){
+      //Handle error status.
+    }
+    response = await response.json();
+    return response;
+  }catch(e){
+    console.log(e)
+  }
+  return {}; 
+}
+
+export async function fetchReferenceDataByCatergory(category){
+  const headers = getAuthHeaders();
+  const config = getAWSStore();
+  const requestOptions = {
+    method: "GET",
+    headers: headers
+  };
+  try{
+    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities/reference?category=" + category, requestOptions);
+    if(response.status != 200){
+      //Handle error status.
+    }
+    response = await response.json();
+    return response;
+  }catch(e){
+    console.log(e)
+  }
+  return {}; 
+}
+
+
+async function getAuthHeaders() {
+  if (!getValueFromLocalStorage('api_file_status_token')) {
+    await authenticateFileStatusEndpoint();
+  }
+  let authToken = getValueFromLocalStorage('api_file_status_token');
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${authToken}`);
+  return myHeaders;
 }
 
 async function authenticateFileStatusEndpoint() {
