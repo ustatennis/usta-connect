@@ -1,0 +1,13 @@
+#filter-state-box {
+  height: 32px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+#filter-text-box {
+  height: 32px;
+  width: calc(100% - 8px);
+  margin-bottom: 30px;
+}
+
+/*# sourceMappingURL=facilities.css.map */

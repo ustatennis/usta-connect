@@ -1,0 +1,62 @@
+.formbuilder-text label {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: row;
+  font-size: var(--body-font-size-xxs);
+}
+
+.formbuilder-select-label {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: row;
+  font-size: var(--body-font-size-xxs);
+}
+
+.formbuilder-select select {
+  width: 100%;
+  height: 32px;
+}
+
+.formbuilder-text input {
+  width: calc(100% - 8px);
+  height: 32px;
+}
+
+.formbuilder-radio {
+  margin-top: 20px;
+  font-size: var(--body-font-size-xxs);
+}
+
+.formbuilder-radio label {
+  font-size: var(--body-font-size-xxs);
+}
+
+.formbuttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.formbutton {
+  font-size: 14px;
+  font-weight: bold;
+  height: 40px;
+  color: #fff;
+  background-color: #337ab7;
+  padding: 6px 12px;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.field-error {
+  font-size: var(--body-font-size-xxs);
+  position: relative;
+  top: -12px;
+  color: red;
+}
+
+/*# sourceMappingURL=facility-add.css.map */
