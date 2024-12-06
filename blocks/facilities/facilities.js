@@ -1,9 +1,10 @@
 import { getUsersList } from '../../middleware/admin.js';
 import { usstates } from '../../constants/usstates.js';
+import { fetchFacilities } from '../../scripts/s3script.js';
 // import { isAdminUser } from '../../store/userStore.js';
 // import { uploadS3Objects, listFiles } from '../../scripts/s3script.js';
 import '../../jslibraries/ag-grid-community.min.js';
-// import { getAWSStore } from '../../store/awsStore.js';
+import { getAWSStore } from '../../store/awsStore.js';
 // import BtnCellRenderer from '../available-files/btn-cell-renderer.js';
 // import userSystemCellRenderer from '../available-files/user-system-cell-renderer.js';
 // import { formatBytes } from '../../jslibraries/utility/utility.js';
@@ -127,6 +128,18 @@ export default async function decorate(block) {
     option.value = state.id;
     option.text = state.value;
     statebox.appendChild(option);
+  });
+  statebox.addEventListener('change', async function (event) {
+    // Get the selected value
+    const selectedValue = event.target.value;
+    // Do something with the selected value
+    console.log('Selected value:', selectedValue);
+    const config = getAWSStore();
+    const facili = await fetchFacilities(selectedValue);
+    // eslint-disable-next-line no-debugger
+    debugger;
+    console.log(config);
+    console.log(facili);
   });
   const inputbox = document.createElement('input');
   inputbox.id = 'filter-text-box';

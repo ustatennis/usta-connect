@@ -11,7 +11,6 @@ header {
 }
 
 .admin-create-facility-container a {
-  background-color: #199319;
   color: white;
   background-color: #337ab7;
   padding: 8px 12px;
@@ -51,6 +50,7 @@ header .header picture {
   position: absolute;
   right: 27px;
 }
+
 @media (max-width: 700px) {
   header .header picture {
     display: none;
@@ -126,5 +126,3 @@ header .header picture {
   position: absolute;
   right: 22px;
 }
-
-/*# sourceMappingURL=header.css.map */
