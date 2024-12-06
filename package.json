@@ -27,7 +27,6 @@
     "@babel/eslint-parser": "^7.25.0",
     "@babel/preset-react": "^7.22.15",
     "@esm-bundle/chai": "4.3.4-fix.0",
-    "@hapi/eslint-plugin": "^7.0.0",
     "@web/test-runner": "0.15.1",
     "@web/test-runner-commands": "0.6.5",
     "chai": "4.3.7",
