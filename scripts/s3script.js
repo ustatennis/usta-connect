@@ -247,7 +247,7 @@ export async function getFileStatuses(user, retry = 3) {
 
 export async function fetchFacilities(state, text){
   const config = getAWSStore();
-  const headers = getAuthHeaders();
+  const headers = await getAuthHeaders();
 
   const raw = JSON.stringify({
     "state": state || "",
@@ -275,7 +275,7 @@ export async function fetchFacilities(state, text){
 
 export async function fetchFacilityById(facilityId){
   const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const config = await getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
@@ -295,7 +295,7 @@ export async function fetchFacilityById(facilityId){
 
 export async function createOrUpdateFacility(facility){
   const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const config = await getAWSStore();
   const requestOptions = {
     method: "POST",
     headers: headers,
@@ -316,7 +316,7 @@ export async function createOrUpdateFacility(facility){
 
 export async function fetchReferenceCategories(){
   const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const config = await getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
@@ -336,7 +336,7 @@ export async function fetchReferenceCategories(){
 
 export async function fetchReferenceDataByCatergory(category){
   const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const config = await getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
