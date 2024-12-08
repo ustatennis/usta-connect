@@ -3,6 +3,9 @@ export const ROUTES = {
 
   home: '/',
   users: '/users',
+  facilitysearch: '/facility-search',
+  facilityupdate: '/facility-update',
+  facilitycreate: '/facility-create',
   broadcastPartners: '/broadcast-partners',
   worldFeedInfo: '/world-feed-info',
   tournamentInfo: '/tournament-info',
@@ -31,6 +34,9 @@ export const ROUTES = {
 export const PRIVATE_ROUTES = [
   ROUTES.home,
   ROUTES.users,
+  ROUTES.facilitysearch,
+  ROUTES.facilitycreate,
+  ROUTES.facilityupdate,
   ROUTES.photosVideoAudio,
   ROUTES.transcripts,
   ROUTES.worldFeedInfo,
