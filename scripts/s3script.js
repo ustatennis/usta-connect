@@ -245,13 +245,15 @@ export async function getFileStatuses(user, retry = 3) {
   return [];
 }
 
-export async function fetchFacilities(state, text){
+export async function fetchFacilities(state, text, page, size){
   const config = getAWSStore();
   const headers = await getAuthHeaders();
 
   const raw = JSON.stringify({
     "state": state || "",
-    "text": text || ""
+    "text": text || "",
+    "page" : page,
+    "size" : size
   });
 
   const requestOptions = {

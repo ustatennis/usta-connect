@@ -1,4 +1,18 @@
+import { fetchFacilityById } from '../../scripts/s3script.js';
+
 export default async function decorate(block) {
+  // Get the query string from the URL
+  const queryString = window.location.search;
+
+  // Create a URLSearchParams object
+  const urlParams = new URLSearchParams(queryString);
+
+  // Get the value of a specific parameter
+  const ustafacilityid = urlParams.get('ustafacilityid');
+  // eslint-disable-next-line no-unused-vars
+  const facility = await fetchFacilityById(ustafacilityid);
+  //   console.log(facility);
+  //   debugger;
   const divheader = document.createElement('div');
   divheader.innerHTML = `
 <form class="rendered-form">
@@ -109,7 +123,7 @@ export default async function decorate(block) {
     const btnSubmit = divh.querySelector('#btn-next');
     btnSubmit.addEventListener('click', () => {
       // eslint-disable-next-line prettier/prettier
-      console.log('SUBMIT');
+      // console.log('SUBMIT');
     });
     return true; // Form is valid
   }

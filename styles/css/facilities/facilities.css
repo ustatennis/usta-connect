@@ -9,3 +9,14 @@
   width: calc(100% - 8px);
   margin-bottom: 30px;
 }
+
+.cellheader {
+  margin-top: 5px;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.cellsubheader {
+  line-height: 15px;
+  text-transform: capitalize;
+}
