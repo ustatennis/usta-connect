@@ -47,6 +47,7 @@ export async function adminInitiateAuth() {
     const res = await adminApi.adminInitiateAuth(reqData);
     return res;
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
   }
 }

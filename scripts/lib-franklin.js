@@ -738,7 +738,7 @@ export function loadHeader(header) {
  */
 export function loadUserDayInfo(section) {
   const userDayInfoBlock = buildBlock('user-day-info', '');
-  section.append(userDayInfoBlock);
+  section?.append(userDayInfoBlock);
   decorateBlock(userDayInfoBlock);
   decorateAnchors(userDayInfoBlock);
   return loadBlock(userDayInfoBlock);
