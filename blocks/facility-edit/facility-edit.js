@@ -22,8 +22,36 @@ export default async function decorate(block) {
   // Get the value of a specific parameter
   const ustafacilityid = urlParams.get('ustafacilityid');
 
+  let facility = {
+    ustaFacilityId: null,
+    facilityStatus: 'Active',
+    externalFacilityId: '',
+    name: '',
+    address: {
+      streetAddressLine1: '',
+      streetAddressLine2: '',
+      city: '',
+      state: '',
+      zip: '00000',
+      postalCode: '00000-000',
+      country: 'US',
+      latitude: '40.270742',
+      longitude: '-75.143615',
+    },
+    courts: {
+      totalIndoorTennisCourts: '',
+      totalOutdoorTennisCourts: '',
+    },
+    verifiedBy: 'Test User',
+    phoneNumber: '555-555-5555',
+    website: 'www.usta.com',
+    sourceData: 'USTA',
+    lastUpdatedBy: 'Logged in user',
+  };
   // eslint-disable-next-line no-unused-vars
-  const facility = await fetchFacilityById(`${ustafacilityid}`);
+  if (ustafacilityid) {
+    facility = await fetchFacilityById(`${ustafacilityid}`);
+  }
 
   const divheader = document.createElement('div');
   divheader.innerHTML = `
@@ -211,12 +239,12 @@ export default async function decorate(block) {
   //     const dummy = {
   //         "facilityStatus": "Active",
   //         "externalFacilityId" : "b89eeafa-218e-11ee-be56-0242ac120002",
-  //         "name": "07/15 Facility (with phone and website after update)",
+  //         "name": "Facility (with phone and website after update)",
   //         "address": {
-  //           "streetAddressLine1": "AddressLine 07-15",
+  //           "streetAddressLine1": "",
   //           "streetAddressLine2": "",
-  //           "city": "Kingston",
-  //           "state": "AA",
+  //           "city": "",
+  //           "state": "",
   //           "zip": "00000",
   //           "postalCode": "00000-2650",
   //           "country": "US",
@@ -224,9 +252,9 @@ export default async function decorate(block) {
   //           "longitude": "-75.143615"
   //          },
   //         "verifiedBy": "Test User",
-  //         "phoneNumber": "215-322-7020",
-  //         "website": "www.buckscountytennis.usta.com",
-  //         "sourceData": "Kinetica",
+  //         "phoneNumber": "555-555-5555",
+  //         "website": "www.usta.com",
+  //         "sourceData": "USTA",
   //         "lastUpdatedBy": "Logged in user"
   //       }
   //   }
