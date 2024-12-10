@@ -1,4 +1,7 @@
-import { fetchFacilityById, createOrUpdateFacility } from '../../scripts/s3script.js';
+import {
+  fetchFacilityById,
+  createOrUpdateFacility,
+} from '../../scripts/s3script.js';
 import { usstates } from '../../constants/usstates.js';
 import { countrystate } from '../../constants/countrystate.js';
 import { getUser } from '../../store/userStore.js';

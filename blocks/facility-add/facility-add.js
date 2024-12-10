@@ -101,21 +101,21 @@ export default async function decorate(block) {
 </form>`;
 
   const statebox = divheader.querySelector('#text-state');
-//   statebox.id = 'filter-state-box';
-//   statebox.placeholder = 'SEARCH BY STATE';
-//   statebox.addEventListener('input', () => {
-//     const inp = document.getElementById('filter-text-box');
-//     inp.disabled = false;
-//     // gridOptions.api.setQuickFilter(
-//     //   document.getElementById('filter-state-box').value,
-//     // );
-//   });
-//   const selectstate = document.createElement('option');
-//   selectstate.text = 'SEARCH BY STATE';
-//   selectstate.disabled = true;
-//   selectstate.selected = true;
-//   selectstate.hidden = true;
-//   statebox.appendChild(selectstate);
+  //   statebox.id = 'filter-state-box';
+  //   statebox.placeholder = 'SEARCH BY STATE';
+  //   statebox.addEventListener('input', () => {
+  //     const inp = document.getElementById('filter-text-box');
+  //     inp.disabled = false;
+  //     // gridOptions.api.setQuickFilter(
+  //     //   document.getElementById('filter-state-box').value,
+  //     // );
+  //   });
+  //   const selectstate = document.createElement('option');
+  //   selectstate.text = 'SEARCH BY STATE';
+  //   selectstate.disabled = true;
+  //   selectstate.selected = true;
+  //   selectstate.hidden = true;
+  //   statebox.appendChild(selectstate);
   usstates.data.forEach(state => {
     const option = document.createElement('option');
     option.value = state.id;
