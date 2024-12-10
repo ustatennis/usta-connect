@@ -276,8 +276,8 @@ export async function fetchFacilities(state, text, page, size){
 }
 
 export async function fetchFacilityById(facilityId){
-  const headers = getAuthHeaders();
-  const config = await getAWSStore();
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
@@ -296,6 +296,7 @@ export async function fetchFacilityById(facilityId){
 }
 
 export async function createOrUpdateFacility(facility){
+  const raw = JSON.stringify(facility);
   const headers = getAuthHeaders();
   const config = await getAWSStore();
   const requestOptions = {
@@ -304,6 +305,7 @@ export async function createOrUpdateFacility(facility){
     body: raw,
   };
   try{
+    debugger;
     let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities", requestOptions);
     if(response.status != 200){
       //Handle error status.

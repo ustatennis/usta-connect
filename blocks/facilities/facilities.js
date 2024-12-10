@@ -173,6 +173,8 @@ export default async function decorate(block) {
     // Do something with the selected value
     // onsole.log('Selected value:', selectedValue);
     // const config = getAWSStore();
+    gridDiv = document.querySelector('#userGrid');
+    gridDiv.innerHTML = '';
     Facilities = await fetchFacilities(selectedValue, '');
     columnDefs = [
       {
@@ -189,12 +191,12 @@ export default async function decorate(block) {
         sortable: true,
         width: 160,
       },
-      // {
-      //   field: 'zendesk',
-      //   headerName: 'Zendesk Internal ID',
-      //   sortable: true,
-      // },
-      // // { field: 'email_verified' },
+      {
+        field: 'externalFacilityId',
+        headerName: 'Zendesk Internal ID',
+        sortable: true,
+      },
+      // { field: 'email_verified' },
       {
         field: 'facilityStatus',
         headerName: 'Facility Status',

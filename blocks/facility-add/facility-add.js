@@ -1,3 +1,5 @@
+import { usstates } from '../../constants/usstates.js';
+
 export default async function decorate(block) {
   const divheader = document.createElement('div');
   divheader.innerHTML = `
@@ -26,9 +28,9 @@ export default async function decorate(block) {
         <label for="text-country" class="formbuilder-text-label">COUNTRY<span class="formbuilder-required">*</span></label>
         <input type="text" class="form-control" name="text-country" access="false" id="text-country" required="required" aria-required="true">
     </div>
-    <div class="formbuilder-text form-group field-text-state">
-        <label for="text-state" class="formbuilder-text-label">STATE/PROVINCE<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="text-state" access="false" id="text-state" required="required" aria-required="true">
+    <div class="formbuilder-select form-group field-text-state">
+        <label for="text-state" class="formbuilder-select-label">STATE/PROVINCE<span class="formbuilder-required">*</span></label>
+        <select class="form-control" name="text-state" access="false" id="text-state" required="required" aria-required="true"></select>
         <span class="field-error" id="state-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-zip">
@@ -97,6 +99,29 @@ export default async function decorate(block) {
         <button class="formbutton" id="btn-next">NEXT</button>
     </div>
 </form>`;
+
+  const statebox = divheader.querySelector('#text-state');
+//   statebox.id = 'filter-state-box';
+//   statebox.placeholder = 'SEARCH BY STATE';
+//   statebox.addEventListener('input', () => {
+//     const inp = document.getElementById('filter-text-box');
+//     inp.disabled = false;
+//     // gridOptions.api.setQuickFilter(
+//     //   document.getElementById('filter-state-box').value,
+//     // );
+//   });
+//   const selectstate = document.createElement('option');
+//   selectstate.text = 'SEARCH BY STATE';
+//   selectstate.disabled = true;
+//   selectstate.selected = true;
+//   selectstate.hidden = true;
+//   statebox.appendChild(selectstate);
+  usstates.data.forEach(state => {
+    const option = document.createElement('option');
+    option.value = state.id;
+    option.text = state.value;
+    statebox.appendChild(option);
+  });
 
   function validateForm(divh) {
     // Get form elements
