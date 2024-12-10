@@ -297,8 +297,8 @@ export async function fetchFacilityById(facilityId){
 
 export async function createOrUpdateFacility(facility){
   const raw = JSON.stringify(facility);
-  const headers = getAuthHeaders();
-  const config = await getAWSStore();
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
   const requestOptions = {
     method: "POST",
     headers: headers,
@@ -319,8 +319,8 @@ export async function createOrUpdateFacility(facility){
 }
 
 export async function fetchReferenceCategories(){
-  const headers = getAuthHeaders();
-  const config = await getAWSStore();
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
@@ -339,8 +339,8 @@ export async function fetchReferenceCategories(){
 }
 
 export async function fetchReferenceDataByCatergory(category){
-  const headers = getAuthHeaders();
-  const config = await getAWSStore();
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
