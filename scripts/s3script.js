@@ -245,13 +245,15 @@ export async function getFileStatuses(user, retry = 3) {
   return [];
 }
 
-export async function fetchFacilities(state, text){
+export async function fetchFacilities(state, text, page, size){
   const config = getAWSStore();
-  const headers = getAuthHeaders();
+  const headers = await getAuthHeaders();
 
   const raw = JSON.stringify({
     "state": state || "",
-    "text": text || ""
+    "text": text || "",
+    "page" : page,
+    "size" : size
   });
 
   const requestOptions = {
@@ -274,8 +276,8 @@ export async function fetchFacilities(state, text){
 }
 
 export async function fetchFacilityById(facilityId){
-  const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
@@ -294,14 +296,16 @@ export async function fetchFacilityById(facilityId){
 }
 
 export async function createOrUpdateFacility(facility){
+  const raw = JSON.stringify(facility);
   const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const config = await getAWSStore();
   const requestOptions = {
     method: "POST",
     headers: headers,
     body: raw,
   };
   try{
+    debugger;
     let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities", requestOptions);
     if(response.status != 200){
       //Handle error status.
@@ -316,7 +320,7 @@ export async function createOrUpdateFacility(facility){
 
 export async function fetchReferenceCategories(){
   const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const config = await getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
@@ -336,7 +340,7 @@ export async function fetchReferenceCategories(){
 
 export async function fetchReferenceDataByCatergory(category){
   const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const config = await getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
