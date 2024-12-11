@@ -1,6 +1,10 @@
 import { logOut } from '../../middleware/auth.js';
 import { decorateIcons } from '../../scripts/lib-franklin.js';
-import { getUser, isAdminUser } from '../../store/userStore.js';
+import {
+  getUser,
+  isAdminUser,
+  isFacilityGroupMember,
+} from '../../store/userStore.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -149,6 +153,14 @@ export default async function decorate(block) {
       nnn[0].parentElement.parentElement.className += 'disabled';
       nnn.forEach((l, i) => {
         nnn[i].className = 'disabled';
+      });
+    }
+
+    const faciltyNav = nav.querySelectorAll('a[href*="/facility-search"]');
+    if (faciltyNav && !isFacilityGroupMember()) {
+      faciltyNav[0].parentElement.parentElement.className += 'disabled';
+      faciltyNav.forEach((l, i) => {
+        faciltyNav[i].className = 'disabled';
       });
     }
 

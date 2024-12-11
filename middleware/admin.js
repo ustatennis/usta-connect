@@ -2,7 +2,7 @@ import { adminApi } from '../api/adminApi.js';
 import { USER_ROLES } from '../constants/user.js';
 import { getValueFromLocalStorage } from '../scripts/helpers.js';
 import { getAWSStore } from '../store/awsStore.js';
-import { getUser, setUserRole } from '../store/userStore.js';
+import { getUser, setUserRole, setGroups } from '../store/userStore.js';
 
 export async function getAdminUser() {
   const { userPoolId } = getAWSStore();
@@ -27,6 +27,43 @@ export async function getAdminUser() {
   } catch (e) {
     setUserRole(USER_ROLES.user);
   }
+}
+
+export async function getCognitoGroups() {
+  // const config = getAWSStore();
+  // Get the identity pool ID.
+  const user = getUser();
+  const config = getAWSStore();
+  const { identityPoolId } = config;
+
+  const idToken = getValueFromLocalStorage('id_token');
+
+  const userPoolIdIDP = getValueFromLocalStorage(
+    `aws.cognito.identity-providers.${identityPoolId}`,
+  );
+  const logins = {
+    [`${userPoolIdIDP}`]: idToken,
+  };
+  const cognitoIdp = new AWS.CognitoIdentityServiceProvider({
+    region: AWS.config.region,
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: identityPoolId,
+      Logins: logins,
+    }),
+  });
+  const params = {
+    UserPoolId: config.userPoolId,
+    Username: user.Username,
+  };
+  try {
+    const response = await cognitoIdp.adminListGroupsForUser(params).promise();
+    console.log(response);
+    setGroups(response.Groups);
+    return response.Groups;
+  } catch (err) {
+    console.log(err);
+  }
+  return [];
 }
 
 export async function adminInitiateAuth() {
