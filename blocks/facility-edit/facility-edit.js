@@ -144,6 +144,11 @@ export default async function decorate(block) {
             <option value="Nonexistent" id="select-facility-status-4">Nonexistent</option>
         </select>
     </div>
+    <div class="formbuilder-text form-group field-text-survivor-facility-id hidden">
+        <label for="text-zip" class="formbuilder-text-label">SURVIVOR FACILITY ID</label>
+        <input type="text" class="form-control" name="survivorFacilityId" access="false" id="text-survivor-facility-id">
+        <span class="field-error" id="survivor-facility-id-error"></span>
+    </div>
     <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
         <label for="text-name" class="formbuilder-text-label">TOTAL INDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
         <input type="text" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
@@ -226,6 +231,9 @@ export default async function decorate(block) {
     // FacilityStatus
     const fieldFacilityStatus = divh.querySelector('#select-facility-status');
     fieldFacilityStatus.value = facility.facilityStatus;
+    // FacilityStatus
+    const survivorFacilityId = divh.querySelector('#text-survivor-facility-id');
+    survivorFacilityId.value = facility.survivorFacilityId;
     // Total indoor tennis courts
     const fieldTotalIndoorTennisCourts = divh.querySelector(
       '#text-total-indoor-tennis-courts',
@@ -370,6 +378,29 @@ export default async function decorate(block) {
       cityError.innerHTML = '';
     });
 
+    // validate facility status and set up event listener
+    const fieldFacilityStatus = divh.querySelector('#select-facility-status');
+    if (fieldFacilityStatus.value === 'Duplicate') {
+      const fieldSurvivor = divh.querySelector(
+        '.field-text-survivor-facility-id',
+      );
+      fieldSurvivor.classList.remove('hidden');
+    }
+    fieldFacilityStatus.addEventListener('change', ev => {
+      if (fieldFacilityStatus.value === 'Duplicate') {
+        const fieldSurvivor = divh.querySelector(
+          '.field-text-survivor-facility-id',
+        );
+        debugger;
+        fieldSurvivor.classList.remove('hidden');
+      } else {
+        const fieldSurvivor = divh.querySelector(
+          '.field-text-survivor-facility-id',
+        );
+        fieldSurvivor.classList.add('hidden');
+      }
+    });
+
     // validate Total Indoor Courts
     const fieldTotalIndoorTennisCourts = divh.querySelector(
       '#text-total-indoor-tennis-courts',
@@ -461,6 +492,20 @@ export default async function decorate(block) {
       delete updatedfacility.address.longitude;
       delete updatedfacility.lastUpdatedDateTime;
       delete updatedfacility.createdDateTime;
+      // delete all derived fields
+      delete updatedfacility.courts.hasGrassCourts;
+      delete updatedfacility.courts.hasHardCourts;
+      delete updatedfacility.courts.hasClayCourts;
+      delete updatedfacility.courts.hasOtherCourtSurface;
+      delete updatedfacility.courts.hasOutdoorLightedCourts;
+      delete updatedfacility.courts.has36ftCourts;
+      delete updatedfacility.courts.hasBlended36ftCourts;
+      delete updatedfacility.courts.hasStandalone36ftCourts;
+      delete updatedfacility.courts.has60ftCourts;
+      delete updatedfacility.courts.hasBlended60ftCourts;
+      delete updatedfacility.courts.hasStandalone60ftCourts;
+      delete updatedfacility.courts.has78ftCourts;
+      delete updatedfacility.courts.hasPickleballCourts;
       updatedfacility.lastUpdatedBy = userNameCpitalized;
       updatedfacility.sourceData = 'Customer Care';
       console.log(addr);
