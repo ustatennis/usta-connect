@@ -62,3 +62,14 @@
   top: -12px;
   color: red;
 }
+
+.field-input-error input {
+  border-color: red;
+  border-width: 2px;
+}
+
+.field-input-error label {
+  color: red;
+}
+
+/*# sourceMappingURL=facility-edit.css.map */

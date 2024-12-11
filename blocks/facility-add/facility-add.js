@@ -129,6 +129,9 @@ export default async function decorate(block) {
     fieldFacilityUSTANumber.addEventListener('blur', ev => {
       // eslint-disable-next-line prettier/prettier
       console.log(ev.target.value);
+      ev.target.parent.classList.add('field-input-error');
+      // eslint-disable-next-line prettier/prettier
+      console.log(ev.target.value);
     });
 
     const btnSubmit = divh.querySelector('#btn-next');

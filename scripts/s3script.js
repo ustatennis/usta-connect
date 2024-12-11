@@ -297,8 +297,8 @@ export async function fetchFacilityById(facilityId){
 
 export async function createOrUpdateFacility(facility){
   const raw = JSON.stringify(facility);
-  const headers = getAuthHeaders();
-  const config = await getAWSStore();
+  const headers = await getAuthHeaders();
+  const config = getAWSStore();
   const requestOptions = {
     method: "POST",
     headers: headers,

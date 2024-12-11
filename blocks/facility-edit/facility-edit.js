@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import {
   fetchFacilityById,
   createOrUpdateFacility,
@@ -20,7 +21,7 @@ export default async function decorate(block) {
   const urlParams = new URLSearchParams(queryString);
 
   // Get the value of a specific parameter
-  const ustafacilityid = urlParams.get('ustafacilityid');
+  const ustafacilityid = Number(urlParams.get('ustafacilityid'));
 
   let facility = {
     ustaFacilityId: null,
@@ -50,7 +51,7 @@ export default async function decorate(block) {
   };
   // eslint-disable-next-line no-unused-vars
   if (ustafacilityid) {
-    facility = await fetchFacilityById(`${ustafacilityid}`);
+    facility = await fetchFacilityById(ustafacilityid);
   }
 
   const divheader = document.createElement('div');
@@ -58,19 +59,23 @@ export default async function decorate(block) {
 <form class="rendered-form">
     <div class="formbuilder-text form-group field-text-facility-usta-number">
         <label for="text-facility-usta-number" class="formbuilder-text-label">FACILITY USTA NUMBER<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="ustaFacilityId" access="false" id="text-facility-usta-number" required="required" aria-required="true">
+        <input type="number" class="form-control" name="ustaFacilityId" access="false" id="text-facility-usta-number" required="required" aria-required="true">
+        <span class="field-error" id="facility-usta-number-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-zendesk-internal-id">
         <label for="text-zendesk-internal-id" class="formbuilder-text-label">ZENDESK INTERNAL ID</label>
         <input type="text" class="form-control" name="externalFacilityId" access="false" id="text-zendesk-internal-id">
+        <span class="field-error" id="zendesk-internal-id-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-name">
         <label for="text-name" class="formbuilder-text-label">NAME</label>
         <input type="text" class="form-control" name="name" access="false" id="text-name">
+        <span class="field-error" id="name-error"></span>
     </div>
-    <div class="formbuilder-text form-group field-text-adddress">
-        <label for="text-adddress" class="formbuilder-text-label">ADDRESS<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="address.streetAddressLine1" access="false" id="text-adddress" required="required" aria-required="true">
+    <div class="formbuilder-text form-group field-text-address">
+        <label for="text-address" class="formbuilder-text-label">ADDRESS<span class="formbuilder-required">*</span></label>
+        <input type="text" class="form-control" name="address.streetAddressLine1" access="false" id="text-address" required="required" aria-required="true">
+        <span class="field-error" id="address-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-city">
         <label for="text-city" class="formbuilder-text-label">CITY<span class="formbuilder-required">*</span></label>
@@ -83,7 +88,7 @@ export default async function decorate(block) {
     </div>
     <div class="formbuilder-select form-group field-text-state">
         <label for="text-state" class="formbuilder-select-label">STATE/PROVINCE<span class="formbuilder-required">*</span></label>
-        <select class="form-control" name="text-state" access="false" id="text-state" required="required" aria-required="true"></select>
+        <select class="form-control" name="address.state" access="false" id="text-state" required="required" aria-required="true"></select>
         <span class="field-error" id="state-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-zip">
@@ -141,15 +146,17 @@ export default async function decorate(block) {
     </div>
     <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
         <label for="text-name" class="formbuilder-text-label">TOTAL INDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+        <input type="text" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+        <span class="field-error" id="total-indoor-tennis-courts-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
-        <label for="text-adddress" class="formbuilder-text-label">TOTAL OUTDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-    </div>
+        <label for="text-address" class="formbuilder-text-label">TOTAL OUTDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
+        <input type="text" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+        <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+        </div>
     <div class="formbuttons">
         <button class="formbutton" id="btn-cancel">CANCEL</button>
-        <button class="formbutton" id="btn-next">NEXT</button>
+        <button class="formbutton" id="btn-next">SUBMIT</button>
     </div>
 </form>`;
 
@@ -179,7 +186,7 @@ export default async function decorate(block) {
     const fieldFacilityUSTANumber = divh.querySelector(
       '#text-facility-usta-number',
     );
-    fieldFacilityUSTANumber.value = facility.ustaFacilityId;
+    fieldFacilityUSTANumber.value = Number(facility.ustaFacilityId);
     // externalFacilityId
     const fieldExternalFacilityId = divh.querySelector(
       '#text-zendesk-internal-id',
@@ -189,7 +196,7 @@ export default async function decorate(block) {
     const facilityName = divh.querySelector('#text-name');
     facilityName.value = facility.name;
     // Address
-    const fieldAddress = divh.querySelector('#text-adddress');
+    const fieldAddress = divh.querySelector('#text-address');
     fieldAddress.value = facility.address.streetAddressLine1;
     // City
     const fieldCity = divh.querySelector('#text-city');
@@ -274,11 +281,145 @@ export default async function decorate(block) {
   }
 
   function validateForm(divh) {
-    // Get form elements
-    const fieldFacilityUSTANumber = divh.querySelector('#text-zip');
-    fieldFacilityUSTANumber.addEventListener('blur', ev => {
-      // eslint-disable-next-line prettier/prettier
-      console.log(ev.target.value);
+    // validate zendesk-internal-id
+    const fieldZendesk = divh.querySelector('#text-zendesk-internal-id');
+    fieldZendesk.addEventListener('blur', ev => {
+      // eslint-disable-next-line no-use-before-define
+      if (!isDigitsOnly(fieldZendesk.value)) {
+        ev.target.parentNode.classList.add('field-input-error');
+        const zendeskInternalIdError = divh.querySelector(
+          '#zendesk-internal-id-error',
+        );
+        zendeskInternalIdError.innerHTML = 'Please enter only numbers.';
+      }
+    });
+    fieldZendesk.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('field-input-error');
+      const zendeskInternalIdError = divh.querySelector(
+        '#zendesk-internal-id-error',
+      );
+      zendeskInternalIdError.innerHTML = '';
+    });
+    // validate zip
+    const fieldFacilityZip = divh.querySelector('#text-zip');
+    fieldFacilityZip.addEventListener('blur', ev => {
+      // eslint-disable-next-line no-use-before-define
+      if (
+        // eslint-disable-next-line no-use-before-define
+        !isDigitsOnly(fieldFacilityZip.value) ||
+        fieldFacilityZip.value.length !== 5
+      )
+        ev.target.parentNode.classList.add('field-input-error');
+      const zipError = divh.querySelector('#zip-error');
+      zipError.innerHTML = 'Please enter only a 5-digit numeric zip code.';
+    });
+    fieldFacilityZip.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('field-input-error');
+      const zipError = divh.querySelector('#zip-error');
+      zipError.innerHTML = '';
+    });
+    // validate name
+    const fieldFacilityName = divh.querySelector('#text-name');
+    debugger;
+    fieldFacilityName.addEventListener('blur', ev => {
+      if (fieldFacilityName.value.length > 100) {
+        ev.target.parentNode.classList.add('field-input-error');
+        const nameError = divh.querySelector('#name-error');
+        nameError.innerHTML = 'Name is too long';
+      }
+    });
+    fieldFacilityName.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('field-input-error');
+      const nameError = divh.querySelector('#name-error');
+      nameError.innerHTML = '';
+    });
+    // validate address
+    const fieldFacilityAddr = divh.querySelector('#text-address');
+    fieldFacilityAddr.addEventListener('blur', ev => {
+      if (fieldFacilityAddr.value.length > 200) {
+        ev.target.parentNode.classList.add('field-input-error');
+        const addressError = divh.querySelector('#address-error');
+        addressError.innerHTML =
+          'Please do not enter more than 200 characters.';
+      }
+
+      if (fieldFacilityAddr.value.toLowerCase().includes('po box')) {
+        ev.target.parentNode.classList.add('field-input-error');
+        const addressError = divh.querySelector('#address-error');
+        addressError.innerHTML = 'P.O. Boxes are not permitted.';
+      }
+    });
+    fieldFacilityAddr.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('field-input-error');
+      const addressError = divh.querySelector('#address-error');
+      addressError.innerHTML = '';
+    });
+
+    // validate city
+    const fieldFacilityCity = divh.querySelector('#text-city');
+    fieldFacilityCity.addEventListener('blur', ev => {
+      if (fieldFacilityCity.value.length > 50) {
+        ev.target.parentNode.classList.add('field-input-error');
+        const cityError = divh.querySelector('#city-error');
+        cityError.innerHTML = 'Please do not enter more than 50 characters';
+      }
+    });
+    fieldFacilityCity.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('field-input-error');
+      const cityError = divh.querySelector('#city-error');
+      cityError.innerHTML = '';
+    });
+
+    // validate Total Indoor Courts
+    const fieldTotalIndoorTennisCourts = divh.querySelector(
+      '#text-total-indoor-tennis-courts',
+    );
+    fieldTotalIndoorTennisCourts.addEventListener('blur', ev => {
+      // eslint-disable-next-line no-use-before-define
+      if (!isDigitsOnly(fieldTotalIndoorTennisCourts.value)) {
+        ev.target.parentNode.classList.add('field-input-error');
+        const totalIndoorTennisCourtsError = divh.querySelector(
+          '#total-indoor-tennis-courts-error',
+        );
+        totalIndoorTennisCourtsError.innerHTML =
+          'Please enter only positive numbers.';
+      }
+    });
+    fieldTotalIndoorTennisCourts.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('field-input-error');
+      const totalIndoorTennisCourtsError = divh.querySelector(
+        '#total-indoor-tennis-courts-error',
+      );
+      totalIndoorTennisCourtsError.innerHTML = '';
+    });
+
+    // validate Total Outdoor Courts
+    const fieldTotalOutdoorTennisCourts = divh.querySelector(
+      '#text-total-outdoor-tennis-courts',
+    );
+    fieldTotalOutdoorTennisCourts.addEventListener('blur', ev => {
+      // eslint-disable-next-line no-use-before-define
+      if (!isDigitsOnly(fieldTotalOutdoorTennisCourts.value)) {
+        ev.target.parentNode.classList.add('field-input-error');
+        const totalOutdoorTennisCourtsError = divh.querySelector(
+          '#total-outdoor-tennis-courts-error',
+        );
+        totalOutdoorTennisCourtsError.innerHTML =
+          'Please enter only positive numbers.';
+      }
+    });
+    fieldTotalOutdoorTennisCourts.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('field-input-error');
+      const totalOutdoorTennisCourtsError = divh.querySelector(
+        '#total-outdoor-tennis-courts-error',
+      );
+      totalOutdoorTennisCourtsError.innerHTML = '';
+    });
+
+    const btnCancel = divh.querySelector('#btn-cancel');
+    btnCancel.addEventListener('click', ev => {
+      ev.preventDefault();
+      window.location.href = '/facility-search';
     });
 
     const btnSubmit = divh.querySelector('#btn-next');
@@ -287,6 +428,7 @@ export default async function decorate(block) {
       console.log('SUBMIT');
       ev.preventDefault();
       const ob = formToObject(divheader);
+      ob.ustaFacilityId = Number(ob.ustaFacilityId);
       const addr = {
         streetAddressLine1: ob['address.streetAddressLine1'],
         city: ob['address.city'],
@@ -294,19 +436,33 @@ export default async function decorate(block) {
         zip: ob['address.zip'],
         country: ob['address.country'],
       };
+      const courts = {
+        totalIndoorTennisCourts: Number(ob['courts.totalIndoorTennisCourts']),
+        totalOutdoorTennisCourts: Number(ob['courts.totalOutdoorTennisCourts']),
+      };
       ob.isPrivateFlag = ob.isPrivate === 'Yes';
       delete ob['address.streetAddressLine1'];
       delete ob['address.city'];
       delete ob['address.state'];
       delete ob['address.zip'];
       delete ob['address.country'];
+
+      delete ob['courts.totalIndoorTennisCourts'];
+      delete ob['courts.totalOutdoorTennisCourts'];
       delete ob.isPrivate;
       facility.address = { ...facility.address, ...addr };
+      facility.courts = { ...facility.courts, ...courts };
       const updatedfacility = { ...facility, ...ob };
-      const date = new Date();
-      updatedfacility.lastUpdatedDateTime = date.toISOString().slice(0, 19);
+      //   const date = new Date();
+      //   updatedfacility.lastUpdatedDateTime = date.toISOString().slice(0, 19);
+      delete updatedfacility.address.district_id;
+      delete updatedfacility.address.section_id;
+      delete updatedfacility.address.latitude;
+      delete updatedfacility.address.longitude;
+      delete updatedfacility.lastUpdatedDateTime;
+      delete updatedfacility.createdDateTime;
       updatedfacility.lastUpdatedBy = userNameCpitalized;
-      // updatedfacility.sourceData = 'USTA';
+      updatedfacility.sourceData = 'Customer Care';
       console.log(addr);
       console.log(facility);
       console.log(ob);
@@ -315,6 +471,10 @@ export default async function decorate(block) {
       console.log(response);
     });
     return false; // Form is valid
+  }
+
+  function isDigitsOnly(str) {
+    return /^\d+$/.test(str);
   }
 
   validateForm(divheader);
