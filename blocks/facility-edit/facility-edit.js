@@ -386,7 +386,7 @@ export default async function decorate(block) {
       );
       fieldSurvivor.classList.remove('hidden');
     }
-    fieldFacilityStatus.addEventListener('change', ev => {
+    fieldFacilityStatus.addEventListener('change', () => {
       if (fieldFacilityStatus.value === 'Duplicate') {
         const fieldSurvivor = divh.querySelector(
           '.field-text-survivor-facility-id',
