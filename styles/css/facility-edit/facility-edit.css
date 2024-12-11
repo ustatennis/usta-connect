@@ -72,4 +72,6 @@
   color: red;
 }
 
-/*# sourceMappingURL=facility-edit.css.map */
+.hidden {
+  display: none;
+}
