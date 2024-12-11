@@ -64,11 +64,30 @@
   color: red;
 }
 
-.field-input-error input {
-  border-color:red;
-  border-width: 2px;
+.table {
+  display: flex;
+  flex-flow: column nowrap;
+  // border: 1px solid black;
+  font-size: var(--body-font-size-xs);
 }
 
-.field-input-error label {
-  color:red;
+.row {
+  display: flex;
+  // border-bottom: 1px solid black;
+}
+
+.heading {
+  font-weight: bold;
+}
+
+.cell {
+  display: flex;
+  flex: 3;
+  justify-content: left;
+  align-items: center;
+}
+
+.cell-title {
+  font-weight: bold;
+  flex: 1;
 }
