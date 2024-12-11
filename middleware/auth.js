@@ -5,7 +5,7 @@ import {
 } from '../store/authStore.js';
 import { getAWSStore } from '../store/awsStore.js';
 import { removeUser, removeUserRole, setUser } from '../store/userStore.js';
-import { getAdminUser } from './admin.js';
+import { getAdminUser, getCognitoGroups } from './admin.js';
 import { getCredentialsForIdentity } from './identity.js';
 import { fetchUser } from './user.js';
 
@@ -28,6 +28,7 @@ export async function logIn(username, password) {
       setUser(data);
       await getCredentialsForIdentity();
       await getAdminUser();
+      await getCognitoGroups();
     }
     return data;
   } catch (error) {
