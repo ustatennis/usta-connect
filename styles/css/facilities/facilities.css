@@ -20,3 +20,7 @@
   line-height: 15px;
   text-transform: capitalize;
 }
+
+.facilities-container p a {
+  text-decoration: underline;
+}

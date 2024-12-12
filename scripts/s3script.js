@@ -306,6 +306,7 @@ export async function createOrUpdateFacility(facility){
   };
   try{
     let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities", requestOptions);
+    debugger;
     if(response.status != 200){
       //Handle error status.
     }
