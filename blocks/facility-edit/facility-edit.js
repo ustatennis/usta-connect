@@ -311,7 +311,6 @@ export default async function decorate(block) {
     // validate zip
     const fieldFacilityZip = divh.querySelector('#text-zip');
     fieldFacilityZip.addEventListener('blur', ev => {
-      debugger;
       // eslint-disable-next-line no-use-before-define
       if (
         // eslint-disable-next-line no-use-before-define
