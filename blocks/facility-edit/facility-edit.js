@@ -328,7 +328,6 @@ export default async function decorate(block) {
     });
     // validate name
     const fieldFacilityName = divh.querySelector('#text-name');
-    debugger;
     fieldFacilityName.addEventListener('blur', ev => {
       if (fieldFacilityName.value.length > 100) {
         ev.target.parentNode.classList.add('field-input-error');
@@ -391,7 +390,6 @@ export default async function decorate(block) {
         const fieldSurvivor = divh.querySelector(
           '.field-text-survivor-facility-id',
         );
-        debugger;
         fieldSurvivor.classList.remove('hidden');
       } else {
         const fieldSurvivor = divh.querySelector(
