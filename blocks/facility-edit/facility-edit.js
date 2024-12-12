@@ -516,6 +516,7 @@ export default async function decorate(block) {
       console.log(updatedfacility);
       const response = await createOrUpdateFacility(updatedfacility);
       console.log(response);
+      window.location = `/facility-confirm?ustafacilityid=${updatedfacility.ustaFacilityId}`;
     });
     return false; // Form is valid
   }

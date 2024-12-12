@@ -57,7 +57,7 @@ export default async function decorate(block) {
     </div>
     <div class="row">
       <div class="cell cell-title">ZENDESK INTERNAL ID</div>
-      <div class="cell">Item 2</div>
+      <div class="cell">${facility.externalFacilityId}</div>
     </div>
     <div class="row">
      <div class="cell cell-title">NAME</div>
