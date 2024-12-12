@@ -61,47 +61,47 @@ export default async function decorate(block) {
     </div>
     <div class="row">
      <div class="cell cell-title">NAME</div>
-      <div class="cell">${facility.name}</div>
+      <div class="cell">${facility?.name}</div>
     </div>
     <div class="row">
       <div class="cell cell-title">ADDRESS</div>
-      <div class="cell">${facility.address.streetAddressLine1}</div>
+      <div class="cell">${facility?.address?.streetAddressLine1}</div>
     </div>
     <div class="row">
       <div class="cell cell-title">CITY</div>
-      <div class="cell">${facility.address.city}</div>
+      <div class="cell">${facility?.address?.city}</div>
     </div>
     <div class="row">
      <div class="cell cell-title">COUNTRY</div>
-      <div class="cell">${facility.address.country}</div>
+      <div class="cell">${facility?.address?.country}</div>
     </div>
         <div class="row">
       <div class="cell cell-title">STATE/PROVINCE</div>
-      <div class="cell">${facility.address.state}</div>
+      <div class="cell">${facility?.address?.state}</div>
     </div>
     <div class="row">
       <div class="cell cell-title">ZIP/POSTAL CODE</div>
-      <div class="cell">${facility.address.zip}</div>
+      <div class="cell">${facility?.address?.zip}</div>
     </div>
     <div class="row">
      <div class="cell cell-title">FACILITY TYPE</div>
-      <div class="cell">${facility.facilityType}</div>
+      <div class="cell">${facility?.facilityType}</div>
     </div>
     <div class="row">
       <div class="cell cell-title">FACILITY TYPE DETAIL</div>
-      <div class="cell">${facility.facilityTypeDetail}</div>
+      <div class="cell">${facility?.facilityTypeDetail}</div>
     </div>
     <div class="row">
       <div class="cell cell-title">FACILITY STATUS</div>
-      <div class="cell">${facility.facilityStatus}</div>
+      <div class="cell">${facility?.facilityStatus}</div>
     </div>
     <div class="row">
      <div class="cell cell-title">TOTAL INDOOR TENNIS COURTS</div>
-      <div class="cell">${facility.courts.totalIndoorTennisCourts}</div>
+      <div class="cell">${facility?.courts?.totalIndoorTennisCourts}</div>
     </div>
     <div class="row">
       <div class="cell cell-title">TOTAL OUTDOOR TENNIS COURTS</div>
-      <div class="cell">${facility.courts.totalOutdoorTennisCourts}</div>
+      <div class="cell">${facility?.courts?.totalOutdoorTennisCourts}</div>
     </div>
   </div>
   `;
