@@ -507,6 +507,9 @@ export default async function decorate(block) {
       delete updatedfacility.courts.has78ftCourts;
       delete updatedfacility.courts.hasPickleballCourts;
       updatedfacility.lastUpdatedBy = userNameCpitalized;
+      if (updatedfacility.facilityStatus !== 'Duplicate') {
+        delete updatedfacility.survivorFacilityId;
+      }
       updatedfacility.sourceData = 'Customer Care';
       console.log(addr);
       console.log(facility);
