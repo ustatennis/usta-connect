@@ -311,15 +311,17 @@ export default async function decorate(block) {
     // validate zip
     const fieldFacilityZip = divh.querySelector('#text-zip');
     fieldFacilityZip.addEventListener('blur', ev => {
+      debugger;
       // eslint-disable-next-line no-use-before-define
       if (
         // eslint-disable-next-line no-use-before-define
         !isDigitsOnly(fieldFacilityZip.value) ||
         fieldFacilityZip.value.length !== 5
-      )
+      ) {
         ev.target.parentNode.classList.add('field-input-error');
-      const zipError = divh.querySelector('#zip-error');
-      zipError.innerHTML = 'Please enter only a 5-digit numeric zip code.';
+        const zipError = divh.querySelector('#zip-error');
+        zipError.innerHTML = 'Please enter only a 5-digit numeric zip code.';
+      }
     });
     fieldFacilityZip.addEventListener('focus', ev => {
       ev.target.parentNode.classList.remove('field-input-error');
