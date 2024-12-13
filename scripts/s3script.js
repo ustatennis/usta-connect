@@ -407,6 +407,9 @@ async function getSinitiAuthHeaders() {
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", `Bearer ${authToken}`);
   myHeaders.append("X-Internal-Traffic",'true');
+  myHeaders.append("Access-Control-Allow-Methods",'POST')
+  myHeaders.append("Access-Control-Allow-Headers",'authorization,content-type')
+  myHeaders.append("Access-Control-Allow-Origin",'*')
   return myHeaders;
 }
 async function authenticateSinitiEndpoint() {

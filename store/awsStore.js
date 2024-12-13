@@ -12,12 +12,14 @@ export function setAWSStore() {
   const appFileStatusEndpoint = window.hlx.APP_FILE_STATUS_API_ENDPOINT;
   const appAuthorizationEndpoint = window.hlx.APP_AUTHORIZATION_API_ENDPOINT;
   const appFileStatusClientId = window.hlx.APP_FILE_STATUS_API_CLIENT_ID;
-  const appFileStatusClientSecret = window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET;
-    const appSinitiEndpoint = window.hlx.APP_SINITI_API_ENDPOINT;
-    const appSinitiAuthorizationEndpoint = window.hlx.APP_SINITI_AUTHORIZATION_API_ENDPOINT;
-    const appSinitiClientId = window.hlx.APP_SINITI_API_CLIENT_ID;
-    const appSinitiClientSecret = window.hlx.APP_SINITI_API_CLIENT_SECRET;
-  
+  const appFileStatusClientSecret =
+    window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET;
+  const appSinitiEndpoint = window.hlx.APP_SINITI_API_ENDPOINT;
+  const appSinitiAuthorizationEndpoint =
+    window.hlx.APP_SINITI_AUTHORIZATION_API_ENDPOINT;
+  const appSinitiClientId = window.hlx.APP_SINITI_API_CLIENT_ID;
+  const appSinitiClientSecret = window.hlx.APP_SINITI_API_CLIENT_SECRET;
+
   awsStore.saveData('config', {
     identityPoolId,
     userPoolId,
