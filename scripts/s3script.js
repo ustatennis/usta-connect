@@ -410,3 +410,61 @@ async function authenticateFileStatusEndpoint() {
 // https://s3upload-ui-scanned-stage.s3.amazonaws.com/?list-type=2&prefix=private%2Fus-east-1%3A68ffed30-3180-48d2-8b37-2e07596c5389
 
 // https://s3upload-ui-upload-prod.s3.us-east-1.amazonaws.com/private/us-east-1%3Aa0ea4540-cbcc-4ff9-9b53-2c258f383593/sai.theja%40contractor.usta.com/logo192_1708367868662.png?x-id=PutObjecthttps://s3upload-ui-upload-prod.s3.us-east-1.amazonaws.com/private/us-east-1%3Aa0ea4540-cbcc-4ff9-9b53-2c258f383593/sai.theja%40contractor.usta.com/logo192_1708367868662.png?x-id=PutObject
+async function getSinitiAuthHeaders() {
+  if (!getValueFromLocalStorage('api_siniti_status_token')) {
+    await authenticateSinitiEndpoint();
+  }
+  let authToken = getValueFromLocalStorage('api_file_status_token');
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${authToken}`);
+  myHeaders.append("X-Internal-Traffic",'true');
+  myHeaders.append("Access-Control-Allow-Methods",'POST')
+  myHeaders.append("Access-Control-Allow-Headers",'authorization,content-type')
+  myHeaders.append("Access-Control-Allow-Origin",'*')
+  return myHeaders;
+}
+async function authenticateSinitiEndpoint() {
+  let config = getAWSStore();
+  const myHeaders = new Headers();
+  const encodedCred = btoa(`${config.appSinitiClientId}:${config.appSinitiClientSecret}`);
+  myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  myHeaders.append("Authorization", `Basic ${encodedCred}`);
+  const urlencoded = new URLSearchParams();
+  urlencoded.append("grant_type", "client_credentials");
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: urlencoded,
+    redirect: "follow"
+  };
+  try {
+    let response = await fetch(config.appSinitiAuthorizationEndpoint + "/oauth2/token", requestOptions);
+    response = await response.json();
+    setLocalStorage("api_siniti_status_token", response.access_token);
+  } catch (e) {
+    console.log("Siniti Authentication Failed");
+  }
+}
+export async function addressValidation(address){
+  const raw = JSON.stringify(address);
+  const headers = await getSinitiAuthHeaders();
+  const config =  getAWSStore();
+  const requestOptions = {
+    method: "POST",
+    headers: headers,
+    body: raw,
+  };
+  try{
+    let response = await fetch(config.appSinitiEndpoint+ "/v1/address/validation", requestOptions);
+    if(response.status != 200){
+      //Handle error status.
+    }
+    response = await response.json();
+    return response;
+  }catch(e){
+    console.log(e)
+  }
+  return {}; 
+}
