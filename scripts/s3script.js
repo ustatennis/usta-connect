@@ -456,3 +456,36 @@ export async function addressValidation(address){
   }
   return {}; 
 }
+export async function validateAddressV2 (address)
+{
+  const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const raw = JSON.stringify({
+  "key": "EF31-BC17-AR21-HT29",
+  "geocode": true,
+  "addresses": [
+  address
+  ]
+});
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow"
+};
+
+
+  try{
+    let response = await fetch("https://api.addressy.com/Cleansing/International/Batch/v1.00/json4.ws", requestOptions)
+    if(response.status != 200){
+      //Handle error status.
+    }
+    response = await response.json();
+    return response;
+  }catch(e){
+    console.log(e)
+  }
+  return []; 
+}
