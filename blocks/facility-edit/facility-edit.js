@@ -59,7 +59,7 @@ export default async function decorate(block) {
 <form class="rendered-form">
     <div class="formbuilder-text form-group field-text-facility-usta-number">
         <label for="text-facility-usta-number" class="formbuilder-text-label">FACILITY USTA NUMBER<span class="formbuilder-required">*</span></label>
-        <input type="number" class="form-control" name="ustaFacilityId" access="false" id="text-facility-usta-number" required="required" aria-required="true">
+        <input type="number" class="form-control" name="ustaFacilityId" access="false" id="text-facility-usta-number" required="required" aria-required="true" disabled>
         <span class="field-error" id="facility-usta-number-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-zendesk-internal-id">
