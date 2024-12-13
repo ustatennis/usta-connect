@@ -21,6 +21,8 @@
   text-transform: capitalize;
 }
 
-.facilities-container p a {
+.facilities-container p > a {
   text-decoration: underline;
 }
+
+/*# sourceMappingURL=facilities.css.map */

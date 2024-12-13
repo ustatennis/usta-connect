@@ -80,6 +80,7 @@ export default async function decorate(block) {
     <div class="formbuilder-text form-group field-text-city">
         <label for="text-city" class="formbuilder-text-label">CITY<span class="formbuilder-required">*</span></label>
         <input type="text" class="form-control" name="address.city" access="false" id="text-city" required="required" aria-required="true">
+        <span class="field-error" id="city-error"></span>
     </div>
     <div class="formbuilder-select form-group field-text-country">
         <label for="text-country" class="formbuilder-select-label">COUNTRY<span class="formbuilder-required">*</span></label>
@@ -101,8 +102,8 @@ export default async function decorate(block) {
         <select class="form-control" name="facilityType" id="select-facilitytype">
             <option value="Club" selected="true" id="select-facilitytype-0">Club</option>
             <option value="Corporation" id="select-facilitytype-1">Corporation</option>
-            <option value="Carks & Recreation" id="select-facilitytype-2">Parks &amp; Recreation</option>
-            <option value="Crivate Homeowner" id="select-facilitytype-3">Private Homeowner</option>
+            <option value="Parks & Recreation" id="select-facilitytype-2">Parks &amp; Recreation</option>
+            <option value="Private Homeowner" id="select-facilitytype-3">Private Homeowner</option>
             <option value="School" id="select-facilitytype-4">School</option>
             <option value="Service Facility" id="select-facilitytype-5">Service Facility</option>
         </select>
@@ -333,7 +334,7 @@ export default async function decorate(block) {
       if (fieldFacilityName.value.length > 100) {
         ev.target.parentNode.classList.add('field-input-error');
         const nameError = divh.querySelector('#name-error');
-        nameError.innerHTML = 'Name is too long';
+        nameError.innerHTML = 'Please do not enter more than 100 characters.';
       }
     });
     fieldFacilityName.addEventListener('focus', ev => {
