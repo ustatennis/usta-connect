@@ -184,7 +184,14 @@ export default async function decorate(block) {
         cellRenderer: nameAndAddressRenderer,
         width: 300,
       },
-      // { field: 'custom:country', headerName: 'Country', sortable: true },
+      {
+        field: 'address.streetAddressLine1',
+        headerName: 'Address',
+        hide: true,
+      },
+      { field: 'address.city', headerName: 'Country', hide: true },
+      { field: 'address.state', headerName: 'Country', hide: true },
+      { field: 'address.zip', headerName: 'Country', hide: true },
       {
         field: 'ustaFacilityId',
         headerName: 'Facility USTA No',
@@ -245,6 +252,7 @@ export default async function decorate(block) {
       headerHeight: 53,
       rowHeight: 60,
       rowSelection: 'single',
+      includeHiddenColumnsInQuickFilter: true,
       onSelectionChanged: () => {
         const selectedRows = gridOptions.api.getSelectedRows();
         window.location.assign(
