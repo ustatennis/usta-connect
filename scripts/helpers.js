@@ -103,6 +103,7 @@ export function removeTokens() {
   deleteLocalStorage('refresh_token');
   deleteLocalStorage('id_token');
   deleteLocalStorage('api_file_status_token')
+  deleteLocalStorage('api_siniti_status_token')
 }
 
 export function resetAWSConfigs() {
