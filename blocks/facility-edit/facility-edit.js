@@ -23,6 +23,8 @@ export default async function decorate(block) {
   // Get the value of a specific parameter
   const ustafacilityid = Number(urlParams.get('ustafacilityid'));
 
+  const createFacilityOperation = window.location.pathname.includes('create');
+
   let facility = {
     ustaFacilityId: null,
     facilityStatus: 'Active',
@@ -329,6 +331,22 @@ export default async function decorate(block) {
       zipError.innerHTML = '';
     });
     // validate name
+    const fieldZendeskInternalId = divh.querySelector(
+      '#text-zendesk-internal-id',
+    );
+    fieldZendeskInternalId.addEventListener('blur', ev => {
+      if (fieldZendeskInternalId.value.length > 100) {
+        ev.target.parentNode.classList.add('zendesk-internal-id-error');
+        const nameError = divh.querySelector('#zendesk-internal-id-error');
+        nameError.innerHTML = 'Please do not enter more than 100 characters.';
+      }
+    });
+    fieldZendeskInternalId.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('zendesk-internal-id-error');
+      const nameError = divh.querySelector('#zendesk-internal-id-error');
+      nameError.innerHTML = '';
+    });
+    // validate name
     const fieldFacilityName = divh.querySelector('#text-name');
     fieldFacilityName.addEventListener('blur', ev => {
       if (fieldFacilityName.value.length > 100) {
@@ -515,14 +533,13 @@ export default async function decorate(block) {
       console.log(facility);
       console.log(ob);
       console.log(updatedfacility);
-      debugger;
+      if (createFacilityOperation) delete updatedfacility.ustaFacilityId;
       const response = await createOrUpdateFacility(updatedfacility);
       console.log(response);
-      debugger;
       if (response.message) {
         alert(response.message);
       } else {
-        window.location = `/facility-confirm?ustafacilityid=${updatedfacility.ustaFacilityId}`;
+        window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
       }
     });
     return false; // Form is valid

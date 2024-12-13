@@ -245,6 +245,19 @@ export async function getFileStatuses(user, retry = 3) {
   return [];
 }
 
+export async function fetchAllFacilities(state, text) {
+  let fac = [];
+  let page = 1;
+  let resp=[];
+  do {
+    resp = await fetchFacilities(state, text, page);
+    if (resp.length>0) fac.push(...resp);
+    page++;;
+  }
+  while (resp.length>0);
+  return fac;
+}
+
 export async function fetchFacilities(state, text, page, size){
   const config = getAWSStore();
   const headers = await getAuthHeaders();
@@ -306,7 +319,6 @@ export async function createOrUpdateFacility(facility){
   };
   try{
     let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities", requestOptions);
-    debugger;
     if(response.status != 200){
       //Handle error status.
     }
