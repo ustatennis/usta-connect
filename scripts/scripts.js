@@ -82,6 +82,10 @@ function setStagePoolConfig() {
   window.hlx.APP_FILE_STATUS_API_ENDPOINT = 'https://stage-api-ustaconnect.usta.com';
   window.hlx.APP_FILE_STATUS_API_CLIENT_ID = '7tpb3e2ceupf5r572oh7fpsdpe';
   window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET = 'pcm2f7gi5gu0vhpqjneup3fhk35capc13n92qk5ham8onjhg3s9';
+  window.hlx.APP_SINITI_AUTHORIZATION_API_ENDPOINT = 'https://stage-account.usta.com';
+  window.hlx.APP_SINITI_API_ENDPOINT = 'https://stage-services.usta.com';
+  window.hlx.APP_SINITI_API_CLIENT_ID = '3sfema9t4ftf0mguomefmqr6pq';
+  window.hlx.APP_SINITI_API_CLIENT_SECRET = 'ti1mscnufta4h6fh1vkshuj0so3rui213gbjft4m1c5incgnlqk';
 }
 const subdomain = window.location.hostname.split('.')[0];
 const envUnderDomain = subdomain?.split('-')[0];
