@@ -1,6 +1,6 @@
 // import { getUsersList } from '../../middleware/admin.js';
 import { usstates } from '../../constants/usstates.js';
-import { fetchFacilities } from '../../scripts/s3script.js';
+import { fetchAllFacilities } from '../../scripts/s3script.js';
 // import { isAdminUser } from '../../store/userStore.js';
 // import { uploadS3Objects, listFiles } from '../../scripts/s3script.js';
 import '../../jslibraries/ag-grid-community.min.js';
@@ -175,7 +175,7 @@ export default async function decorate(block) {
     // const config = getAWSStore();
     gridDiv = document.querySelector('#userGrid');
     gridDiv.innerHTML = '';
-    Facilities = await fetchFacilities(selectedValue, '');
+    Facilities = await fetchAllFacilities(selectedValue, '');
     columnDefs = [
       {
         field: 'name',
