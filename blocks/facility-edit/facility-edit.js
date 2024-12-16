@@ -2,7 +2,6 @@
 import {
   fetchFacilityById,
   createOrUpdateFacility,
-  validateAddressV2,
 } from '../../scripts/s3script.js';
 import { usstates } from '../../constants/usstates.js';
 import { countrystate } from '../../constants/countrystate.js';
@@ -598,8 +597,6 @@ You entered:
       console.log(ob);
       console.log(updatedfacility);
       // eslint-disable-next-line no-unused-vars
-      const xx = await validateAddressV2();
-      debugger;
       if (createFacilityOperation) delete updatedfacility.ustaFacilityId;
       const response = await createOrUpdateFacility(updatedfacility);
       // hideSpinner();
