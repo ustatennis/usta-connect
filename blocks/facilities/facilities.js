@@ -28,8 +28,6 @@ export default async function decorate(block) {
   </div>
 </div>`;
 
-
-
   function showSpinner() {
     const spinner = document.querySelector('#spinner');
     spinner.style.display = 'block';

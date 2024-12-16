@@ -90,7 +90,7 @@ You entered:
   </div>
 </div>
 
-    <form id="modalForm">
+    <form id="modal-form">
       <button type="button" id="submitBtn">CONTINUE</button>
       <button type="button" id="cancelBtn">CANCEL</button>
     </form>
@@ -226,9 +226,11 @@ You entered:
   // eslint-disable-next-line no-use-before-define
   populateForm(divheader);
 
+  // eslint-disable-next-line no-unused-vars
   function modalMessageOpen(msg) {}
 
-  function modalAddressSelect(addr1, addr2) {
+  // eslint-disable-next-line no-unused-vars
+  function modalAddressSelect() {
     const bdy = document.createElement('div');
     bdy.innerHTML = `
       <div class="modal-content">
@@ -255,7 +257,7 @@ You entered:
   </div>
 </div>
 
-    <form id="modalForm">
+    <form id="modal-form">
       <button type="button" id="submitBtn">CONTINUE</button>
       <button type="button" id="cancelBtn">CANCEL</button>
     </form>
