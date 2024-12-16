@@ -541,8 +541,12 @@ You entered:
       };
       ob.survivorFacilityId = Number(ob.survivorFacilityId || 0);
       const courts = {
-        totalIndoorTennisCourts: Number(ob['courts.totalIndoorTennisCourts'] || 0),
-        totalOutdoorTennisCourts: Number(ob['courts.totalOutdoorTennisCourts'] || 0),
+        totalIndoorTennisCourts: Number(
+          ob['courts.totalIndoorTennisCourts'] || 0,
+        ),
+        totalOutdoorTennisCourts: Number(
+          ob['courts.totalOutdoorTennisCourts'] || 0,
+        ),
       };
       ob.isPrivateFlag = ob.isPrivate === 'Yes';
       delete ob['address.streetAddressLine1'];
