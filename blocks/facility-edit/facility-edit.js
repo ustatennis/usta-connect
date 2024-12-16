@@ -153,10 +153,9 @@ You entered:
         <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY TYPE DETAIL</label>
         <select class="form-control" name="facilityTypeDetail" id="select-facilitytype-detail">
             <option value="Apartments/Condominiums" selected="true" id="select-facilitytype-detail-0">Apartments/Condominiums</option>
-            <option value="Athletic/Commercial club" id="select-facilitytype-detail-1">Athletic/Commercial Club</option>
+            <option value="Athletic/Commercial Club" id="select-facilitytype-detail-1">Athletic/Commercial Club</option>
             <option value="College/University" id="select-facilitytype-detail-2">College/University</option>
-            <option value="Community/Recreation" id="select-facilitytype-detail-3">Community/Recreation</option>
-            <option value="Center" id="select-facilitytype-detail-4">Center</option>
+            <option value="Community/Recreation Center" id="select-facilitytype-detail-3">Community/Recreation Center</option>
             <option value="Corporation" id="select-facilitytype-detail-5">Corporation</option>
             <option value="Country Club" id="select-facilitytype-detail-6">Country Club</option>
             <option value="Homeowner Association" id="select-facilitytype-detail-7">Homeowner Association</option>
