@@ -22,7 +22,23 @@ export default async function decorate(block) {
   div.style = 'height: 800px; max-width:1280px;font-size:14px';
   div.className = 'ag-theme-alpine';
 
-  div.innerHTML = '';
+  div.innerHTML = `<div id="spinner" style="display: none;">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>`;
+
+
+
+  function showSpinner() {
+    const spinner = document.querySelector('#spinner');
+    spinner.style.display = 'block';
+  }
+
+  function hideSpinner() {
+    const spinner = document.querySelector('#spinner');
+    spinner.style.display = 'none';
+  }
 
   block.textContent = '';
   block.append(div);
@@ -174,8 +190,14 @@ export default async function decorate(block) {
     // onsole.log('Selected value:', selectedValue);
     // const config = getAWSStore();
     gridDiv = document.querySelector('#userGrid');
-    gridDiv.innerHTML = '';
+    gridDiv.innerHTML = `<div id="spinner" style="display: none;">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>`;
+    showSpinner();
     Facilities = await fetchAllFacilities(selectedValue, '');
+    hideSpinner();
     columnDefs = [
       {
         field: 'name',
@@ -265,7 +287,11 @@ export default async function decorate(block) {
     // console.log(config);
     // console.log(Facilities);
     gridDiv = document.querySelector('#userGrid');
-    gridDiv.innerHTML = '';
+    gridDiv.innerHTML = `<div id="spinner" style="display: none;">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>`;
     // eslint-disable-next-line no-undef, no-unused-vars
     const userGrid = new agGrid.Grid(gridDiv, gridOptions);
     // userGrid.GridApi.setGridOption('rowData', Facilities);

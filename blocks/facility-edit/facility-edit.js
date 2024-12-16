@@ -2,6 +2,7 @@
 import {
   fetchFacilityById,
   createOrUpdateFacility,
+  validateAddressV2,
 } from '../../scripts/s3script.js';
 import { usstates } from '../../constants/usstates.js';
 import { countrystate } from '../../constants/countrystate.js';
@@ -58,6 +59,44 @@ export default async function decorate(block) {
 
   const divheader = document.createElement('div');
   divheader.innerHTML = `
+<div id="spinner" style="display: none;">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="modal-header">We found a similar address</div>
+    <div class="modal-body">
+      Please verify your address below
+
+    <div class="row">
+  <div class="column">
+We found:
+    <div>
+    <input type="radio" id="radio1" name="addressoption" value="option1">
+    <label for="radio1">Use this address</label>
+    </div>
+  </div>
+
+  <div class="column">
+You entered:
+    <div>
+    <input type="radio" id="radio2" name="addressoption" value="option2">
+    <label for="radio2">Use the address you entered</label>
+    </div>
+  </div>
+</div>
+
+    <form id="modalForm">
+      <button type="button" id="submitBtn">CONTINUE</button>
+      <button type="button" id="cancelBtn">CANCEL</button>
+    </form>
+    </div>
+  </div>
+</div>
 <form class="rendered-form">
     <div class="formbuilder-text form-group field-text-facility-usta-number">
         <label for="text-facility-usta-number" class="formbuilder-text-label">FACILITY USTA NUMBER<span class="formbuilder-required">*</span></label>
@@ -187,6 +226,44 @@ export default async function decorate(block) {
   // eslint-disable-next-line no-use-before-define
   populateForm(divheader);
 
+  function modalMessageOpen(msg) {}
+
+  function modalAddressSelect(addr1, addr2) {
+    const bdy = document.createElement('div');
+    bdy.innerHTML = `
+      <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="modal-header">We found a similar address</div>
+    <div class="modal-body">
+      Please verify your address below
+
+    <div class="row">
+  <div class="column">
+We found:
+    <div>
+    <input type="radio" id="radio1" name="addressoption" value="option1">
+    <label for="radio1">Use this address</label>
+    </div>
+  </div>
+
+  <div class="column">
+You entered:
+    <div>
+    <input type="radio" id="radio2" name="addressoption" value="option2">
+    <label for="radio2">Use the address you entered</label>
+    </div>
+  </div>
+</div>
+
+    <form id="modalForm">
+      <button type="button" id="submitBtn">CONTINUE</button>
+      <button type="button" id="cancelBtn">CANCEL</button>
+    </form>
+    </div>
+  </div>
+    `;
+  }
+
   async function populateForm(divh) {
     // eslint-disable-next-line no-unused-vars
 
@@ -251,37 +328,6 @@ export default async function decorate(block) {
       facility.courts.totalOutdoorTennisCourts;
   }
 
-  //   function updateForm(divh) {
-  //     const date = new Date();
-  //     const formattedDate = date.toISOString().slice(0, 16).replace(':', '.');
-  //     const dummy = {
-  //         "facilityStatus": "Active",
-  //         "externalFacilityId" : "b89eeafa-218e-11ee-be56-0242ac120002",
-  //         "name": "Facility (with phone and website after update)",
-  //         "address": {
-  //           "streetAddressLine1": "",
-  //           "streetAddressLine2": "",
-  //           "city": "",
-  //           "state": "",
-  //           "zip": "00000",
-  //           "postalCode": "00000-2650",
-  //           "country": "US",
-  //           "latitude": "40.270742",
-  //           "longitude": "-75.143615"
-  //          },
-  //         "verifiedBy": "Test User",
-  //         "phoneNumber": "555-555-5555",
-  //         "website": "www.usta.com",
-  //         "sourceData": "USTA",
-  //         "lastUpdatedBy": "Logged in user"
-  //       }
-  //   }
-
-  //   function createForm(divh) {
-  //     const date = new Date();
-  //     const formattedDate = date.toISOString().slice(0, 19);
-  //   }
-
   function formToObject(divh) {
     const object = {};
     const formElement = divh.querySelector('.rendered-form');
@@ -292,6 +338,13 @@ export default async function decorate(block) {
   }
 
   function validateForm(divh) {
+    const fieldFacilityUstaNumber = divh.querySelector(
+      '.field-text-facility-usta-number',
+    );
+    if (createFacilityOperation) {
+      fieldFacilityUstaNumber.classList.add('hidden');
+    }
+
     // validate zendesk-internal-id
     const fieldZendesk = divh.querySelector('#text-zendesk-internal-id');
     fieldZendesk.addEventListener('blur', ev => {
@@ -475,9 +528,9 @@ export default async function decorate(block) {
     btnSubmit.addEventListener('click', async ev => {
       // eslint-disable-next-line prettier/prettier
       console.log('SUBMIT');
+      // showSpinner();
       ev.preventDefault();
       const ob = formToObject(divheader);
-      ob.ustaFacilityId = Number(ob.ustaFacilityId);
       const addr = {
         streetAddressLine1: ob['address.streetAddressLine1'],
         city: ob['address.city'],
@@ -533,8 +586,12 @@ export default async function decorate(block) {
       console.log(facility);
       console.log(ob);
       console.log(updatedfacility);
+      // eslint-disable-next-line no-unused-vars
+      const xx = await validateAddressV2();
+      debugger;
       if (createFacilityOperation) delete updatedfacility.ustaFacilityId;
       const response = await createOrUpdateFacility(updatedfacility);
+      // hideSpinner();
       console.log(response);
       if (response.message) {
         alert(response.message);
@@ -542,7 +599,39 @@ export default async function decorate(block) {
         window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
       }
     });
-    return false; // Form is valid
+    // const modal = divh.querySelector('#myModal');
+    // const btn = divh.querySelector('#openModal');
+    //   const span = divh.querySelector('.close');
+    //   const submitBtn = divh.querySelector('#submitBtn');
+    //   const cancelBtn = divh.querySelector('#cancelBtn');
+    //   // let modalValue = null;
+
+    //   btn.onclick = function () {
+    //     modal.style.display = 'block';
+    //   };
+
+    //   span.onclick = function () {
+    //     modal.style.display = 'none';
+    //   };
+
+    //   window.onclick = function (event) {
+    //     if (event.target === modal) {
+    //       modal.style.display = 'none';
+    //     }
+    //   };
+
+    //   submitBtn.onclick = function () {
+    //     // modalValue = divh.getElementById('dataInput').value;
+    //     modal.style.display = 'none';
+    //     // Do something with modalValue, e.g., console.log it
+    //     // console.log(modalValue);
+    //   };
+
+    //   cancelBtn.onclick = function () {
+    //     modalValue = null;
+    //     modal.style.display = 'none';
+    //   };
+    //   return false; // Form is valid
   }
 
   function isDigitsOnly(str) {
