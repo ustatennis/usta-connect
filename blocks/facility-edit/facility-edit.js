@@ -2,7 +2,6 @@
 import {
   fetchFacilityById,
   createOrUpdateFacility,
-  validateAddressV2,
 } from '../../scripts/s3script.js';
 import { usstates } from '../../constants/usstates.js';
 import { countrystate } from '../../constants/countrystate.js';
@@ -153,10 +152,9 @@ You entered:
         <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY TYPE DETAIL</label>
         <select class="form-control" name="facilityTypeDetail" id="select-facilitytype-detail">
             <option value="Apartments/Condominiums" selected="true" id="select-facilitytype-detail-0">Apartments/Condominiums</option>
-            <option value="Athletic/Commercial club" id="select-facilitytype-detail-1">Athletic/Commercial Club</option>
+            <option value="Athletic/Commercial Club" id="select-facilitytype-detail-1">Athletic/Commercial Club</option>
             <option value="College/University" id="select-facilitytype-detail-2">College/University</option>
-            <option value="Community/Recreation" id="select-facilitytype-detail-3">Community/Recreation</option>
-            <option value="Center" id="select-facilitytype-detail-4">Center</option>
+            <option value="Community/Recreation Center" id="select-facilitytype-detail-3">Community/Recreation Center</option>
             <option value="Corporation" id="select-facilitytype-detail-5">Corporation</option>
             <option value="Country Club" id="select-facilitytype-detail-6">Country Club</option>
             <option value="Homeowner Association" id="select-facilitytype-detail-7">Homeowner Association</option>
@@ -188,7 +186,7 @@ You entered:
     </div>
     <div class="formbuilder-text form-group field-text-survivor-facility-id hidden">
         <label for="text-zip" class="formbuilder-text-label">SURVIVOR FACILITY ID</label>
-        <input type="text" class="form-control" name="survivorFacilityId" access="false" id="text-survivor-facility-id">
+        <input type="number" class="form-control" name="survivorFacilityId" access="false" id="text-survivor-facility-id">
         <span class="field-error" id="survivor-facility-id-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
@@ -222,6 +220,11 @@ You entered:
     option.text = country.label;
     countrybox.appendChild(option);
   });
+
+  if (createFacilityOperation) {
+    const dupli = divheader.querySelector('#select-facility-status-3');
+    dupli.classList.add('hidden');
+  }
 
   // eslint-disable-next-line no-use-before-define
   populateForm(divheader);
@@ -315,7 +318,7 @@ You entered:
     fieldFacilityStatus.value = facility.facilityStatus;
     // FacilityStatus
     const survivorFacilityId = divh.querySelector('#text-survivor-facility-id');
-    survivorFacilityId.value = facility.survivorFacilityId;
+    survivorFacilityId.value = Number(facility.survivorFacilityId);
     // Total indoor tennis courts
     const fieldTotalIndoorTennisCourts = divh.querySelector(
       '#text-total-indoor-tennis-courts',
@@ -540,9 +543,14 @@ You entered:
         zip: ob['address.zip'],
         country: ob['address.country'],
       };
+      ob.survivorFacilityId = Number(ob.survivorFacilityId || 0);
       const courts = {
-        totalIndoorTennisCourts: Number(ob['courts.totalIndoorTennisCourts']),
-        totalOutdoorTennisCourts: Number(ob['courts.totalOutdoorTennisCourts']),
+        totalIndoorTennisCourts: Number(
+          ob['courts.totalIndoorTennisCourts'] || 0,
+        ),
+        totalOutdoorTennisCourts: Number(
+          ob['courts.totalOutdoorTennisCourts'] || 0,
+        ),
       };
       ob.isPrivateFlag = ob.isPrivate === 'Yes';
       delete ob['address.streetAddressLine1'];
@@ -589,8 +597,6 @@ You entered:
       console.log(ob);
       console.log(updatedfacility);
       // eslint-disable-next-line no-unused-vars
-      const xx = await validateAddressV2();
-      debugger;
       if (createFacilityOperation) delete updatedfacility.ustaFacilityId;
       const response = await createOrUpdateFacility(updatedfacility);
       // hideSpinner();
