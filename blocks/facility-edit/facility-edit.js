@@ -187,7 +187,7 @@ You entered:
     </div>
     <div class="formbuilder-text form-group field-text-survivor-facility-id hidden">
         <label for="text-zip" class="formbuilder-text-label">SURVIVOR FACILITY ID</label>
-        <input type="text" class="form-control" name="survivorFacilityId" access="false" id="text-survivor-facility-id">
+        <input type="number" class="form-control" name="survivorFacilityId" access="false" id="text-survivor-facility-id">
         <span class="field-error" id="survivor-facility-id-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
@@ -314,7 +314,7 @@ You entered:
     fieldFacilityStatus.value = facility.facilityStatus;
     // FacilityStatus
     const survivorFacilityId = divh.querySelector('#text-survivor-facility-id');
-    survivorFacilityId.value = facility.survivorFacilityId;
+    survivorFacilityId.value = Number(facility.survivorFacilityId);
     // Total indoor tennis courts
     const fieldTotalIndoorTennisCourts = divh.querySelector(
       '#text-total-indoor-tennis-courts',
@@ -539,9 +539,10 @@ You entered:
         zip: ob['address.zip'],
         country: ob['address.country'],
       };
+      ob.survivorFacilityId = Number(ob.survivorFacilityId || 0);
       const courts = {
-        totalIndoorTennisCourts: Number(ob['courts.totalIndoorTennisCourts']),
-        totalOutdoorTennisCourts: Number(ob['courts.totalOutdoorTennisCourts']),
+        totalIndoorTennisCourts: Number(ob['courts.totalIndoorTennisCourts'] || 0),
+        totalOutdoorTennisCourts: Number(ob['courts.totalOutdoorTennisCourts'] || 0),
       };
       ob.isPrivateFlag = ob.isPrivate === 'Yes';
       delete ob['address.streetAddressLine1'];
