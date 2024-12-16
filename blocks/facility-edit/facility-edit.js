@@ -2,11 +2,17 @@
 import {
   fetchFacilityById,
   createOrUpdateFacility,
+  addressValidation,
 } from '../../scripts/s3script.js';
 import { usstates } from '../../constants/usstates.js';
 import { countrystate } from '../../constants/countrystate.js';
 import { getUser } from '../../store/userStore.js';
 
+// let modalSelect;
+let updatedfacility = {};
+let matchedAddress = {};
+// eslint-disable-next-line no-unused-vars
+let modalSelect = '';
 const user = getUser();
 const userName = user.UserAttributes.find(o => o.Name === 'name')?.Value;
 const userNameCpitalized =
@@ -55,6 +61,14 @@ export default async function decorate(block) {
   if (ustafacilityid) {
     facility = await fetchFacilityById(ustafacilityid);
   }
+
+  const userAddress = {
+    address1: '25 Ivry rd',
+    city: 'Bloomfield',
+    state: 'CT',
+    zipcode: '06002',
+    country: 'USA',
+  };
 
   const divheader = document.createElement('div');
   divheader.innerHTML = `
@@ -108,7 +122,7 @@ You entered:
         <span class="field-error" id="zendesk-internal-id-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-name">
-        <label for="text-name" class="formbuilder-text-label">NAME</label>
+        <label for="text-name" class="formbuilder-text-label">NAME<span class="formbuilder-required">*</span></label>
         <input type="text" class="form-control" name="name" access="false" id="text-name">
         <span class="field-error" id="name-error"></span>
     </div>
@@ -133,12 +147,12 @@ You entered:
         <span class="field-error" id="state-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-zip">
-        <label for="text-zip" class="formbuilder-text-label">ZIP/POSTAL CODE</label>
+        <label for="text-zip" class="formbuilder-text-label">ZIP/POSTAL CODE<span class="formbuilder-required">*</span></label>
         <input type="text" class="form-control" name="address.zip" access="false" id="text-zip">
         <span class="field-error" id="zip-error"></span>
     </div>
     <div class="formbuilder-select form-group field-select-facilitytype">
-        <label for="select-facilitytype" class="formbuilder-select-label">FACILITY TYPE</label>
+        <label for="select-facilitytype" class="formbuilder-select-label">FACILITY TYPE<span class="formbuilder-required">*</span></label>
         <select class="form-control" name="facilityType" id="select-facilitytype">
             <option value="Club" selected="true" id="select-facilitytype-0">Club</option>
             <option value="Corporation" id="select-facilitytype-1">Corporation</option>
@@ -149,7 +163,7 @@ You entered:
         </select>
     </div>
     <div class="formbuilder-select form-group field-select-facilitytype-detail">
-        <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY TYPE DETAIL</label>
+        <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY TYPE DETAIL<span class="formbuilder-required">*</span></label>
         <select class="form-control" name="facilityTypeDetail" id="select-facilitytype-detail">
             <option value="Apartments/Condominiums" selected="true" id="select-facilitytype-detail-0">Apartments/Condominiums</option>
             <option value="Athletic/Commercial Club" id="select-facilitytype-detail-1">Athletic/Commercial Club</option>
@@ -175,7 +189,7 @@ You entered:
         </div>
     </div>
     <div class="formbuilder-select form-group field-select-facility-status">
-        <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY STATUS</label>
+        <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY STATUS<span class="formbuilder-required">*</span></label>
         <select class="form-control" name="facilityStatus" id="select-facility-status">
             <option value="Active" selected="true" id="select-facility-status-0">Active</option>
             <option value="Closed" id="select-facility-status-1">Closed</option>
@@ -227,26 +241,82 @@ You entered:
   }
 
   // eslint-disable-next-line no-use-before-define
-  populateForm(divheader);
+  await populateForm(divheader);
 
   // eslint-disable-next-line no-unused-vars
   function modalMessageOpen(msg) {}
 
   // eslint-disable-next-line no-unused-vars
-  function modalAddressSelect() {
+  function modalAddressConfirm() {
+    const bdy = document.createElement('div');
+    bdy.innerHTML = `
+      <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="modal-header">No Address Found</div>
+    <div class="modal-body">
+      <div class="modal-sub-header">Would you like to continue with this address?</div>
+
+    <form id="modal-form">
+      <button type="button" id="submitBtn">CONTINUE</button>
+      <button type="button" id="cancelBtn">CANCEL</button>
+    </form>
+    </div>
+  </div>
+    `;
+    const showDiv = divheader.querySelector('#myModal');
+    showDiv.style.display = 'block';
+    showDiv.innerHTML = '';
+    showDiv.appendChild(bdy);
+    // const modal = showDiv.querySelector('#myModal');
+    const span = showDiv.querySelector('.close');
+    const submitBtn = showDiv.querySelector('#submitBtn');
+    const cancelBtn = showDiv.querySelector('#cancelBtn');
+    span.onclick = function () {
+      const modalwindow = document.querySelector('#myModal');
+      modalwindow.style.display = 'none';
+    };
+    window.onclick = function (event) {
+      const modal = document.querySelector('#myModal');
+      if (event.target === modal) {
+        const modalwindow = document.querySelector('#myModal');
+        modalwindow.style.display = 'none';
+      }
+    };
+    submitBtn.onclick = async function () {
+      const response = await createOrUpdateFacility(updatedfacility);
+      // hideSpinner();
+      console.log(response);
+      if (response.message) {
+        alert(response.message);
+      } else {
+        window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+      }
+      const modalwindow = document.querySelector('#myModal');
+      modalwindow.style.display = 'none';
+    };
+    cancelBtn.onclick = function () {
+      const modalwindow = document.querySelector('#myModal');
+      modalwindow.style.display = 'none';
+    };
+  }
+  // eslint-disable-next-line no-unused-vars
+  function modalAddressSelect(addr1, addr2) {
     const bdy = document.createElement('div');
     bdy.innerHTML = `
       <div class="modal-content">
     <span class="close">&times;</span>
     <div class="modal-header">We found a similar address</div>
     <div class="modal-body">
-      Please verify your address below
+      <div class="modal-sub-header">Please verify your address below</div>
 
     <div class="row">
   <div class="column">
 We found:
     <div>
-    <input type="radio" id="radio1" name="addressoption" value="option1">
+    ${addr1.address1}<br/>
+    ${addr1?.city}, ${addr1?.state} ${addr1?.zip}<br/>
+    ${addr1.country}<br/><br/>
+    <input type="radio" id="radio1" name="addressoption" value="selectFound">
     <label for="radio1">Use this address</label>
     </div>
   </div>
@@ -254,7 +324,10 @@ We found:
   <div class="column">
 You entered:
     <div>
-    <input type="radio" id="radio2" name="addressoption" value="option2">
+    ${addr2.address1}<br/>
+    ${addr2?.city}, ${addr2?.state} ${addr2?.zip}<br/>
+    ${addr2.country}<br/><br/>
+    <input type="radio" id="radio2" name="addressoption" value="selectEntered">
     <label for="radio2">Use the address you entered</label>
     </div>
   </div>
@@ -267,6 +340,60 @@ You entered:
     </div>
   </div>
     `;
+    const showDiv = divheader.querySelector('#myModal');
+    showDiv.style.display = 'block';
+    showDiv.innerHTML = '';
+    showDiv.appendChild(bdy);
+    const modal = showDiv.querySelector('#myModal');
+    const span = showDiv.querySelector('.close');
+    const submitBtn = showDiv.querySelector('#submitBtn');
+    const cancelBtn = showDiv.querySelector('#cancelBtn');
+    span.onclick = function () {
+      const modalwindow = document.querySelector('#myModal');
+      modalwindow.style.display = 'none';
+    };
+
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        // const modal = document.querySelector('#myModal');
+        const modalwindow = document.querySelector('#myModal');
+        modalwindow.style.display = 'none';
+      }
+    };
+
+    submitBtn.onclick = async function () {
+      modalSelect = '';
+      // Get all radio buttons with the specified name
+      const radioButtons = document.querySelectorAll(
+        'input[name="addressoption"]',
+      );
+
+      // Find the selected radio button
+      radioButtons.forEach(radioButton => {
+        if (radioButton.checked) {
+          modalSelect = radioButton.value;
+        }
+      });
+      updatedfacility.address.streetAddressLine1 = matchedAddress.address1;
+      updatedfacility.address.city = matchedAddress.city;
+      updatedfacility.address.zip = matchedAddress.zip;
+      updatedfacility.address.state = matchedAddress.state;
+      const response = await createOrUpdateFacility(updatedfacility);
+      // hideSpinner();
+      console.log(response);
+      if (response.message) {
+        alert(response.message);
+      } else {
+        window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+      }
+      const modalwindow = document.querySelector('#myModal');
+      modalwindow.style.display = 'none';
+    };
+
+    cancelBtn.onclick = function () {
+      const modalwindow = document.querySelector('#myModal');
+      modalwindow.style.display = 'none';
+    };
   }
 
   async function populateForm(divh) {
@@ -428,7 +555,12 @@ You entered:
           'Please do not enter more than 200 characters.';
       }
 
-      if (fieldFacilityAddr.value.toLowerCase().includes('po box')) {
+      if (
+        fieldFacilityAddr.value
+          .toLowerCase()
+          .replace(/[\s.]/g, '')
+          .includes('pobox')
+      ) {
         ev.target.parentNode.classList.add('field-input-error');
         const addressError = divh.querySelector('#address-error');
         addressError.innerHTML = 'P.O. Boxes are not permitted.';
@@ -564,7 +696,7 @@ You entered:
       delete ob.isPrivate;
       facility.address = { ...facility.address, ...addr };
       facility.courts = { ...facility.courts, ...courts };
-      const updatedfacility = { ...facility, ...ob };
+      updatedfacility = { ...facility, ...ob };
       //   const date = new Date();
       //   updatedfacility.lastUpdatedDateTime = date.toISOString().slice(0, 19);
       delete updatedfacility.address.district_id;
@@ -596,50 +728,53 @@ You entered:
       console.log(facility);
       console.log(ob);
       console.log(updatedfacility);
+      userAddress.address1 = updatedfacility.address.streetAddressLine1;
+      userAddress.city = updatedfacility.address.city;
+      userAddress.state = updatedfacility.address.state;
+      userAddress.zip = updatedfacility.address.zip;
+      userAddress.country = updatedfacility.address.country;
       // eslint-disable-next-line no-unused-vars
+      const sinRes = await addressValidation(userAddress);
+      matchedAddress = {
+        address1: sinRes.matchedAddress.address1,
+        city: sinRes.matchedAddress.city,
+        state: sinRes.matchedAddress.administrativeArea,
+        zip: sinRes.matchedAddress.zipcodePrimary,
+        country: sinRes.matchedAddress.country,
+      };
       if (createFacilityOperation) delete updatedfacility.ustaFacilityId;
-      const response = await createOrUpdateFacility(updatedfacility);
-      // hideSpinner();
-      console.log(response);
-      if (response.message) {
-        alert(response.message);
+      if (sinRes.matchedAddress.status === 'SUGGEST') {
+        modalAddressSelect(matchedAddress, userAddress);
+      } else if (sinRes.matchedAddress.status === 'BAD') {
+        modalAddressConfirm(userAddress);
       } else {
-        window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+        const response = await createOrUpdateFacility(updatedfacility);
+        // hideSpinner();
+        console.log(response);
+        if (response.message) {
+          alert(response.message);
+        } else {
+          window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+        }
       }
+
+      // const response = await createOrUpdateFacility(updatedfacility);
+      // // hideSpinner();
+      // console.log(response);
+      // if (response.message) {
+      //   alert(response.message);
+      // } else {
+      //   window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+      // }
     });
     // const modal = divh.querySelector('#myModal');
-    // const btn = divh.querySelector('#openModal');
-    //   const span = divh.querySelector('.close');
-    //   const submitBtn = divh.querySelector('#submitBtn');
-    //   const cancelBtn = divh.querySelector('#cancelBtn');
-    //   // let modalValue = null;
+    // const span = divh.querySelector('.close');
+    // const submitBtn = divh.querySelector('#submitBtn');
+    // const cancelBtn = divh.querySelector('#cancelBtn');
+    // let modalValue = null;
+    // debugger;
 
-    //   btn.onclick = function () {
-    //     modal.style.display = 'block';
-    //   };
-
-    //   span.onclick = function () {
-    //     modal.style.display = 'none';
-    //   };
-
-    //   window.onclick = function (event) {
-    //     if (event.target === modal) {
-    //       modal.style.display = 'none';
-    //     }
-    //   };
-
-    //   submitBtn.onclick = function () {
-    //     // modalValue = divh.getElementById('dataInput').value;
-    //     modal.style.display = 'none';
-    //     // Do something with modalValue, e.g., console.log it
-    //     // console.log(modalValue);
-    //   };
-
-    //   cancelBtn.onclick = function () {
-    //     modalValue = null;
-    //     modal.style.display = 'none';
-    //   };
-    //   return false; // Form is valid
+    return false; // Form is valid
   }
 
   function isDigitsOnly(str) {
