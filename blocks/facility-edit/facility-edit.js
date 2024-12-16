@@ -222,6 +222,11 @@ You entered:
     countrybox.appendChild(option);
   });
 
+  if (createFacilityOperation) {
+    const dupli = divheader.querySelector('#select-facility-status-3');
+    dupli.classList.add('hidden');
+  }
+
   // eslint-disable-next-line no-use-before-define
   populateForm(divheader);
 
