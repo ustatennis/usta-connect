@@ -470,6 +470,7 @@ export async function addressValidation(address){
 }
 export async function validateAddressV2 (address)
 {
+address = {Address1:"123 Brite Ave",City:"Scarsdale",Zip:"10583",Country:"US",State:"NY"};
   const myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
@@ -491,6 +492,7 @@ const requestOptions = {
 
   try{
     let response = await fetch("https://api.addressy.com/Cleansing/International/Batch/v1.00/json4.ws", requestOptions)
+    debugger;
     if(response.status != 200){
       //Handle error status.
     }
