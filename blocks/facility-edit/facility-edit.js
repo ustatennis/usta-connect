@@ -48,8 +48,8 @@ export default async function decorate(block) {
       longitude: '-75.143615',
     },
     courts: {
-      totalIndoorTennisCourts: '',
-      totalOutdoorTennisCourts: '',
+      totalIndoorTennisCourts: 0,
+      totalOutdoorTennisCourts: 0,
     },
     verifiedBy: 'Test User',
     phoneNumber: '555-555-5555',
@@ -193,7 +193,7 @@ You entered:
         <select class="form-control" name="facilityStatus" id="select-facility-status">
             <option value="Active" selected="true" id="select-facility-status-0">Active</option>
             <option value="Closed" id="select-facility-status-1">Closed</option>
-            <option value="Converted/PickleBall" id="select-facility-status-2">Converted/PickleBall</option>
+            <option value="ConvertedPickleBall" id="select-facility-status-2">Converted/PickleBall</option>
             <option value="Duplicate" id="select-facility-status-3">Duplicate</option>
             <option value="Nonexistent" id="select-facility-status-4">Nonexistent</option>
         </select>
@@ -205,12 +205,12 @@ You entered:
     </div>
     <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
         <label for="text-name" class="formbuilder-text-label">TOTAL INDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+        <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
         <label for="text-address" class="formbuilder-text-label">TOTAL OUTDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+        <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
         </div>
     <div class="formbuttons">
@@ -450,14 +450,16 @@ You entered:
     const fieldTotalIndoorTennisCourts = divh.querySelector(
       '#text-total-indoor-tennis-courts',
     );
-    fieldTotalIndoorTennisCourts.value =
-      facility.courts.totalIndoorTennisCourts;
+    fieldTotalIndoorTennisCourts.value = Number(
+      facility.courts.totalIndoorTennisCourts,
+    );
     // Total outdoor tennis courts
     const fieldTotalOutdoorTennisCourts = divh.querySelector(
       '#text-total-outdoor-tennis-courts',
     );
-    fieldTotalOutdoorTennisCourts.value =
-      facility.courts.totalOutdoorTennisCourts;
+    fieldTotalOutdoorTennisCourts.value = Number(
+      facility.courts.totalOutdoorTennisCourts,
+    );
   }
 
   function formToObject(divh) {
