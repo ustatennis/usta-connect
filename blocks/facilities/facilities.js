@@ -239,15 +239,18 @@ export default async function decorate(block) {
       {
         field: 'createdDateTime',
         headerName: 'Created Date Time',
+        sortable: true,
       },
       {
         field: 'lastUpdatedBy',
         headerName: 'Last Updated By',
         width: 145,
+        sortable: true,
       },
       {
         field: 'lastUpdatedDateTime',
         headerName: 'Last Updated Date Time',
+        sortable: true,
       },
       // { field: 'sub', headerName: 'ID' },
     ];

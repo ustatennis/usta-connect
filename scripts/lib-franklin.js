@@ -644,7 +644,12 @@ export function decorateTemplateAndTheme() {
 export function decorateAnchors(element) {
   element.querySelectorAll('a').forEach(a => {
     if (a.getAttribute('href').charAt(0) === '#') return;
-    if (a.getAttribute('href').charAt(0) === '/') return;
+    if (a.getAttribute('href').charAt(0) === '/') {
+      if (a.target = '_blank') {
+        a.target = '';
+      }
+      return
+    };
     const linkPath = new URL(a.href);
     if (linkPath.origin !== window.location.origin) {
       if (a.target === '') {
