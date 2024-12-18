@@ -245,13 +245,28 @@ export async function getFileStatuses(user, retry = 3) {
   return [];
 }
 
-export async function fetchFacilities(state, text){
+export async function fetchAllFacilities(state, text) {
+  let fac = [];
+  let page = 1;
+  let resp=[];
+  do {
+    resp = await fetchFacilities(state, text, page);
+    if (resp.length>0) fac.push(...resp);
+    page++;;
+  }
+  while (resp.length>0);
+  return fac;
+}
+
+export async function fetchFacilities(state, text, page, size){
   const config = getAWSStore();
-  const headers = getAuthHeaders();
+  const headers = await getAuthHeaders();
 
   const raw = JSON.stringify({
     "state": state || "",
-    "text": text || ""
+    "text": text || "",
+    "page" : page,
+    "size" : size
   });
 
   const requestOptions = {
@@ -274,8 +289,8 @@ export async function fetchFacilities(state, text){
 }
 
 export async function fetchFacilityById(facilityId){
-  const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
@@ -294,8 +309,9 @@ export async function fetchFacilityById(facilityId){
 }
 
 export async function createOrUpdateFacility(facility){
-  const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const raw = JSON.stringify(facility);
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
   const requestOptions = {
     method: "POST",
     headers: headers,
@@ -315,8 +331,8 @@ export async function createOrUpdateFacility(facility){
 }
 
 export async function fetchReferenceCategories(){
-  const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
@@ -335,8 +351,8 @@ export async function fetchReferenceCategories(){
 }
 
 export async function fetchReferenceDataByCatergory(category){
-  const headers = getAuthHeaders();
-  const config = getAWSStore();
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
@@ -394,3 +410,24 @@ async function authenticateFileStatusEndpoint() {
 // https://s3upload-ui-scanned-stage.s3.amazonaws.com/?list-type=2&prefix=private%2Fus-east-1%3A68ffed30-3180-48d2-8b37-2e07596c5389
 
 // https://s3upload-ui-upload-prod.s3.us-east-1.amazonaws.com/private/us-east-1%3Aa0ea4540-cbcc-4ff9-9b53-2c258f383593/sai.theja%40contractor.usta.com/logo192_1708367868662.png?x-id=PutObjecthttps://s3upload-ui-upload-prod.s3.us-east-1.amazonaws.com/private/us-east-1%3Aa0ea4540-cbcc-4ff9-9b53-2c258f383593/sai.theja%40contractor.usta.com/logo192_1708367868662.png?x-id=PutObject
+export async function addressValidation(address){
+  const raw = JSON.stringify(address);
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
+  const requestOptions = {
+    method: "POST",
+    headers: headers,
+    body: raw,
+  };
+  try{
+    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-service/address/validation", requestOptions);
+    if(response.status != 200){
+      //Handle error status.
+    }
+    response = await response.json();
+    return response;
+  }catch(e){
+    console.log(e)
+  }
+  return {}; 
+}

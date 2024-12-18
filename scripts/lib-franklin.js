@@ -322,7 +322,7 @@ export function decorateBlock(block) {
     block.dataset.blockName = shortBlockName;
     block.dataset.blockStatus = 'initialized';
     const blockWrapper = block.parentElement;
-    blockWrapper.classList.add(`${shortBlockName}-wrapper`);
+    blockWrapper?.classList.add(`${shortBlockName}-wrapper`);
     const section = block.closest('.section');
     if (section) section.classList.add(`${shortBlockName}-container`);
   }
@@ -738,7 +738,7 @@ export function loadHeader(header) {
  */
 export function loadUserDayInfo(section) {
   const userDayInfoBlock = buildBlock('user-day-info', '');
-  section.append(userDayInfoBlock);
+  section?.append(userDayInfoBlock);
   decorateBlock(userDayInfoBlock);
   decorateAnchors(userDayInfoBlock);
   return loadBlock(userDayInfoBlock);

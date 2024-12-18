@@ -8,7 +8,7 @@
         "selector-class-pattern": null,
         "no-descending-specificity": null,
         "font-family-no-missing-generic-family-keyword": null,
-
+        "declaration-block-no-redundant-longhand-properties": null,
         "at-rule-no-unknown": null,
         "function-no-unknown": null,
         "indentation": 2
@@ -19,6 +19,7 @@
     "selector-class-pattern": null,
     "no-descending-specificity": null,
     "font-family-no-missing-generic-family-keyword": null,
+    "declaration-block-no-redundant-longhand-properties": null,
     "indentation": 2
   }
 }
