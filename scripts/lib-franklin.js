@@ -646,7 +646,7 @@ export function decorateAnchors(element) {
     if (a.getAttribute('href').charAt(0) === '#') return;
     if (a.getAttribute('href').charAt(0) === '/') {
       if (a.target = '_blank') {
-        a.target = '';
+        a.target = '_self';
       }
       return
     };
