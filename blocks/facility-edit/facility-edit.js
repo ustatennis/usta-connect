@@ -51,9 +51,7 @@ export default async function decorate(block) {
       totalIndoorTennisCourts: 0,
       totalOutdoorTennisCourts: 0,
     },
-    verifiedBy: 'Test User',
-    phoneNumber: '555-555-5555',
-    website: 'www.usta.com',
+    verifiedBy: '',
     sourceData: 'USTA',
     lastUpdatedBy: 'Logged in user',
   };
@@ -316,7 +314,7 @@ We found:
     ${addr1.address1}<br/>
     ${addr1?.city}, ${addr1?.state} ${addr1?.zip}<br/>
     ${addr1.country}<br/><br/>
-    <input type="radio" id="radio1" name="addressoption" value="selectFound">
+    <input type="radio" id="radio1" name="addressoption" value="selectFound" checked>
     <label for="radio1">Use this address</label>
     </div>
   </div>
@@ -374,10 +372,15 @@ You entered:
           modalSelect = radioButton.value;
         }
       });
-      updatedfacility.address.streetAddressLine1 = matchedAddress.address1;
-      updatedfacility.address.city = matchedAddress.city;
-      updatedfacility.address.zip = matchedAddress.zip;
-      updatedfacility.address.state = matchedAddress.state;
+      if (modalSelect === 'selectFound') {
+        updatedfacility.address.streetAddressLine1 = addr1.address1;
+        updatedfacility.address.city = addr1.city;
+        updatedfacility.address.postalCode = addr1.zip;
+        updatedfacility.address.zip = addr2.zip;
+        updatedfacility.address.state = addr1.state;
+      } else {
+        updatedfacility.address.postalCode = updatedfacility.address.zip;
+      }
       const response = await createOrUpdateFacility(updatedfacility);
       // hideSpinner();
       console.log(response);
@@ -451,14 +454,14 @@ You entered:
       '#text-total-indoor-tennis-courts',
     );
     fieldTotalIndoorTennisCourts.value = Number(
-      facility.courts.totalIndoorTennisCourts,
+      facility.courts.totalIndoorTennisCourts || 0,
     );
     // Total outdoor tennis courts
     const fieldTotalOutdoorTennisCourts = divh.querySelector(
       '#text-total-outdoor-tennis-courts',
     );
     fieldTotalOutdoorTennisCourts.value = Number(
-      facility.courts.totalOutdoorTennisCourts,
+      facility.courts.totalOutdoorTennisCourts || 0,
     );
   }
 
@@ -722,6 +725,7 @@ You entered:
       delete updatedfacility.courts.has78ftCourts;
       delete updatedfacility.courts.hasPickleballCourts;
       updatedfacility.lastUpdatedBy = userNameCpitalized;
+      updatedfacility.verifiedBy = userNameCpitalized;
       if (updatedfacility.facilityStatus !== 'Duplicate') {
         delete updatedfacility.survivorFacilityId;
       }
@@ -741,8 +745,9 @@ You entered:
         address1: sinRes.matchedAddress.address1,
         city: sinRes.matchedAddress.city,
         state: sinRes.matchedAddress.administrativeArea,
-        zip: sinRes.matchedAddress.zipcodePrimary,
+        zip: sinRes.matchedAddress.zipcode,
         country: sinRes.matchedAddress.country,
+        zipcodePrimary: sinRes.matchedAddress.zipcodePrimary,
       };
       if (createFacilityOperation) delete updatedfacility.ustaFacilityId;
       if (sinRes.matchedAddress.status === 'SUGGEST') {
