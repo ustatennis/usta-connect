@@ -8,6 +8,8 @@ import { usstates } from '../../constants/usstates.js';
 import { countrystate } from '../../constants/countrystate.js';
 import { getUser } from '../../store/userStore.js';
 
+const incompleteMessage = 'Address is too incomplete to be saved';
+
 // let modalSelect;
 let updatedfacility = {};
 let matchedAddress = {};
@@ -115,7 +117,7 @@ You entered:
         <span class="field-error" id="facility-usta-number-error"></span>
     </div>
     <div class="formbuilder-text form-group field-text-zendesk-internal-id">
-        <label for="text-zendesk-internal-id" class="formbuilder-text-label">ZENDESK INTERNAL ID</label>
+        <label for="text-zendesk-internal-id" class="formbuilder-text-label">ZENDESK TICKET NUMBER</label>
         <input type="text" class="form-control" name="externalFacilityId" access="false" id="text-zendesk-internal-id">
         <span class="field-error" id="zendesk-internal-id-error"></span>
     </div>
@@ -281,14 +283,28 @@ You entered:
       }
     };
     submitBtn.onclick = async function () {
-      const response = await createOrUpdateFacility(updatedfacility);
-      // hideSpinner();
-      console.log(response);
-      if (response.message) {
-        alert(response.message);
+      // eslint-disable-next-line no-use-before-define
+      if (incompleteAddress(updatedfacility.address)) {
+        alert(incompleteMessage);
       } else {
-        window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+        const response = await createOrUpdateFacility(updatedfacility);
+        // hideSpinner();
+        console.log(response);
+        if (response.message) {
+          alert(response.message);
+        } else {
+          window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+        }
       }
+
+      // const response = await createOrUpdateFacility(updatedfacility);
+      // // hideSpinner();
+      // console.log(response);
+      // if (response.message) {
+      //   alert(response.message);
+      // } else {
+      //   window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+      // }
       const modalwindow = document.querySelector('#myModal');
       modalwindow.style.display = 'none';
     };
@@ -381,14 +397,30 @@ You entered:
       } else {
         updatedfacility.address.postalCode = updatedfacility.address.zip;
       }
-      const response = await createOrUpdateFacility(updatedfacility);
-      // hideSpinner();
-      console.log(response);
-      if (response.message) {
-        alert(response.message);
+
+      // eslint-disable-next-line no-use-before-define
+      if (incompleteAddress(updatedfacility.address)) {
+        // eslint-disable-next-line no-alert
+        alert(incompleteMessage);
       } else {
-        window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+        const response = await createOrUpdateFacility(updatedfacility);
+        // hideSpinner();
+        console.log(response);
+        if (response.message) {
+          alert(response.message);
+        } else {
+          window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+        }
       }
+
+      // const response = await createOrUpdateFacility(updatedfacility);
+      // // hideSpinner();
+      // console.log(response);
+      // if (response.message) {
+      //   alert(response.message);
+      // } else {
+      //   window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+      // }
       const modalwindow = document.querySelector('#myModal');
       modalwindow.style.display = 'none';
     };
@@ -754,6 +786,9 @@ You entered:
         modalAddressSelect(matchedAddress, userAddress);
       } else if (sinRes.matchedAddress.status === 'BAD') {
         modalAddressConfirm(userAddress);
+        // eslint-disable-next-line no-use-before-define
+      } else if (incompleteAddress(updatedfacility.address)) {
+        alert(incompleteMessage);
       } else {
         const response = await createOrUpdateFacility(updatedfacility);
         // hideSpinner();
@@ -784,6 +819,15 @@ You entered:
     return false; // Form is valid
   }
 
+  function incompleteAddress(address) {
+    return (
+      address.streetAddressLine1 === '' ||
+      address.city === '' ||
+      address.state === '' ||
+      address.country === '' ||
+      address.zip === ''
+    );
+  }
   function isDigitsOnly(str) {
     return /^\d+$/.test(str);
   }
