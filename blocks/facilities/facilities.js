@@ -220,7 +220,7 @@ export default async function decorate(block) {
       },
       {
         field: 'externalFacilityId',
-        headerName: 'Zendesk Internal ID',
+        headerName: 'Zendesk Ticket Number',
         sortable: true,
       },
       // { field: 'email_verified' },
