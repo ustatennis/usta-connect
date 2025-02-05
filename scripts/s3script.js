@@ -398,7 +398,7 @@ async function authenticateFileStatusEndpoint() {
     redirect: "follow"
   };
   try {
-    let response = await fetch(config.appAuthorizationEndpoint + "/oauth/token", requestOptions);
+    let response = await fetch(config.appAuthorizationEndpoint + "/oauth2/token", requestOptions);
     response = await response.json();
     setLocalStorage("api_file_status_token", response.access_token);
   } catch (e) {
