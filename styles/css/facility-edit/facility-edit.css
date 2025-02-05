@@ -54,7 +54,13 @@
 }
 
 .modal-header {
-  font-size: var(--heading-font-size-s);
+  font-size: var(--heading-font-size-m);
+  font-weight: bold;
+}
+
+.modal-sub-header {
+  font-size: var(--heading-font-size-xs);
+  font-weight: bold;
 }
 
 .formbuilder-text label {
@@ -88,6 +94,11 @@
 
 .formbuilder-radio label {
   font-size: var(--body-font-size-xxs);
+}
+
+.formbuilder-required {
+  color: red;
+  font-weight: bold;
 }
 
 .formbuttons {
