@@ -78,10 +78,10 @@ function setStagePoolConfig() {
   window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET = 's3upload-ui-upload-stage';
   window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET = 's3upload-ui-download-stage';
   window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned-stage';
-  window.hlx.APP_AUTHORIZATION_API_ENDPOINT = 'https://stage-account-ustaconnect.usta.com';
+  window.hlx.APP_AUTHORIZATION_API_ENDPOINT = 'https://usta-external-stage.us.auth0.com';
   window.hlx.APP_FILE_STATUS_API_ENDPOINT = 'https://stage-api-ustaconnect.usta.com';
-  window.hlx.APP_FILE_STATUS_API_CLIENT_ID = '7tpb3e2ceupf5r572oh7fpsdpe';
-  window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET = 'pcm2f7gi5gu0vhpqjneup3fhk35capc13n92qk5ham8onjhg3s9';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_ID = '7qYeHPKt6vUUHTImUWspqOMqJF4bb1VS';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET = 'SYvDISy2k4E_xdmQ611-86Wefxc-_vjIt2aBoLmXPZbVdWkh7F9PhklMV0tm859F';
   window.hlx.APP_SINITI_AUTHORIZATION_API_ENDPOINT = 'https://stage-account.usta.com';
   window.hlx.APP_SINITI_API_ENDPOINT = 'https://stage-services.usta.com';
   window.hlx.APP_SINITI_API_CLIENT_ID = '3sfema9t4ftf0mguomefmqr6pq';
