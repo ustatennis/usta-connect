@@ -54,7 +54,7 @@ export async function createS3Client() {
   //   console.log(Scheduler);
   var scheduler = new AWS.Scheduler({
     region: AWS.config.region,
-    credentials: new AWS.CognitoIdentityCredentials({
+    credentials: AWS.config.credentials({
       IdentityPoolId: identityPoolId,
       Logins: logins,
     })});
