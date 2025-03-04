@@ -52,7 +52,12 @@ export async function createS3Client() {
   //    credentials: AWS.config.credentials
   // });
   //   console.log(Scheduler);
-  var scheduler = new AWS.Scheduler({apiVersion: '2021-06-30'});
+  var scheduler = new AWS.Scheduler({
+    region: AWS.config.region,
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: identityPoolId,
+      Logins: logins,
+    })});
 var jsSchedules = scheduler.listSchedules({MaxResults: '10'},function (err, data){
     if (err) {
         console.log("Error", err);
