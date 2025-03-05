@@ -46,6 +46,31 @@ export async function createS3Client() {
     //   } else {
     //     console.log('Rules:', data.Rules);
     //
+    try {
+      // Step 1: Assume the Role
+      const roleArn = 'arn:aws:iam::449001737845:role/ustaconnect-stage-eventbridge';
+      const assumedRole = await sts.assumeRole({
+          RoleArn: roleArn,
+          RoleSessionName: AWS.config.credentials.params.RoleSessionName,
+      }).promise();
+
+      // Step 2: Use Temporary Credentials
+      const scheduler = new AWS.Scheduler({
+          region: AWS.config.region,
+          credentials: {
+              accessKeyId: assumedRole.Credentials.AccessKeyId,
+              secretAccessKey: assumedRole.Credentials.SecretAccessKey,
+              sessionToken: assumedRole.Credentials.SessionToken
+          }
+      });
+
+      // Step 3: List Schedules
+      var scheduler = new AWS.Scheduler();
+      const schedules = await scheduler.listSchedules().promise();
+      console.log('Schedules:', schedules);
+  } catch (error) {
+      console.error('Error:', error);
+  }
   try{
     var scheduler = new AWS.Scheduler();
     console.log(scheduler)
