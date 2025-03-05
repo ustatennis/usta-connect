@@ -3,7 +3,9 @@ import {
   fetchFacilityById,
   createOrUpdateFacility,
   addressValidation,
+  fetchAllReferenceData
 } from '../../scripts/s3script.js';
+// import { basicInfo } from './facility-edit-tab-basicinfo.js';
 import { usstates } from '../../constants/usstates.js';
 import { countrystate } from '../../constants/countrystate.js';
 import { getUser } from '../../store/userStore.js';
@@ -16,6 +18,8 @@ let matchedAddress = {};
 // eslint-disable-next-line no-unused-vars
 let modalSelect = '';
 const user = getUser();
+const refData = await fetchAllReferenceData();
+debugger;
 const userName = user.UserAttributes.find(o => o.Name === 'name')?.Value;
 const userNameCpitalized =
   // eslint-disable-next-line no-unsafe-optional-chaining
@@ -73,98 +77,109 @@ export default async function decorate(block) {
   const divheader = document.createElement('div');
   divheader.innerHTML = `
 <div id="spinner" style="display: none;">
-  <div class="spinner-border" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
+   <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+   </div>
 </div>
-
 <div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="modal-header">We found a similar address</div>
-    <div class="modal-body">
-      Please verify your address below
-
-    <div class="row">
-  <div class="column">
-We found:
-    <div>
-    <input type="radio" id="radio1" name="addressoption" value="option1">
-    <label for="radio1">Use this address</label>
-    </div>
-  </div>
-
-  <div class="column">
-You entered:
-    <div>
-    <input type="radio" id="radio2" name="addressoption" value="option2">
-    <label for="radio2">Use the address you entered</label>
-    </div>
-  </div>
-</div>
-
-    <form id="modal-form">
-      <button type="button" id="submitBtn">CONTINUE</button>
-      <button type="button" id="cancelBtn">CANCEL</button>
-    </form>
-    </div>
-  </div>
+   <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modal-header">We found a similar address</div>
+      <div class="modal-body">
+         Please verify your address below
+         <div class="row">
+            <div class="column">
+               We found:
+               <div>
+                  <input type="radio" id="radio1" name="addressoption" value="option1">
+                  <label for="radio1">Use this address</label>
+               </div>
+            </div>
+            <div class="column">
+               You entered:
+               <div>
+                  <input type="radio" id="radio2" name="addressoption" value="option2">
+                  <label for="radio2">Use the address you entered</label>
+               </div>
+            </div>
+         </div>
+         <form id="modal-form">
+            <button type="button" id="submitBtn">CONTINUE</button>
+            <button type="button" id="cancelBtn">CANCEL</button>
+         </form>
+      </div>
+   </div>
 </div>
 <form class="rendered-form">
-    <div class="formbuilder-text form-group field-text-facility-usta-number">
-        <label for="text-facility-usta-number" class="formbuilder-text-label">FACILITY USTA NUMBER<span class="formbuilder-required">*</span></label>
-        <input type="number" class="form-control" name="ustaFacilityId" access="false" id="text-facility-usta-number" required="required" aria-required="true" disabled>
-        <span class="field-error" id="facility-usta-number-error"></span>
-    </div>
-    <div class="formbuilder-text form-group field-text-zendesk-internal-id">
-        <label for="text-zendesk-internal-id" class="formbuilder-text-label">ZENDESK TICKET NUMBER</label>
-        <input type="text" class="form-control" name="externalFacilityId" access="false" id="text-zendesk-internal-id">
-        <span class="field-error" id="zendesk-internal-id-error"></span>
-    </div>
-    <div class="formbuilder-text form-group field-text-name">
-        <label for="text-name" class="formbuilder-text-label">NAME<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="name" access="false" id="text-name">
-        <span class="field-error" id="name-error"></span>
-    </div>
-    <div class="formbuilder-text form-group field-text-address">
-        <label for="text-address" class="formbuilder-text-label">ADDRESS<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="address.streetAddressLine1" access="false" id="text-address" required="required" aria-required="true">
-        <span class="field-error" id="address-error"></span>
-    </div>
-    <div class="formbuilder-text form-group field-text-city">
-        <label for="text-city" class="formbuilder-text-label">CITY<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="address.city" access="false" id="text-city" required="required" aria-required="true">
-        <span class="field-error" id="city-error"></span>
-    </div>
-    <div class="formbuilder-select form-group field-text-country">
-        <label for="text-country" class="formbuilder-select-label">COUNTRY<span class="formbuilder-required">*</span></label>
-        <select class="form-control" name="address.country" access="false" id="text-country" required="required" aria-required="true"></select>
-        <span class="field-error" id="country-error"></span>
-    </div>
-    <div class="formbuilder-select form-group field-text-state">
-        <label for="text-state" class="formbuilder-select-label">STATE/PROVINCE<span class="formbuilder-required">*</span></label>
-        <select class="form-control" name="address.state" access="false" id="text-state" required="required" aria-required="true"></select>
-        <span class="field-error" id="state-error"></span>
-    </div>
-    <div class="formbuilder-text form-group field-text-zip">
-        <label for="text-zip" class="formbuilder-text-label">ZIP/POSTAL CODE<span class="formbuilder-required">*</span></label>
-        <input type="text" class="form-control" name="address.zip" access="false" id="text-zip">
-        <span class="field-error" id="zip-error"></span>
-    </div>
-    <div class="formbuilder-select form-group field-select-facilitytype">
-        <label for="select-facilitytype" class="formbuilder-select-label">FACILITY TYPE<span class="formbuilder-required">*</span></label>
-        <select class="form-control" name="facilityType" id="select-facilitytype">
+   <div class="tab-bar">
+      <div class="tab-item selected">
+         BASIC INFO
+      </div>
+      <div class="tab-item">
+         COURT DETAILS
+      </div>
+      <div class="tab-item">
+         AMENITIES
+      </div>
+      <div class="tab-item">
+         ADDITIONAL INFO
+      </div>
+   </div>
+   <div class="tab-panel visible">
+      <div class="formbuilder-text form-group field-text-facility-usta-number">
+         <label for="text-facility-usta-number" class="formbuilder-text-label">FACILITY USTA NUMBER<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="ustaFacilityId" access="false" id="text-facility-usta-number" required="required" aria-required="true" disabled>
+         <span class="field-error" id="facility-usta-number-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-zendesk-internal-id">
+         <label for="text-zendesk-internal-id" class="formbuilder-text-label">ZENDESK TICKET NUMBER</label>
+         <input type="text" class="form-control" name="externalFacilityId" access="false" id="text-zendesk-internal-id">
+         <span class="field-error" id="zendesk-internal-id-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-name">
+         <label for="text-name" class="formbuilder-text-label">NAME<span class="formbuilder-required">*</span></label>
+         <input type="text" class="form-control" name="name" access="false" id="text-name">
+         <span class="field-error" id="name-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-address">
+         <label for="text-address" class="formbuilder-text-label">ADDRESS<span class="formbuilder-required">*</span></label>
+         <input type="text" class="form-control" name="address.streetAddressLine1" access="false" id="text-address" required="required" aria-required="true">
+         <span class="field-error" id="address-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-city">
+         <label for="text-city" class="formbuilder-text-label">CITY<span class="formbuilder-required">*</span></label>
+         <input type="text" class="form-control" name="address.city" access="false" id="text-city" required="required" aria-required="true">
+         <span class="field-error" id="city-error"></span>
+      </div>
+      <div class="formbuilder-select form-group field-text-country">
+         <label for="text-country" class="formbuilder-select-label">COUNTRY<span class="formbuilder-required">*</span></label>
+         <select class="form-control" name="address.country" access="false" id="text-country" required="required" aria-required="true"></select>
+         <span class="field-error" id="country-error"></span>
+      </div>
+      <div class="formbuilder-select form-group field-text-state">
+         <label for="text-state" class="formbuilder-select-label">STATE/PROVINCE<span class="formbuilder-required">*</span></label>
+         <select class="form-control" name="address.state" access="false" id="text-state" required="required" aria-required="true"></select>
+         <span class="field-error" id="state-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-zip">
+         <label for="text-zip" class="formbuilder-text-label">ZIP/POSTAL CODE<span class="formbuilder-required">*</span></label>
+         <input type="text" class="form-control" name="address.zip" access="false" id="text-zip">
+         <span class="field-error" id="zip-error"></span>
+      </div>
+      <div class="formbuilder-select form-group field-select-facilitytype">
+         <label for="select-facilitytype" class="formbuilder-select-label">FACILITY TYPE<span class="formbuilder-required">*</span></label>
+         <select class="form-control" name="facilityType" id="select-facilitytype">
             <option value="Club" selected="true" id="select-facilitytype-0">Club</option>
             <option value="Corporation" id="select-facilitytype-1">Corporation</option>
             <option value="Parks & Recreation" id="select-facilitytype-2">Parks &amp; Recreation</option>
             <option value="Private Homeowner" id="select-facilitytype-3">Private Homeowner</option>
             <option value="School" id="select-facilitytype-4">School</option>
             <option value="Service Facility" id="select-facilitytype-5">Service Facility</option>
-        </select>
-    </div>
-    <div class="formbuilder-select form-group field-select-facilitytype-detail">
-        <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY TYPE DETAIL<span class="formbuilder-required">*</span></label>
-        <select class="form-control" name="facilityTypeDetail" id="select-facilitytype-detail">
+         </select>
+      </div>
+      <div class="formbuilder-select form-group field-select-facilitytype-detail">
+         <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY TYPE DETAIL<span class="formbuilder-required">*</span></label>
+         <select class="form-control" name="facilityTypeDetail" id="select-facilitytype-detail">
             <option value="Apartments/Condominiums" selected="true" id="select-facilitytype-detail-0">Apartments/Condominiums</option>
             <option value="Athletic/Commercial Club" id="select-facilitytype-detail-1">Athletic/Commercial Club</option>
             <option value="College/University" id="select-facilitytype-detail-2">College/University</option>
@@ -177,46 +192,208 @@ You entered:
             <option value="Public Park" id="select-facilitytype-detail-10">Public Park</option>
             <option value="Private Residence" id="select-facilitytype-detail-11">Private Residence</option>
             <option value="School" id="select-facilitytype-detail-12">School</option>
-        </select>
-    </div>
-    <div class="formbuilder-radio">
-        IS PRIVATE<span class="formbuilder-required">*</span>
-        <div class="formbuilder-select form-group radio-isprivate">
+         </select>
+      </div>
+      <div class="formbuilder-radio">
+         IS PRIVATE<span class="formbuilder-required">*</span>
+         <div class="formbuilder-select form-group radio-isprivate">
             <input type="radio" id="radio-isprivate-yes" name="isPrivate" value="Yes">
             <label for="html">Yes</label><br>
             <input type="radio" id="radio-isprivate-no" name="isPrivate" value="No">
             <label for="css">No</label><br>
-        </div>
-    </div>
-    <div class="formbuilder-select form-group field-select-facility-status">
-        <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY STATUS<span class="formbuilder-required">*</span></label>
-        <select class="form-control" name="facilityStatus" id="select-facility-status">
+         </div>
+      </div>
+      <div class="formbuilder-select form-group field-select-facility-status">
+         <label for="select-facilitytype-detail" class="formbuilder-select-label">FACILITY STATUS<span class="formbuilder-required">*</span></label>
+         <select class="form-control" name="facilityStatus" id="select-facility-status">
             <option value="Active" selected="true" id="select-facility-status-0">Active</option>
             <option value="Closed" id="select-facility-status-1">Closed</option>
             <option value="ConvertedPickleBall" id="select-facility-status-2">Converted/PickleBall</option>
             <option value="Duplicate" id="select-facility-status-3">Duplicate</option>
             <option value="Nonexistent" id="select-facility-status-4">Nonexistent</option>
-        </select>
-    </div>
-    <div class="formbuilder-text form-group field-text-survivor-facility-id hidden">
-        <label for="text-zip" class="formbuilder-text-label">SURVIVOR FACILITY ID</label>
-        <input type="number" class="form-control" name="survivorFacilityId" access="false" id="text-survivor-facility-id">
-        <span class="field-error" id="survivor-facility-id-error"></span>
-    </div>
-    <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
-        <label for="text-name" class="formbuilder-text-label">TOTAL INDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
-        <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
-        <span class="field-error" id="total-indoor-tennis-courts-error"></span>
-    </div>
-    <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
-        <label for="text-address" class="formbuilder-text-label">TOTAL OUTDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
-        <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-        <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
-        </div>
-    <div class="formbuttons">
-        <button class="formbutton" id="btn-cancel">CANCEL</button>
-        <button class="formbutton" id="btn-next">SUBMIT</button>
-    </div>
+         </select>
+      </div>
+      <div class="formbuilder-text form-group field-text-survivor-facility-id hidden">
+         <label for="text-zip" class="formbuilder-text-label">SURVIVOR FACILITY ID</label>
+         <input type="number" class="form-control" name="survivorFacilityId" access="false" id="text-survivor-facility-id">
+         <span class="field-error" id="survivor-facility-id-error"></span>
+      </div>
+      <div class="formbuttons">
+         <button class="formbutton" id="btn-cancel">CANCEL</button>
+         <button class="formbutton" id="btn-next">NEXT</button>
+      </div>
+   </div>
+   <div class="tab-panel hidden">
+      <div class="formbuilder-header">
+        Tennis Courts
+      </div>
+      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+         <label for="text-name" class="formbuilder-text-label">TOTAL INDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+         <label for="text-address" class="formbuilder-text-label">TOTAL OUTDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-select form-group field-select-courts-playable-status">
+         <label for="select-facilitytype-detail" class="formbuilder-select-label">COURTS PLAYABLE STATUS<span class="formbuilder-required">*</span></label>
+         <select class="form-control" name="courtsPlayableStatus" id="select-courts-palyable-status">
+            <option value="All Playable" selected="true" id="select-courts-palyable-status-0">All Playable</option>
+            <option value="Closed" id="select-courts-palyable-status-1">Permanently Closed</option>
+            <option value="Some Unplayable" id="select-courts-palyable-status-2">Some Unplayable</option>
+            <option value="Unplayable" id="select-courts-palyable-status-3">Unplayable</option>
+            <option value="Nonexistent" id="select-courts-palyable-status-4">Nonexistent</option>
+         </select>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-bubble-courts">
+         <label for="text-name" class="formbuilder-text-label">TOTAL BUBBLE COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <span class="field-error" id="total-bubble-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+         <label for="text-address" class="formbuilder-text-label">NUMBER OF OUTDOOR LIGHTED COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-header">
+        Court Surfaces
+      </div>
+      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+         <label for="text-name" class="formbuilder-text-label">NUMBER OF GRASS COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+         <label for="text-address" class="formbuilder-text-label">NUMBER OF HARD COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+         <label for="text-name" class="formbuilder-text-label">NUMBER OF CLAY COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+         <label for="text-address" class="formbuilder-text-label">NUMBER OF SOFT COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-header">
+        Youth Courts
+      </div>
+      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+         <label for="text-name" class="formbuilder-text-label">NUMBER OF 36FT COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+         <label for="text-address" class="formbuilder-text-label">NUMBER OF 36FT BLENDED COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+         <label for="text-name" class="formbuilder-text-label">NUMBER OF 36FT STANDALONE COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+         <label for="text-address" class="formbuilder-text-label">NUMBER OF 60FT COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+        <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+         <label for="text-address" class="formbuilder-text-label">NUMBER OF 60FT BLENDED COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+         <label for="text-name" class="formbuilder-text-label">NUMBER OF 60FT STANDALONE COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+         <label for="text-address" class="formbuilder-text-label">NUMBER OF 78FT COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-header">
+        Pickleball Courts
+      </div>
+      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+         <label for="text-name" class="formbuilder-text-label">NUMBER OF STANDALONE PICKLEBALL COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+         <label for="text-address" class="formbuilder-text-label">NUMBER OF PICKLEBALL BLENDED COURTS<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuttons">
+         <button class="formbutton" id="btn-cancel">CANCEL</button>
+         <button class="formbutton" id="btn-next">NEXT</button>
+      </div>
+   </div>
+   <div class="tab-panel hidden">
+      <div class="checkbox-header">FACILITY FEATURES</div>
+      <div class="checkbox-group">
+      <input type="checkbox" id="facility-feature-coaching-available" name="facility-feature-coaching-available" value="Coaching Available">
+      <label for="facility-feature-coaching-available"> Coaching Available</label><br/>
+      <input type="checkbox" id="facility-feature-pro-shop" name="facility-feature-pro-shop" value="Pro Shop">
+      <label for="facility-feature-pro-shop"> Pro Shop</label><br/>
+      <input type="checkbox" id="facility-feature-changing-room" name="facility-feature-changing-room" value="Changing Room">
+      <label for="facility-feature-changing-room"> Changing Room</label><br/>
+      <input type="checkbox" id="facility-feature-smart-gate-access" name="facility-feature-smart-gate-access" value="Smart Gate Access">
+      <label for="facility-feature-smart-gate-access"> Smart Gate Access</label><br/>
+      </div>
+      <div class="checkbox-header">ACCESSIBILITY & LANGUAGES</div>
+      <div class="checkbox-group">
+      <input type="checkbox" id="accessibility-language-spanish" name="accessibility-language-spanish" value="Coaching Available">
+      <label for="accessibility-language-spanish"> Spanish Speaking Staff</label><br/>
+      <input type="checkbox" id="accessibility-language-wheelchair" name="accessibility-language-wheelchair" value="Pro Shop">
+      <label for="accessibility-language-wheelchair"> Wheelchair Accessible</label><br/>
+      </div>
+      <div class="formbuttons">
+         <button class="formbutton" id="btn-cancel">CANCEL</button>
+         <button class="formbutton" id="btn-next">NEXT</button>
+      </div>
+   </div>
+   <div class="tab-panel hidden">
+      <div class="formbuilder-text form-group field-text-phone-number">
+         <label for="text-address" class="formbuilder-text-label">PHONE NUMBER<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.phoneNumber" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-website">
+         <label for="text-address" class="formbuilder-text-label">WEBSITE<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.website" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+      </div>
+      <div class="formbuilder-select form-group field-select-reservation-status">
+         <label for="select-facilitytype-detail" class="formbuilder-select-label">RESERVATION TYPE<span class="formbuilder-required">*</span></label>
+         <select class="form-control" name="courtsPlayableStatus" id="select-courts-reservation-status">
+            <option value="All Playable" selected="true" id="select-courts-palyable-status-0">First Come/First Served</option>
+            <option value="Closed" id="select-courts-palyable-status-1">Managed Reservation</option>
+            <option value="Some Unplayable" id="select-courts-palyable-status-2">Unknown</option>
+         </select>
+      </div>
+      <div class="formbuilder-text form-group field-text-latitude">
+         <label for="text-address" class="formbuilder-text-label">LATITUDE<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.latitude" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="lattitude-error"></span>
+      </div>
+      <div class="formbuilder-text form-group field-text-longitude">
+         <label for="text-address" class="formbuilder-text-label">LONGITUDE<span class="formbuilder-required">*</span></label>
+         <input type="number" class="form-control" name="courts.longitude" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <span class="field-error" id="longitude-error"></span>
+      </div>
+      <div class="formbuttons">
+         <button class="formbutton" id="btn-cancel">CANCEL</button>
+         <button class="formbutton" id="btn-next">SUBMIT</button>
+      </div>
+   </div>
 </form>`;
 
   const statebox = divheader.querySelector('#text-state');
@@ -506,6 +683,11 @@ You entered:
     return object;
   }
 
+  // function showMessage(id,msg){
+  //   const 
+
+  // }
+
   function validateForm(divh) {
     const fieldFacilityUstaNumber = divh.querySelector(
       '.field-text-facility-usta-number',
@@ -696,6 +878,30 @@ You entered:
     btnCancel.addEventListener('click', ev => {
       ev.preventDefault();
       window.location.href = '/facility-search';
+    });
+
+    function tabClickHandler(elementlist, panelList, ev) {
+      Array.from(elementlist).forEach(function (element) {
+        element.classList.remove('selected');
+      });
+      ev.target.classList.add('selected');
+      Array.from(panelList).forEach((panel, i) => {
+        if (elementlist[i].classList.contains('selected')) {
+          panel.classList.remove('hidden');
+          panel.classList.add('visible');
+        } else {
+          panel.classList.remove('visible');
+          panel.classList.add('hidden');
+        }
+      });
+    }
+    const tabElements = divh.querySelectorAll('.tab-item');
+    const tabPanels = divh.querySelectorAll('.tab-panel');
+    Array.from(tabElements).forEach(element => {
+      element.addEventListener(
+        'click',
+        tabClickHandler.bind(null, tabElements, tabPanels),
+      );
     });
 
     const btnSubmit = divh.querySelector('#btn-next');

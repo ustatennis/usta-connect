@@ -756,7 +756,7 @@ export function loadUserDayInfo(section) {
  */
 export function loadSidebar(aside) {
   const sidebarBlock = buildBlock('sidebar', '');
-  aside.append(sidebarBlock);
+  aside?.append(sidebarBlock);
   decorateBlock(sidebarBlock);
   return loadBlock(sidebarBlock);
 }

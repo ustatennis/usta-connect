@@ -350,6 +350,28 @@ export async function fetchReferenceCategories(){
   return {}; 
 }
 
+export async function fetchAllReferenceData(){
+  debugger;
+  const headers = await getAuthHeaders();
+  const config =  getAWSStore();
+  const requestOptions = {
+    method: "GET",
+    headers: headers
+  };
+  try{
+    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities/reference/data", requestOptions);
+    if(response.status != 200){
+      //Handle error status.
+    }
+    response = await response.json();
+    return response;
+  }catch(e){
+    console.log(e)
+  }
+  return {}; 
+}
+
+
 export async function fetchReferenceDataByCatergory(category){
   const headers = await getAuthHeaders();
   const config =  getAWSStore();
