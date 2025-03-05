@@ -45,20 +45,13 @@ export async function createS3Client() {
     //     console.error('Error listing rules:', err);
     //   } else {
     //     console.log('Rules:', data.Rules);
-    //      }
-    // });
-
-  //   const Scheduler = new AWS.Scheduler({
-  //    region: AWS.config.region,
-  //    credentials: AWS.config.credentials
-  // });
-  //   console.log(Scheduler);
-  var scheduler = new AWS.Scheduler({
-    region: AWS.config.region,
-    credentials: AWS.config.credentials({
-      IdentityPoolId: identityPoolId,
-      Logins: logins,
-    })});
+    //
+  try{
+    var scheduler = new AWS.Scheduler();
+    console.log(scheduler)
+  }catch(e){
+    console.log(e);
+  }
     /*
 var jsSchedules = scheduler.listSchedules({MaxResults: '10'},function (err, data){
     if (err) {
