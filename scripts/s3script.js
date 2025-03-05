@@ -52,19 +52,19 @@ export async function createS3Client() {
   //    credentials: AWS.config.credentials
   // });
   //   console.log(Scheduler);
-  var scheduler = new AWS.Scheduler({
-    region: AWS.config.region,
-    credentials: AWS.config.credentials({
-      IdentityPoolId: identityPoolId,
-      Logins: logins,
-    })});
-var jsSchedules = scheduler.listSchedules({MaxResults: '10'},function (err, data){
-    if (err) {
-        console.log("Error", err);
-      } else {
-        console.log("Success - Schedules:\n", data);
-      }
-});
+//   var scheduler = new AWS.Scheduler({
+//     region: AWS.config.region,
+//     credentials: AWS.config.credentials({
+//       IdentityPoolId: identityPoolId,
+//       Logins: logins,
+//     })});
+// var jsSchedules = scheduler.listSchedules({MaxResults: '10'},function (err, data){
+//     if (err) {
+//         console.log("Error", err);
+//       } else {
+//         console.log("Success - Schedules:\n", data);
+//       }
+// });
     s3Client = new AWS.S3({
       region: AWS.config.region,
       credentials: new AWS.CognitoIdentityCredentials({
