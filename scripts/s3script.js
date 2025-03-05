@@ -48,6 +48,7 @@ export async function createS3Client() {
     //
     try {
       // Step 1: Assume the Role
+      const sts = new AWS.STS({ region: AWS.config.region });
       const roleArn = 'arn:aws:iam::449001737845:role/ustaconnect-stage-eventbridge';
       const assumedRole = await sts.assumeRole({
           RoleArn: roleArn,
