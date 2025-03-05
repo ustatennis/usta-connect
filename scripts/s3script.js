@@ -2,6 +2,7 @@ import { getAWSStore } from '../store/awsStore.js';
 import { getValueFromLocalStorage, formatDateTime, setLocalStorage } from './helpers.js';
 import { getUser } from '../store/userStore.js';
 import { logOut  } from '../middleware/auth.js';
+// const AWS  = require('../../jslibraries/aws-sdk-2.1692.0.min.js');
 // import { SchedulerClient } from '../node_modules/@aws-sdk/client-scheduler';
 // Checks user object data is not found will logout.
 async function isUserValid(){
@@ -52,19 +53,19 @@ export async function createS3Client() {
   //    credentials: AWS.config.credentials
   // });
   //   console.log(Scheduler);
-//   var scheduler = new AWS.Scheduler({
-//     region: AWS.config.region,
-//     credentials: AWS.config.credentials({
-//       IdentityPoolId: identityPoolId,
-//       Logins: logins,
-//     })});
-// var jsSchedules = scheduler.listSchedules({MaxResults: '10'},function (err, data){
-//     if (err) {
-//         console.log("Error", err);
-//       } else {
-//         console.log("Success - Schedules:\n", data);
-//       }
-// });
+  var scheduler = new AWS.Scheduler({
+    region: AWS.config.region,
+    credentials: AWS.config.credentials({
+      IdentityPoolId: identityPoolId,
+      Logins: logins,
+    })});
+var jsSchedules = scheduler.listSchedules({MaxResults: '10'},function (err, data){
+    if (err) {
+        console.log("Error", err);
+      } else {
+        console.log("Success - Schedules:\n", data);
+      }
+});
     s3Client = new AWS.S3({
       region: AWS.config.region,
       credentials: new AWS.CognitoIdentityCredentials({
