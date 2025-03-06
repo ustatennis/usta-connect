@@ -1,7 +1,12 @@
 // import { FOLDER_IDS } from '../../constants/googleDrive.js';
 import '../../jslibraries/ag-grid-community.min.js';
 // import { getDataFromFolder } from '../../middleware/googleDrive.js';
-import { listFiles, getFileStatuses } from '../../scripts/s3script.js';
+import {
+  listFiles,
+  getFileStatuses,
+  listScheduleGroups,
+  listSchedules,
+} from '../../scripts/s3script.js';
 import BtnCellRenderer from './btn-cell-renderer.js';
 import userSystemCellRenderer from './user-system-cell-renderer.js';
 import { formatBytes } from '../../jslibraries/utility/utility.js';
@@ -21,6 +26,8 @@ export default async function decorate(block) {
     const downloadFiles = await listFiles(config.s3DownloadBucket, 1000, user);
     const scannedFiles = await listFiles(config.s3ScannedBucket, 1000, user);
     const filesStatuses = (await getFileStatuses(user)) || [];
+    console.log(await listSchedules());
+    console.log(await listScheduleGroups());
     const files = [
       ...downloadFiles.map(obj => {
         return { ...obj, owner: 'SYSTEM', fileStatus: 'Success' };
