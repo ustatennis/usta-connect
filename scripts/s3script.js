@@ -68,22 +68,11 @@ export async function createS3Client() {
       // Step 3: List Schedules
       // var scheduler2 = new AWS.Scheduler();
       const schedules = await scheduler2.listSchedules().promise();
+      const scheduleGroups = await scheduler2.listScheduleGroups().promise();
       console.log('Schedules:', schedules);
+      console.log('Schedulegroups:', scheduleGroups);
   } catch (error) {
       console.error('Error:', error);
-  }
-  try{
-    var scheduler = new AWS.Scheduler();
-    console.log(scheduler)
-    var jsSchedules = scheduler.listSchedules({MaxResults: '10'},function (err, data){
-      if (err) {
-          console.log("Error", err);
-        } else {
-          console.log("Success - Schedules:\n", data);
-        }
-  })
-  }catch(e){
-    console.log(e);
   }
 
     s3Client = new AWS.S3({
