@@ -56,7 +56,7 @@ export async function createS3Client() {
       }).promise();
 
       // Step 2: Use Temporary Credentials
-      const scheduler = new AWS.Scheduler({
+      const scheduler2 = new AWS.Scheduler({
           region: AWS.config.region,
           credentials: {
               accessKeyId: assumedRole.Credentials.AccessKeyId,
@@ -66,7 +66,7 @@ export async function createS3Client() {
       });
 
       // Step 3: List Schedules
-      var scheduler2 = new AWS.Scheduler();
+      // var scheduler2 = new AWS.Scheduler();
       const schedules = await scheduler2.listSchedules().promise();
       console.log('Schedules:', schedules);
   } catch (error) {
