@@ -39,53 +39,6 @@ export async function createS3Client() {
     [`${userPoolIdIDP}`]: idToken,
   };
   try {
-    // const cloudWatchEvents = new AWS.CloudWatchEvents();
-    // cloudWatchEvents.listRules(params, (err, data) => {
-    //   if (err) {
-    //     console.error('Error listing rules:', err);
-    //   } else {
-    //     console.log('Rules:', data.Rules);
-    //
-    try {
-      // Step 1: Assume the Role
-      const sts = new AWS.STS({ region: AWS.config.region });
-      const roleArn = 'arn:aws:iam::449001737845:role/ustaconnect-stage-eventbridge';
-      const assumedRole = await sts.assumeRole({
-          RoleArn: roleArn,
-          RoleSessionName: AWS.config.credentials.params.RoleSessionName,
-      }).promise();
-
-      // Step 2: Use Temporary Credentials
-      const scheduler2 = new AWS.Scheduler({
-          region: AWS.config.region,
-          credentials: {
-              accessKeyId: assumedRole.Credentials.AccessKeyId,
-              secretAccessKey: assumedRole.Credentials.SecretAccessKey,
-              sessionToken: assumedRole.Credentials.SessionToken
-          }
-      });
-
-      // Step 3: List Schedules
-      // var scheduler2 = new AWS.Scheduler();
-      const schedules = await scheduler2.listSchedules().promise();
-      console.log('Schedules:', schedules);
-  } catch (error) {
-      console.error('Error:', error);
-  }
-  try{
-    var scheduler = new AWS.Scheduler();
-    console.log(scheduler)
-    var jsSchedules = scheduler.listSchedules({MaxResults: '10'},function (err, data){
-      if (err) {
-          console.log("Error", err);
-        } else {
-          console.log("Success - Schedules:\n", data);
-        }
-  })
-  }catch(e){
-    console.log(e);
-  }
-
     s3Client = new AWS.S3({
       region: AWS.config.region,
       credentials: new AWS.CognitoIdentityCredentials({
@@ -479,3 +432,186 @@ export async function addressValidation(address){
   }
   return {}; 
 }
+
+async function assumeRole() {
+    try {
+        const region = AWS.config.region;
+        const roleArn = 'arn:aws:iam::449001737845:role/ustaconnect-stage-eventbridge';
+        const roleSessionName = AWS.config.credentials.params.RoleSessionName;
+        
+        const sts = new AWS.STS({ region });
+        const assumedRole = await sts.assumeRole({
+            RoleArn: roleArn,
+            RoleSessionName: roleSessionName,
+        }).promise();
+        
+        return {
+            region,
+            credentials: {
+                accessKeyId: assumedRole.Credentials.AccessKeyId,
+                secretAccessKey: assumedRole.Credentials.SecretAccessKey,
+                sessionToken: assumedRole.Credentials.SessionToken
+            }
+        };
+    } catch (error) {
+        console.error('Error assuming role:', error);
+        throw error;
+    }
+}
+
+async function getScheduler() {
+    try {
+        const { region, credentials } = await assumeRole();
+        return new AWS.Scheduler({ region, credentials });
+    } catch (error) {
+        console.error('Error initializing scheduler:', error);
+        throw error;
+    }
+}
+
+export async function listSchedules() {
+    try {
+        const scheduler = await getScheduler();
+        console.log('Listing Schedules...');
+        return await scheduler.listSchedules().promise();
+    } catch (error) {
+        console.error('Error listing schedules:', error);
+        throw error;
+    }
+}
+
+export async function listScheduleGroups() {
+    try {
+        const scheduler = await getScheduler();
+        console.log('Listing Schedule Groups...');
+        return await scheduler.listScheduleGroups().promise();
+    } catch (error) {
+        console.error('Error listing schedule groups:', error);
+        throw error;
+    }
+}
+export async function createSchedule(data) {
+  try {
+      const scheduler = await getScheduler();
+      const result = await scheduler.createSchedule(data).promise();
+      console.log('Schedule created successfully:', result);
+      return result;
+  } catch (error) {
+      console.error('Error creating schedule:', error);
+      throw error;
+  }
+}
+export async function updateSchedule(data) {
+  try {
+      const scheduler = await getScheduler();
+      const result = await scheduler.updateSchedule(data).promise();
+      console.log('Schedule updated successfully:', result);
+      return result;
+  } catch (error) {
+      console.error('Error updating schedule:', error);
+      throw error;
+  }
+}
+export async function deleteSchedule(data) {
+  try {
+      const scheduler = await getScheduler();
+
+      const params = {
+          Name: data.scheduleName,  // Schedule name to be deleted
+      };
+
+      const result = await scheduler.deleteSchedule(params).promise();
+      console.log('Schedule deleted successfully:', result);
+      return result;
+  } catch (error) {
+      console.error('Error deleting schedule:', error);
+      throw error;
+  }
+}
+
+// Get a Schedule
+export async function getSchedule(data) {
+  try {
+      const scheduler = await getScheduler();
+
+      const params = {
+          Name: data.scheduleName,  // Schedule name to retrieve
+      };
+
+      const result = await scheduler.getSchedule(params).promise();
+      console.log('Schedule retrieved successfully:', result);
+      return result;
+  } catch (error) {
+      console.error('Error getting schedule:', error);
+      throw error;
+  }
+}
+// List tags for a specific resource (Schedule)
+async function listTagsForResource(resourceArn) {
+  try {
+      const scheduler = await getScheduler();
+
+      const params = {
+          ResourceArn: resourceArn, // ARN of the resource (schedule) to list tags
+      };
+
+      const result = await scheduler.listTagsForResource(params).promise();
+      console.log('Tags for resource:', result);
+      return result;
+  } catch (error) {
+      console.error('Error listing tags for resource:', error);
+      throw error;
+  }
+}
+
+// List tags across multiple resources
+export async function listTags() {
+  try {
+      const scheduler = await getScheduler();
+
+      const params = {
+          MaxResults: 50, // Optional: Adjust page size if needed
+      };
+
+      let tagsList = [];
+      let hasNextPage = true;
+
+      while (hasNextPage) {
+          const result = await scheduler.listTagsForResource(params).promise();
+          tagsList = tagsList.concat(result.TagList);
+
+          // Check if there are more pages
+          if (result.NextToken) {
+              params.NextToken = result.NextToken;
+          } else {
+              hasNextPage = false;
+          }
+      }
+
+      console.log('Tags for all resources:', tagsList);
+      return tagsList;
+  } catch (error) {
+      console.error('Error listing tags for all resources:', error);
+      throw error;
+  }
+}
+// Create a Schedule Group
+export async function createScheduleGroup(data) {
+  try {
+      const scheduler = await getScheduler();
+
+      const params = {
+          Name: data.scheduleGroupName, // The name for the schedule group
+          Description: data.description || '', // Optional: Description of the schedule group
+          Tags: data.tags || [], // Optional: Tags to assign to the schedule group
+      };
+
+      const result = await scheduler.createScheduleGroup(params).promise();
+      console.log('Schedule Group created successfully:', result);
+      return result;
+  } catch (error) {
+      console.error('Error creating schedule group:', error);
+      throw error;
+  }
+}
+
