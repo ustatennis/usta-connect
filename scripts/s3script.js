@@ -391,7 +391,7 @@ async function authenticateFileStatusEndpoint() {
   myHeaders.append("Authorization", `Basic ${encodedCred}`);
   const urlencoded = new URLSearchParams();
   urlencoded.append("grant_type", "client_credentials");
-  urlencoded.append("audience", "https://external-stage-services.usta.com");
+  urlencoded.append("audience", window.hlx.AUDIENCE);
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
