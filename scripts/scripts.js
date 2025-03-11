@@ -51,8 +51,9 @@ function setProductionPoolConfig() {
   window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned-prod';
   window.hlx.APP_AUTHORIZATION_API_ENDPOINT = 'https://account-ustaconnect.usta.com';
   window.hlx.APP_FILE_STATUS_API_ENDPOINT = 'https://api-ustaconnect.usta.com';
-  window.hlx.APP_FILE_STATUS_API_CLIENT_ID = 'mqbfp0hi06g6jp2voj8um8hpo';
-  window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET ='1vec4qunko1hg0ot1avo68uot2p111funh2khalkvg44nn1s0vn3';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_ID = 'w7gnVGC0imaOL0XENYqRIZ6KMVCBGZFb';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET ='2eN7BpYA69zbqicg8JFtjo54XSQOm6_JcQMWxh9g2JpVs3Z1LoXXdmiorZL7CsQ-';
+  window.hlx.AUDIENCE = 'https://api-ustaconnect.usta.com';
 }
 function setDevPoolConfig() {
   window.hlx.RUM_GENERATION = 'usta-connect'; // add your RUM generation information here
@@ -78,7 +79,7 @@ function setStagePoolConfig() {
   window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET = 's3upload-ui-upload-stage';
   window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET = 's3upload-ui-download-stage';
   window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned-stage';
-  window.hlx.APP_AUTHORIZATION_API_ENDPOINT = 'https://usta-external-stage.us.auth0.com';
+  window.hlx.APP_AUTHORIZATION_API_ENDPOINT = 'https://stage-account-ustaconnect.usta.com';
   window.hlx.APP_FILE_STATUS_API_ENDPOINT = 'https://stage-api-ustaconnect.usta.com';
   window.hlx.APP_FILE_STATUS_API_CLIENT_ID = '7qYeHPKt6vUUHTImUWspqOMqJF4bb1VS';
   window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET = 'SYvDISy2k4E_xdmQ611-86Wefxc-_vjIt2aBoLmXPZbVdWkh7F9PhklMV0tm859F';
@@ -86,6 +87,7 @@ function setStagePoolConfig() {
   window.hlx.APP_SINITI_API_ENDPOINT = 'https://stage-services.usta.com';
   window.hlx.APP_SINITI_API_CLIENT_ID = '3sfema9t4ftf0mguomefmqr6pq';
   window.hlx.APP_SINITI_API_CLIENT_SECRET = 'ti1mscnufta4h6fh1vkshuj0so3rui213gbjft4m1c5incgnlqk';
+  window.hlx.AUDIENCE = 'https://external-stage-services.usta.com';
 }
 const subdomain = window.location.hostname.split('.')[0];
 const envUnderDomain = subdomain?.split('-')[0];

@@ -58,7 +58,8 @@
   },
   "dependencies": {
     "ag-grid-community": "^29.3.5",
-    "aws-sdk": "^2.1552.0",
+    "aws-sdk": "^2.1692.0",
+    "@aws-sdk/client-scheduler": "3.758.0",
     "sass": "^1.82.0"
   }
 }
