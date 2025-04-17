@@ -1,8 +1,7 @@
 // import { getUsersList } from '../../middleware/admin.js';
-import { usstates } from '../../constants/usstates.js';
+// import { usstates } from '../../constants/usstates.js';
 import {
   listScheduleGroups,
-  listSchedules,
   getSchedule,
   listAllSchedules,
   listTagsForResource,
@@ -26,7 +25,7 @@ export default async function decorate(block) {
   let { campaigns } = [];
 
   const div = document.createElement('div');
-  div.id = 'campaignGrid';
+  div.id = 'campaign-grid';
   div.style = 'height: 800px; max-width:1280px;font-size:14px';
   div.className = 'ag-theme-alpine';
 
@@ -182,7 +181,7 @@ export default async function decorate(block) {
   block.append(inputbox);
   block.append(div);
 
-  let gridDiv = document.querySelector('#campaignGrid');
+  let gridDiv = document.querySelector('#campaign-grid');
   // eslint-disable-next-line no-debugger
   // eslint-disable-next-line
     // const campaignGrid = new agGrid.Grid(gridDiv, gridOptions);
@@ -193,7 +192,7 @@ export default async function decorate(block) {
   // Do something with the selected value
   // onsole.log('Selected value:', selectedValue);
   // const config = getAWSStore();
-  gridDiv = document.querySelector('#campaignGrid');
+  gridDiv = document.querySelector('#campaign-grid');
   gridDiv.innerHTML = `<div id="spinner" style="display: none;">
     <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>
@@ -328,7 +327,7 @@ export default async function decorate(block) {
   };
   // console.log(config);
   // console.log(Facilities);
-  gridDiv = document.querySelector('#campaignGrid');
+  gridDiv = document.querySelector('#campaign-grid');
   gridDiv.innerHTML = `<div id="spinner" style="display: none;">
     <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>
