@@ -28,15 +28,15 @@
   text-decoration: underline;
 }
 
-#campaignGrid .cellicon {
-  background-image: url(/icons/icon_heart.png);
+#campaign-grid .cellicon {
+  background-image: url("/icons/icon_heart.png");
   background-size: 29px;
   background-position: top left;
   background-repeat: no-repeat;
   padding-left: 40px;
 }
 
-#campaignGrid .cellbutton {
+#campaign-grid .cellbutton {
   width: 128px;
   height: 22px;
   background: #85E6FD 0% 0% no-repeat padding-box;
@@ -44,8 +44,9 @@
   border-radius: 10px;
   opacity: 1;
 }
-#campaignGrid .cellbutton button {
-  font: normal normal medium 10px/14px Graphik sans-serif;
+
+#campaign-grid .cellbutton button {
+  font: normal normal medium 10px/14px "Graphik sans-serif";
 }
 
 .rightblock {
@@ -120,5 +121,3 @@
   padding-bottom: 2px;
   font-size: 9;
 }
-
-/*# sourceMappingURL=campaigns.css.map */

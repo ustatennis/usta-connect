@@ -1,37 +1,31 @@
 /* eslint-disable no-debugger */
 import {
-  fetchFacilityById,
   createOrUpdateFacility,
-  addressValidation,
   listSchedule,
   getScheduleGroup,
   listTagsForResource,
   getSchedule,
-  tagResource,
+  // tagResource,
   updateSchedule,
 } from '../../scripts/s3script.js';
 import { htmlForm } from './campaign-update-html.js';
-import { getUser } from '../../store/userStore.js';
 
 const incompleteMessage = 'Address is too incomplete to be saved';
 
 // let modalSelect;
 const updatedfacility = {};
-const matchedAddress = {};
 let schedule = {};
 let scheduleGroup = {};
 let schedules = [];
 let tags = [];
 let sanitizedtags = [];
-let campaignGroupName = '';
-const campaignForm = {};
 // eslint-disable-next-line no-unused-vars
 let modalSelect = '';
-const user = getUser();
-const userName = user.UserAttributes.find(o => o.Name === 'name')?.Value;
-const userNameCpitalized =
-  // eslint-disable-next-line no-unsafe-optional-chaining
-  userName?.charAt(0).toUpperCase() + userName.slice(1);
+// const user = getUser();
+// const userName = user.UserAttributes.find(o => o.Name === 'name')?.Value;
+// const userNameCpitalized =
+//   // eslint-disable-next-line no-unsafe-optional-chaining
+//   userName?.charAt(0).toUpperCase() + userName.slice(1);
 
 export default async function decorate(block) {
   // Get the query string from the URL
@@ -42,19 +36,18 @@ export default async function decorate(block) {
 
   // Get the value of a specific parameter
   const campaignid = urlParams.get('campaignid');
-  const createFacilityOperation = window.location.pathname.includes('create');
 
   // eslint-disable-next-line no-unused-vars
   if (campaignid) {
     // to-do
     schedule = await listSchedule(campaignid);
     schedules = schedule?.Schedules;
-    if (schedules.length > 0) {
-      const oneschedule = await getSchedule({
-        groupName: campaignid,
-        scheduleName: schedules[0]?.Name,
-      });
-    }
+    // if (schedules.length > 0) {
+    //   const oneschedule = await getSchedule({
+    //     groupName: campaignid,
+    //     scheduleName: schedules[0]?.Name,
+    //   });
+    // }
     scheduleGroup = await getScheduleGroup(campaignid);
     const arn = scheduleGroup?.Arn;
     const tgs = await listTagsForResource(arn);
@@ -268,7 +261,7 @@ You entered:
 
     // campaign name
     const campaignName = divh.querySelector('#campaign-name');
-    campaignGroupName = campaignName;
+    // campaignGroupName = campaignName;
     // debugger;
     campaignName.value = tags.Title;
     // list tags comma separated
@@ -308,35 +301,37 @@ You entered:
       //   '$$CampaignName$$',
       //   campaignid,
       // );
-      let ob = formToObject(divheader);
+      // let ob = formToObject(divheader);
       const modal = divh.querySelector('#enableModal');
       modal.style.display = 'block';
       const span = divh.querySelector('.close');
       const submitBtn = divh.querySelector('#submitBtn');
       const cancelBtn = divh.querySelector('#cancelBtn');
-      const modalValue = null;
 
-      span.addEventListener('click', ev => {
+      // eslint-disable-next-line no-unused-vars
+      span.addEventListener('click', e => {
         const modalwindow = document.querySelector('#enableModal');
         modalwindow.style.display = 'none';
       });
-      cancelBtn.addEventListener('click', ev => {
+      // eslint-disable-next-line no-unused-vars
+      cancelBtn.addEventListener('click', e2 => {
         const modalwindow = document.querySelector('#enableModal');
         modalwindow.style.display = 'none';
       });
 
-      submitBtn.addEventListener('click', async ev => {
+      // eslint-disable-next-line no-unused-vars
+      submitBtn.addEventListener('click', async e3 => {
         const modalwindow = document.querySelector('#enableModal');
         modalwindow.style.display = 'none';
         ev.preventDefault();
-        let ob = formToObject(divheader);
+        const ob = formToObject(divheader);
         const titleAndDescriptionTags = [
           { Key: 'Title', Value: ob.name },
           { Key: 'Description', Value: ob.description },
         ];
 
         // eslint-disable-next-line no-use-before-define
-        const tags = [
+        tags = [
           ...titleAndDescriptionTags,
           // eslint-disable-next-line no-use-before-define
           ...stringToTags(ob.tagstring),
@@ -394,18 +389,18 @@ You entered:
     return obj;
   }
 
-  function stringToObj(str) {
-    const obj = {};
-    const pairs = str.split(',');
-    // eslint-disable-next-line no-restricted-syntax
-    for (const pair of pairs) {
-      const [key, value] = pair.split('=');
-      if (key && value) {
-        obj[key.trim()] = value.trim();
-      }
-    }
-    return obj;
-  }
+  // function stringToObj(str) {
+  //   const obj = {};
+  //   const pairs = str.split(',');
+  //   // eslint-disable-next-line no-restricted-syntax
+  //   for (const pair of pairs) {
+  //     const [key, value] = pair.split('=');
+  //     if (key && value) {
+  //       obj[key.trim()] = value.trim();
+  //     }
+  //   }
+  //   return obj;
+  // }
 
   function objToString(obj) {
     let result = '';
@@ -429,9 +424,9 @@ You entered:
       address.zip === ''
     );
   }
-  function isDigitsOnly(str) {
-    return /^\d+$/.test(str);
-  }
+  // function isDigitsOnly(str) {
+  //   return /^\d+$/.test(str);
+  // }
 
   validateForm(divheader);
 
