@@ -469,22 +469,79 @@ async function getScheduler() {
     }
 }
 
-export async function listSchedules() {
+export async function getScheduleGroup(Name) {
+  try{
+  const scheduler = await getScheduler();
+  console.log('Get Schedule Group...');
+  return await scheduler.getScheduleGroup({Name}).promise();
+} catch (error) {
+  console.error('Error getting schedulegroup:', error);
+  throw error;
+}
+}
+
+export async function listSchedule(GroupName) {
     try {
         const scheduler = await getScheduler();
         console.log('Listing Schedules...');
-        return await scheduler.listSchedules().promise();
+        return await scheduler.listSchedules({GroupName}).promise();
     } catch (error) {
         console.error('Error listing schedules:', error);
         throw error;
     }
 }
 
-export async function listScheduleGroups() {
+export async function listSchedules(GroupName) {
+  try {
+    const scheduler = await getScheduler();
+    console.log('Listing Schedules...');
+    return await scheduler.listSchedules({GroupName}).promise();
+} catch (error) {
+    console.error('Error listing schedules:', error);
+    throw error;
+}
+}
+
+export async function listAllSchedules(num) {
+    let count = num > 0 ? num : 999999;
+    const pageSize = num < 100 ? num : 100;
+    const reqData = {
+      MaxResults: pageSize,
+    };
+    try {
+      let response = [];
+      let res = [];
+      const scheduler = await getScheduler();
+      do {
+        reqData.MaxResults = Math.min(pageSize, count);
+        count -= pageSize;
+        // eslint-disable-next-line no-await-in-loop
+        res = await scheduler.listSchedules(reqData).promise();
+        if (res.NextToken) {
+          reqData.NextToken = res.NextToken;
+        }
+        response = response.concat(res.Schedules);
+      } while (res.NextToken !== null && count > 0);
+      return response;
+    } catch (e) {
+      console.error(e);
+    }
+  
+  // try {
+  //     const scheduler = await getScheduler();
+  //     console.log('Listing Schedules...');
+  //     return await scheduler.listSchedules().promise();
+  // } catch (error) {
+  //     console.error('Error listing schedules:', error);
+  //     throw error;
+  // }
+}
+
+export async function listScheduleGroups(NamePrefix) {
     try {
         const scheduler = await getScheduler();
         console.log('Listing Schedule Groups...');
-        return await scheduler.listScheduleGroups().promise();
+        return await scheduler.listScheduleGroups({NamePrefix}).promise();
     } catch (error) {
         console.error('Error listing schedule groups:', error);
         throw error;
@@ -535,9 +592,9 @@ export async function getSchedule(data) {
       const scheduler = await getScheduler();
 
       const params = {
+          GroupName: data.groupName,
           Name: data.scheduleName,  // Schedule name to retrieve
       };
-
       const result = await scheduler.getSchedule(params).promise();
       console.log('Schedule retrieved successfully:', result);
       return result;
@@ -547,14 +604,13 @@ export async function getSchedule(data) {
   }
 }
 // List tags for a specific resource (Schedule)
-async function listTagsForResource(resourceArn) {
+export async function listTagsForResource(resourceArn) {
   try {
       const scheduler = await getScheduler();
 
       const params = {
           ResourceArn: resourceArn, // ARN of the resource (schedule) to list tags
       };
-
       const result = await scheduler.listTagsForResource(params).promise();
       console.log('Tags for resource:', result);
       return result;
@@ -562,6 +618,25 @@ async function listTagsForResource(resourceArn) {
       console.error('Error listing tags for resource:', error);
       throw error;
   }
+}
+
+// Tag reource (Schedule)
+export async function tagResource(resourceArn, tags) {
+  try {
+    const scheduler = await getScheduler();
+
+    const params = {
+        ResourceArn: resourceArn, // ARN of the resource (schedule) to set tags
+        Tags: tags
+    };
+    debugger;
+    const result = await scheduler.tagResource(params).promise();
+    console.log('Tags for resource:', result);
+    return result;
+} catch (error) {
+    console.error('Error setting tags for resource:', error);
+    throw error;
+}
 }
 
 // List tags across multiple resources
@@ -614,4 +689,16 @@ export async function createScheduleGroup(data) {
       throw error;
   }
 }
+// Delete a Schedule Group
+export async function deleteScheduleGroup(Name) {
+  try {
+      const scheduler = await getScheduler();
 
+      const result = await scheduler.deleteteScheduleGroup({Name}).promise();
+      console.log('Schedule Group deleted successfully:', result);
+      return result;
+  } catch (error) {
+      console.error('Error deleting schedule group:', error);
+      throw error;
+  }
+}
