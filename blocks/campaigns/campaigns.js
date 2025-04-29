@@ -45,6 +45,39 @@ export default async function decorate(block) {
     spinner.style.display = 'none';
   }
 
+  function findFirstTwoNumbers(str) {
+    const numbers = str.match(/(\d+|\*)/g);
+
+    if (numbers && numbers.length >= 2) {
+      return `${numbers[1]}:${numbers[0].length === 1 ? '0' : ''}${numbers[0]}`;
+    }
+    if (numbers && numbers.length === 1) {
+      return `${numbers[0]}`;
+    }
+    return ``;
+  }
+
+  function getCharsAfterT(str) {
+    const indexOfT = str.indexOf('T');
+
+    if (indexOfT === -1) {
+      return ''; // "T" not found
+    }
+
+    return str.substring(indexOfT + 1, Math.min(indexOfT + 6, str.length));
+  }
+
+  function scheduletime(schedule) {
+    const scheduleExpression = schedule?.ScheduleExpression;
+    if (scheduleExpression && scheduleExpression.substring(0, 5) === 'cron(') {
+      return findFirstTwoNumbers(scheduleExpression);
+    }
+    if (scheduleExpression && scheduleExpression.substring(0, 3) === 'at(') {
+      return getCharsAfterT(scheduleExpression);
+    }
+    return '';
+  }
+
   block.textContent = '';
   block.append(div);
   // class titleAndDescriptionRenderer {
@@ -77,46 +110,7 @@ export default async function decorate(block) {
       headerName: 'Facility USTA Number',
       sortable: true,
     },
-    // {
-    //   field: 'zendesk',
-    //   headerName: 'Zendesk Internal ID',
-    //   sortable: true,
-    // },
-    // // { field: 'email_verified' },
-    // { field: 'facilitystatus', headerName: 'Facility Status', sortable: true },
-    // {
-    //   field: 'verifiedby',
-    //   headerName: 'Verified by',
-    //   sortable: true,
-    //   sort: 'desc',
-    // },
-    // {
-    //   field: 'phone_number_verified',
-    //   headerName: 'Created Date Time',
-    // },
-    // {
-    //   field: 'phone_number_verified',
-    //   headerName: 'Last Updated By',
-    // },
-    // {
-    //   field: 'phone_number_verified',
-    //   headerName: 'Last Updated Date Time',
-    // },
-    // { field: 'sub', headerName: 'ID' },
   ];
-
-  // const rowData = [];
-
-  // Facilities?.forEach(fac => {
-  //   const singleRow = {};
-  //   user.Attributes.forEach(attr => {
-  //     singleRow[attr.Name] = attr.Value;
-  //   });
-  //   singleRow.CreateDate = user.UserCreateDate;
-  //   singleRow.LastModifiedDate = user.UserLastModifiedDate;
-
-  //   rowData.push(singleRow);
-  // });
 
   // let the grid know which columns and what data to use
   let gridOptions = {
@@ -131,44 +125,10 @@ export default async function decorate(block) {
       alert(`${selectedRows[0].name} selected`);
     },
   };
-  // const statebox = document.createElement('select');
-  // statebox.id = 'filter-state-box';
-  // statebox.placeholder = 'SEARCH BY STATE';
-  // statebox.addEventListener('input', () => {
-  //   const inp = document.getElementById('filter-text-box');
-  //   inp.disabled = false;
-  //   // gridOptions.api.setQuickFilter(
-  //   //   document.getElementById('filter-state-box').value,
-  //   // );
-  // });
-  // const selectstate = document.createElement('option');
-  // selectstate.text = 'SEARCH BY STATE';
-  // selectstate.disabled = true;
-  // selectstate.selected = true;
-  // selectstate.hidden = true;
-  // statebox.appendChild(selectstate);
-  // usstates.data.forEach(state => {
-  //   const option = document.createElement('option');
-  //   option.value = state.id;
-  //   option.text = state.value;
-  //   statebox.appendChild(option);
-  // });
-  // statebox.addEventListener('change', async function (event) {
-  //   // Get the selected value
-  //   const selectedValue = event.target.value;
-  //   // Do something with the selected value
-  //   console.log('Selected value:', selectedValue);
-  //   // const config = getAWSStore();
-  //   Facilities = await fetchFacilities(selectedValue, '');
-  //   // eslint-disable-next-line no-debugger
-  //   debugger;
-  //   // console.log(config);
-  //   console.log(Facilities);
-  //   // campaignGrid.GridApi.setGridOption('rowData', Facilities);
-  // });
+
   const inputbox = document.createElement('input');
   inputbox.id = 'filter-text-box';
-  inputbox.disabled = true;
+  inputbox.disabled = false;
   inputbox.type = 'text';
   inputbox.placeholder = 'SEARCH FCAMPAIGNS';
   inputbox.addEventListener('input', () => {
@@ -182,16 +142,7 @@ export default async function decorate(block) {
   block.append(div);
 
   let gridDiv = document.querySelector('#campaign-grid');
-  // eslint-disable-next-line no-debugger
-  // eslint-disable-next-line
-    // const campaignGrid = new agGrid.Grid(gridDiv, gridOptions);
-  // tatebox.addEventListener('change', async function (event) {
-  // Get the selected value
-  // eslint-disable-next-line no-unused-vars
-  // const selectedValue = event.target.value;
-  // Do something with the selected value
-  // onsole.log('Selected value:', selectedValue);
-  // const config = getAWSStore();
+
   gridDiv = document.querySelector('#campaign-grid');
   gridDiv.innerHTML = `<div id="spinner" style="display: none;">
     <div class="spinner-border" role="status">
@@ -228,7 +179,6 @@ export default async function decorate(block) {
       s3res.push(ss);
     }
     s3schedulessummary = s3res;
-
     let statusschedulessummary = schedules
       .filter(el => el.GroupName === schedule.Name)
       .filter(el => el.Arn.includes('Status-'));
@@ -258,26 +208,59 @@ export default async function decorate(block) {
       sndres.push(ss);
     }
     sendchedulessummary = sndres;
-
-    campaigns.ScheduleGroups[s].status = 'ENABLED';
+    const s3pulltime = scheduletime(sendchedulessummary[0]);
+    // const { startDate } = sendchedulessummary[0] || {};
+    const { endDate } = sendchedulessummary[0] || {};
+    const adobestatustime = scheduletime(statusschedulessummary[0]);
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const currentTime = `${hours}:${minutes}`;
+    console.log(currentTime);
+    campaigns.ScheduleGroups[s].Status = 'SCHEDULED';
+    if (campaigns.ScheduleGroups[s].State === 'DISABLED') {
+      if (endDate > now) {
+        campaigns.ScheduleGroups[s].Status = 'PAUSED';
+      } else {
+        campaigns.ScheduleGroups[s].Status = 'INACTIVE';
+      }
+    } else if (endDate > now) {
+      campaigns.ScheduleGroups[s].Status = 'SCHEDULED';
+      if (s3pulltime <= now && now <= adobestatustime) {
+        campaigns.ScheduleGroups[s].Status = 'RUNNING';
+      }
+    } else {
+      campaigns.ScheduleGroups[s].Status = 'INACTIVE';
+    }
+    // eslint-disable-next-line prefer-destructuring
+    campaigns.ScheduleGroups[s].S3Groups = s3schedulessummary[0];
+    // eslint-disable-next-line prefer-destructuring
+    campaigns.ScheduleGroups[s].StatusGroups = statusschedulessummary[0];
+    // eslint-disable-next-line prefer-destructuring
+    campaigns.ScheduleGroups[s].SendGroups = sendchedulessummary[0];
+    campaigns.ScheduleGroups[s].DeliveryTime = scheduletime(
+      sendchedulessummary[0],
+    );
   }
-  // await campaigns.ScheduleGroups.forEach(async (schedule, index, arr) => {
-  //   const GroupTags = await listTagsForResource(schedule.Arn);
-  //   if (GroupTags) {
-  //     console.log(`index: ${index}`);
-  //   }
-  //   arr[index].groupTags = GroupTags;
-  //   console.log(GroupTags.Tags?.join(', '));
-  // });
-  // debugger;
+
   hideSpinner();
   columnDefs = [
     {
-      field: 'name',
+      field: 'Name',
       headerName: 'Campaign',
       sortable: true,
       cellRenderer: titleAndDescriptionRenderer,
       width: 600,
+    },
+    {
+      field: 'Description',
+      headerName: 'Description',
+      hide: true,
+    },
+    {
+      field: 'Title',
+      headerName: 'Title',
+      hide: true,
     },
     {
       field: 'facilityStatus',
@@ -295,20 +278,6 @@ export default async function decorate(block) {
     // { field: 'sub', headerName: 'ID' },
   ];
 
-  // const rowData = [];
-
-  // Facilities?.forEach(fac => {
-  //   const singleRow = {};
-  //   user.Attributes.forEach(attr => {
-  //     singleRow[attr.Name] = attr.Value;
-  //   });
-  //   singleRow.CreateDate = user.UserCreateDate;
-  //   singleRow.LastModifiedDate = user.UserLastModifiedDate;
-
-  //   rowData.push(singleRow);
-  // });
-
-  // let the grid know which columns and what data to use
   gridOptions = {
     columnDefs,
     rowData: campaigns?.ScheduleGroups,
@@ -321,8 +290,6 @@ export default async function decorate(block) {
       window.location.assign(
         `/marketing-trigger-update?campaignid=${selectedRows[0].Name}`,
       );
-      // eslint-disable-next-line no-alert
-      // alert(`${selectedRows[0].Name} selected`);
     },
   };
   // console.log(config);

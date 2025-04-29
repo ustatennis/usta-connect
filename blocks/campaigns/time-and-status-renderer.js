@@ -16,16 +16,17 @@ export default class timeAndStatusRenderer {
     this.eGui = document.createElement('div');
     this.eGui.className = 'rightblock';
     this.eGui.innerHTML = `<div class="statusandtime">
-          <div class="cellstatus">DELIVERY TIME ${
-            params.data.State === 'ENABLED'
+          <div class="cellstatus">DELIVERY TIME ${params.data.DeliveryTime} 
+          ${
+            params.data.Status === 'ENABLED'
               ? '<span class="campaignrunning">&#x25CF; RUNNING</span>'
               : ''
           }${
-      params.data.State === 'PAUSED'
+      params.data.Status === 'PAUSED'
         ? '<span class="campaignpaused">&#x25CF; Paused</span>'
         : ''
     }${
-      params.data.State === 'INACTIVE'
+      params.data.Status === 'INACTIVE'
         ? '<span class="campaigninactive">&#x25CF; Inactive</span>'
         : ''
     }</div>

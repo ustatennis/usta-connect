@@ -475,7 +475,7 @@ export async function getScheduleGroup(Name) {
   console.log('Get Schedule Group...');
   return await scheduler.getScheduleGroup({Name}).promise();
 } catch (error) {
-  console.error('Error listing schedules:', error);
+  console.error('Error getting schedulegroup:', error);
   throw error;
 }
 }
@@ -689,4 +689,16 @@ export async function createScheduleGroup(data) {
       throw error;
   }
 }
+// Delete a Schedule Group
+export async function deleteScheduleGroup(Name) {
+  try {
+      const scheduler = await getScheduler();
 
+      const result = await scheduler.deleteteScheduleGroup({Name}).promise();
+      console.log('Schedule Group deleted successfully:', result);
+      return result;
+  } catch (error) {
+      console.error('Error deleting schedule group:', error);
+      throw error;
+  }
+}

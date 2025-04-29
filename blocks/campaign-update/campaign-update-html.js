@@ -11,7 +11,6 @@ export const htmlForm = `
     <div class="modal-header">Enable campaign</div>
     <div class="modal-body">
       This will launch the campaign $$CampaignName$$ to Scheduled status. 
-Next Run per schedule will be at 09/02/2025 05:00 AM
 Are you sure of the action? 
 
 </div>
@@ -23,19 +22,31 @@ Are you sure of the action?
     </div>
   </div>
 </div>
+
+<div id="disableModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="modal-header">Disable campaign</div>
+    <div class="modal-body">
+      This will launch the campaign $$CampaignName$$ to Paused status. 
+Are you sure of the action? 
+
+</div>
+
+    <form id="modal-form">
+      <button type="button" id="submitBtn">YES</button>
+      <button type="button" id="cancelBtn">NO</button>
+    </form>
+    </div>
+  </div>
+</div>
+
+
 <form method="POST" class="rendered-form">
   <div class="container">
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <div class="form-group" style="">
-            <label>Select A template</label>
-            <select name="template" class="form-control">
-              <option value="value1">Text 1</option>
-              <option value="value2">Text 2</option>
-              <option value="value3">Text 3</option>
-            </select>
-          </div>
           <label>Campaign Name</label>
           <input name="name" type="text" class="form-control" id="campaign-name">
         </div>
@@ -69,7 +80,7 @@ Are you sure of the action?
         </div>
         <div class="formbuttons">
             <button type="submit" class="formbutton btn btn-secondary btn-cancel" id="btn-cancel">CANCEL</button>
-            <button type="submit" class="formbutton btn btn-primary btn-draft" id="btn-save-draft">Save DRAFT</button>
+            <button type="submit" class="formbutton btn btn-primary btn-draft" id="btn-save-draft">DISABLE</button>
             <button type="submit" class="formbutton btn btn-primary btn-enable" id="btn-enable">ENABLE CAMPAIGN</button>
         </div>
 

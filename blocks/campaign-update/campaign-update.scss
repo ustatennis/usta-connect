@@ -90,8 +90,14 @@
     margin: 15% auto;
     padding: 5px 20px 10px;
     border: 1px solid #888;
-    width: 600px;
+    width: 400px;
     font-size: var(--body-font-size-xs);
+    border-radius: 10px;
+  }
+
+  .modal-body {
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   .close {
@@ -125,7 +131,7 @@
   }
 
   .modal-header {
-    font-size: var(--heading-font-size-m);
+    font-size: var(--heading-font-size-s);
     font-weight: bold;
   }
 
