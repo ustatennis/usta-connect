@@ -373,7 +373,6 @@ export async function fetchReferenceCategories(){
 }
 
 export async function fetchAllReferenceData(){
-  debugger;
   const headers = await getAuthHeaders();
   const config =  getAWSStore();
   const requestOptions = {

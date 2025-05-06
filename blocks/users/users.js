@@ -277,7 +277,6 @@ export default async function decorate(block) {
 
   if (!isHomePage) gridOptions.api.sizeColumnsToFit();
   gridOptions.api.sizeColumnsToFit();
-  debugger;
   gridOptions.api.setRowData(files);
   if (gridOptions.api.getDisplayedRowCount() < 11) {
     gridOptions.api.setDomLayout('autoHeight');

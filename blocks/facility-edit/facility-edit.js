@@ -3,7 +3,7 @@ import {
   fetchFacilityById,
   createOrUpdateFacility,
   addressValidation,
-  fetchAllReferenceData
+  fetchAllReferenceData,
 } from '../../scripts/s3script.js';
 // import { basicInfo } from './facility-edit-tab-basicinfo.js';
 import { usstates } from '../../constants/usstates.js';
@@ -18,8 +18,21 @@ let matchedAddress = {};
 // eslint-disable-next-line no-unused-vars
 let modalSelect = '';
 const user = getUser();
-const refData = await fetchAllReferenceData();
-debugger;
+// let latlongenteredmanually = false;
+// const refData = await fetchAllReferenceData();
+// const facilityStatusOptions = refData.data['Facility Status'].map(
+//   obj => obj.value,
+// );
+// debugger;
+// const selectElement = document.getElementById("mySelect");
+// selectElement.options.lenth = 0;
+// facilityStatusOptions.forEach(optionText => {
+//   const optionElement = document.createElement("option");
+//   optionElement.value = optionText; // Set value attribute
+//   optionElement.text = optionText; // Set text displayed to the user
+//   selectElement.add(optionElement);
+// });
+
 const userName = user.UserAttributes.find(o => o.Name === 'name')?.Value;
 const userNameCpitalized =
   // eslint-disable-next-line no-unsafe-optional-chaining
@@ -28,6 +41,9 @@ const userNameCpitalized =
 export default async function decorate(block) {
   // Get the query string from the URL
   const queryString = window.location.search;
+
+  // eslint-disable-next-line prefer-const
+  let coordinatesEnteredManually = false;
 
   // Create a URLSearchParams object
   const urlParams = new URLSearchParams(queryString);
@@ -50,6 +66,7 @@ export default async function decorate(block) {
       zip: '00000',
       postalCode: '00000-000',
       country: 'US',
+      coordinatesEnteredManually: false,
       latitude: '40.270742',
       longitude: '-75.143615',
     },
@@ -128,7 +145,7 @@ export default async function decorate(block) {
    <div class="tab-panel visible">
       <div class="formbuilder-text form-group field-text-facility-usta-number">
          <label for="text-facility-usta-number" class="formbuilder-text-label">FACILITY USTA NUMBER<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="ustaFacilityId" access="false" id="text-facility-usta-number" required="required" aria-required="true" disabled>
+         <input type="number" class="form-control" name="ustaFacilityId" access="false" id="text-facility-usta-number" aria-required="true" disabled>
          <span class="field-error" id="facility-usta-number-error"></span>
       </div>
       <div class="formbuilder-text form-group field-text-zendesk-internal-id">
@@ -143,22 +160,22 @@ export default async function decorate(block) {
       </div>
       <div class="formbuilder-text form-group field-text-address">
          <label for="text-address" class="formbuilder-text-label">ADDRESS<span class="formbuilder-required">*</span></label>
-         <input type="text" class="form-control" name="address.streetAddressLine1" access="false" id="text-address" required="required" aria-required="true">
+         <input type="text" class="form-control" name="address.streetAddressLine1" access="false" id="text-address" aria-required="true">
          <span class="field-error" id="address-error"></span>
       </div>
       <div class="formbuilder-text form-group field-text-city">
          <label for="text-city" class="formbuilder-text-label">CITY<span class="formbuilder-required">*</span></label>
-         <input type="text" class="form-control" name="address.city" access="false" id="text-city" required="required" aria-required="true">
+         <input type="text" class="form-control" name="address.city" access="false" id="text-city" aria-required="true">
          <span class="field-error" id="city-error"></span>
       </div>
       <div class="formbuilder-select form-group field-text-country">
          <label for="text-country" class="formbuilder-select-label">COUNTRY<span class="formbuilder-required">*</span></label>
-         <select class="form-control" name="address.country" access="false" id="text-country" required="required" aria-required="true"></select>
+         <select class="form-control" name="address.country" access="false" id="text-country" aria-required="true"></select>
          <span class="field-error" id="country-error"></span>
       </div>
       <div class="formbuilder-select form-group field-text-state">
          <label for="text-state" class="formbuilder-select-label">STATE/PROVINCE<span class="formbuilder-required">*</span></label>
-         <select class="form-control" name="address.state" access="false" id="text-state" required="required" aria-required="true"></select>
+         <select class="form-control" name="address.state" access="false" id="text-state" aria-required="true"></select>
          <span class="field-error" id="state-error"></span>
       </div>
       <div class="formbuilder-text form-group field-text-zip">
@@ -220,7 +237,7 @@ export default async function decorate(block) {
       </div>
       <div class="formbuttons">
          <button class="formbutton" id="btn-cancel">CANCEL</button>
-         <button class="formbutton" id="btn-next">NEXT</button>
+         <button class="formbutton btn-next" id="btn-next">NEXT</button>
       </div>
    </div>
    <div class="tab-panel hidden">
@@ -234,12 +251,12 @@ export default async function decorate(block) {
       </div>
       <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
          <label for="text-address" class="formbuilder-text-label">TOTAL OUTDOOR TENNIS COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" aria-required="true">
          <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
       </div>
       <div class="formbuilder-select form-group field-select-courts-playable-status">
-         <label for="select-facilitytype-detail" class="formbuilder-select-label">COURTS PLAYABLE STATUS<span class="formbuilder-required">*</span></label>
-         <select class="form-control" name="courtsPlayableStatus" id="select-courts-palyable-status">
+         <label for="select-courts-playable-status" class="formbuilder-select-label">COURTS PLAYABLE STATUS<span class="formbuilder-required">*</span></label>
+         <select class="form-control" name="courts.courtsPlayableStatus" id="select-courts-playable-status">
             <option value="All Playable" selected="true" id="select-courts-palyable-status-0">All Playable</option>
             <option value="Closed" id="select-courts-palyable-status-1">Permanently Closed</option>
             <option value="Some Unplayable" id="select-courts-palyable-status-2">Some Unplayable</option>
@@ -249,131 +266,131 @@ export default async function decorate(block) {
       </div>
       <div class="formbuilder-text form-group field-text-total-bubble-courts">
          <label for="text-name" class="formbuilder-text-label">TOTAL BUBBLE COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <input type="number" class="form-control" name="courts.totalBubbleCourts" access="false" id="text-total-bubble-courts">
          <span class="field-error" id="total-bubble-courts-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-outdoor-lighted-courts">
          <label for="text-address" class="formbuilder-text-label">NUMBER OF OUTDOOR LIGHTED COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOfOutdoorLightedCourts" access="false" id="text-number-of-outdoor-lighted-courts" aria-required="true">
+         <span class="field-error" id="number-of-outdoor-lighted-courts-error"></span>
       </div>
       <div class="formbuilder-header">
         Court Surfaces
       </div>
-      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-grass-courts">
          <label for="text-name" class="formbuilder-text-label">NUMBER OF GRASS COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
-         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOfGrassCourts" access="false" id="text-number-of-grass-courts">
+         <span class="field-error" id="number-of-grass-courts-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-hard-courts">
          <label for="text-address" class="formbuilder-text-label">NUMBER OF HARD COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOfHardCourts" access="false" id="text-number-of-hard-courts" aria-required="true">
+         <span class="field-error" id="number-of-hard-courts-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-clay-courts">
          <label for="text-name" class="formbuilder-text-label">NUMBER OF CLAY COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
-         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOfClayCourts" access="false" id="text-number-of-clay-courts">
+         <span class="field-error" id="number-of-clay-courts-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-soft-courts">
          <label for="text-address" class="formbuilder-text-label">NUMBER OF SOFT COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOfSoftCourts" access="false" id="text-number-of-soft-courts" aria-required="true">
+         <span class="field-error" id="number-of-soft-courts-error"></span>
       </div>
       <div class="formbuilder-header">
         Youth Courts
       </div>
-      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-36ft-courts">
          <label for="text-name" class="formbuilder-text-label">NUMBER OF 36FT COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
-         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOf36ftCourts" access="false" id="text-number-of-36ft-courts">
+         <span class="field-error" id="number-of-36ft-courts-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-36ft-blended-courts">
          <label for="text-address" class="formbuilder-text-label">NUMBER OF 36FT BLENDED COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOf36ftBlendedCourts" access="false" id="text-number-of-36ft-blended-courts" aria-required="true">
+         <span class="field-error" id="number-of-36ft-blended-courts-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-36ft-standalone-courts">
          <label for="text-name" class="formbuilder-text-label">NUMBER OF 36FT STANDALONE COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
-         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOf36ftStandaloneCourts" access="false" id="text-number-of-36ft-standalone-courts">
+         <span class="field-error" id="number-of-36ft-standalone-courts-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-60ft-courts">
          <label for="text-address" class="formbuilder-text-label">NUMBER OF 60FT COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOf60ftCourts" access="false" id="text-number-of-60ft-courts" aria-required="true">
+         <span class="field-error" id="number-of-60ft-courts-error"></span>
       </div>
-        <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+        <div class="formbuilder-text form-group field-text-number-of-60ft-blended-courts">
          <label for="text-address" class="formbuilder-text-label">NUMBER OF 60FT BLENDED COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOf60ftBlendedCourts" access="false" id="text-number-of-60ft-blended-courts" aria-required="true">
+         <span class="field-error" id="number-of-60ft-blended-courts-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-60ft-standalone-courts">
          <label for="text-name" class="formbuilder-text-label">NUMBER OF 60FT STANDALONE COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
+         <input type="number" class="form-control" name="courts.numberOf60ftStandaloneCourts" access="false" id="text-number-of-60ft-standalone-courts">
          <span class="field-error" id="total-indoor-tennis-courts-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-78ft-courts">
          <label for="text-address" class="formbuilder-text-label">NUMBER OF 78FT COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOf78ftCourts" access="false" id="text-number-of-78ft-courts" aria-required="true">
+         <span class="field-error" id="number-of-78ft-courts-error"></span>
       </div>
       <div class="formbuilder-header">
         Pickleball Courts
       </div>
-      <div class="formbuilder-text form-group field-text-total-indoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-standalone-pickleball-courts">
          <label for="text-name" class="formbuilder-text-label">NUMBER OF STANDALONE PICKLEBALL COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalIndoorTennisCourts" access="false" id="text-total-indoor-tennis-courts">
-         <span class="field-error" id="total-indoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOfPickleballCourts" access="false" id="text-number-of-standalone-pickleball-court">
+         <span class="field-error" id="number-of-standalone-pickleball-court-error"></span>
       </div>
-      <div class="formbuilder-text form-group field-text-total-outdoor-tennis-courts">
+      <div class="formbuilder-text form-group field-text-number-of-pickleball-blended-courts">
          <label for="text-address" class="formbuilder-text-label">NUMBER OF PICKLEBALL BLENDED COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.totalOutdoorTennisCourts" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
-         <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
+         <input type="number" class="form-control" name="courts.numberOfPickleballBlendedCourts" access="false" id="text-number-of-pickleball-blended-courts" aria-required="true">
+         <span class="field-error" id="number-of-pickleball-blended-courts-error"></span>
       </div>
       <div class="formbuttons">
          <button class="formbutton" id="btn-cancel">CANCEL</button>
-         <button class="formbutton" id="btn-next">NEXT</button>
+         <button class="formbutton btn-next" id="btn-next">NEXT</button>
       </div>
    </div>
    <div class="tab-panel hidden">
       <div class="checkbox-header">FACILITY FEATURES</div>
       <div class="checkbox-group">
-      <input type="checkbox" id="facility-feature-coaching-available" name="facility-feature-coaching-available" value="Coaching Available">
+      <input type="checkbox" id="facility-feature-coaching-available" name="amenities.coachingAvailable" value="true">
       <label for="facility-feature-coaching-available"> Coaching Available</label><br/>
-      <input type="checkbox" id="facility-feature-pro-shop" name="facility-feature-pro-shop" value="Pro Shop">
+      <input type="checkbox" id="facility-feature-pro-shop" name="amenities.proShop" value="true">
       <label for="facility-feature-pro-shop"> Pro Shop</label><br/>
-      <input type="checkbox" id="facility-feature-changing-room" name="facility-feature-changing-room" value="Changing Room">
+      <input type="checkbox" id="facility-feature-changing-room" name="amenities.changingRoom" value="true">
       <label for="facility-feature-changing-room"> Changing Room</label><br/>
-      <input type="checkbox" id="facility-feature-smart-gate-access" name="facility-feature-smart-gate-access" value="Smart Gate Access">
+      <input type="checkbox" id="facility-feature-smart-gate-access" name="amenities.smartGateAccess" value="true">
       <label for="facility-feature-smart-gate-access"> Smart Gate Access</label><br/>
       </div>
       <div class="checkbox-header">ACCESSIBILITY & LANGUAGES</div>
       <div class="checkbox-group">
-      <input type="checkbox" id="accessibility-language-spanish" name="accessibility-language-spanish" value="Coaching Available">
+      <input type="checkbox" id="accessibility-language-spanish" name="amenities.spanishSpeaking" value="true">
       <label for="accessibility-language-spanish"> Spanish Speaking Staff</label><br/>
-      <input type="checkbox" id="accessibility-language-wheelchair" name="accessibility-language-wheelchair" value="Pro Shop">
-      <label for="accessibility-language-wheelchair"> Wheelchair Accessible</label><br/>
+      <input type="checkbox" id="accessibility-wheelchair" name="amenities.wheelchairAccessible" value="true">
+      <label for="accessibility-wheelchair"> Wheelchair Accessible</label><br/>
       </div>
       <div class="formbuttons">
          <button class="formbutton" id="btn-cancel">CANCEL</button>
-         <button class="formbutton" id="btn-next">NEXT</button>
+         <button class="formbutton btn-next" id="btn-next">NEXT</button>
       </div>
    </div>
    <div class="tab-panel hidden">
       <div class="formbuilder-text form-group field-text-phone-number">
          <label for="text-address" class="formbuilder-text-label">PHONE NUMBER<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.phoneNumber" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <input type="number" class="form-control" name="phoneNumber" access="false" id="text-phone-number" aria-required="true">
          <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
       </div>
       <div class="formbuilder-text form-group field-text-website">
          <label for="text-address" class="formbuilder-text-label">WEBSITE<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.website" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <input type="text" class="form-control" name="website" access="false" id="text-website" aria-required="true">
          <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
       </div>
       <div class="formbuilder-select form-group field-select-reservation-status">
          <label for="select-facilitytype-detail" class="formbuilder-select-label">RESERVATION TYPE<span class="formbuilder-required">*</span></label>
-         <select class="form-control" name="courtsPlayableStatus" id="select-courts-reservation-status">
+         <select class="form-control" name="reservationType" id="select-reservation-type">
             <option value="All Playable" selected="true" id="select-courts-palyable-status-0">First Come/First Served</option>
             <option value="Closed" id="select-courts-palyable-status-1">Managed Reservation</option>
             <option value="Some Unplayable" id="select-courts-palyable-status-2">Unknown</option>
@@ -381,17 +398,17 @@ export default async function decorate(block) {
       </div>
       <div class="formbuilder-text form-group field-text-latitude">
          <label for="text-address" class="formbuilder-text-label">LATITUDE<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.latitude" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <input type="number" class="form-control" name="address.latitude" access="false" id="text-latitude" aria-required="true">
          <span class="field-error" id="lattitude-error"></span>
       </div>
       <div class="formbuilder-text form-group field-text-longitude">
          <label for="text-address" class="formbuilder-text-label">LONGITUDE<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.longitude" access="false" id="text-total-outdoor-tennis-courts" required="required" aria-required="true">
+         <input type="number" class="form-control" name="address.longitude" access="false" id="text-longitude" aria-required="true">
          <span class="field-error" id="longitude-error"></span>
       </div>
       <div class="formbuttons">
          <button class="formbutton" id="btn-cancel">CANCEL</button>
-         <button class="formbutton" id="btn-next">SUBMIT</button>
+         <button class="formbutton" id="btn-submit">SUBMIT</button>
       </div>
    </div>
 </form>`;
@@ -412,10 +429,70 @@ export default async function decorate(block) {
     countrybox.appendChild(option);
   });
 
+  const refData = await fetchAllReferenceData();
+  const facilityStatusOptions = refData.data['Facility Status'].map(
+    obj => obj.value,
+  );
+  let selectElement = divheader.querySelector('#select-facility-status');
+  selectElement.innerHTML = '';
+  facilityStatusOptions.forEach(optionText => {
+    const optionElement = document.createElement('option');
+    optionElement.value = optionText; // Set value attribute
+    optionElement.text = optionText; // Sett displayed to the user
+    optionElement.id = `select-facility-status-${optionText}`;
+    selectElement.add(optionElement);
+  });
   if (createFacilityOperation) {
-    const dupli = divheader.querySelector('#select-facility-status-3');
+    const dupli = divheader.querySelector('#select-facility-status-Duplicate');
     dupli.classList.add('hidden');
   }
+  const facilityTypeOptions = refData.data['Facility Type'].map(
+    obj => obj.value,
+  );
+  selectElement = divheader.querySelector('#select-facilitytype');
+  selectElement.innerHTML = '';
+  facilityTypeOptions.forEach(optionText => {
+    const optionElement = document.createElement('option');
+    optionElement.value = optionText; // Set value attribute
+    optionElement.text = optionText; // Sett displayed to the user
+    optionElement.id = `select-facility-type-${optionText}`;
+    selectElement.add(optionElement);
+  });
+  const playableStatusOptions = refData.data['Playable Status'].map(
+    obj => obj.value,
+  );
+  selectElement = divheader.querySelector('#select-courts-playable-status');
+  selectElement.innerHTML = '';
+  playableStatusOptions.forEach(optionText => {
+    const optionElement = document.createElement('option');
+    optionElement.value = optionText; // Set value attribute
+    optionElement.text = optionText; // Sett displayed to the user
+    optionElement.id = `select-playable-status-${optionText}`;
+    selectElement.add(optionElement);
+  });
+  const reservationTypeOptions = refData.data['Reservation Type'].map(
+    obj => obj.value,
+  );
+  selectElement = divheader.querySelector('#select-reservation-type');
+  selectElement.innerHTML = '';
+  reservationTypeOptions.forEach(optionText => {
+    const optionElement = document.createElement('option');
+    optionElement.value = optionText; // Set value attribute
+    optionElement.text = optionText; // Sett displayed to the user
+    optionElement.id = `select-type-detail-${optionText}`;
+    selectElement.add(optionElement);
+  });
+
+  const typeDetailOptions = refData.data['Type Detail'].map(obj => obj.value);
+  selectElement = divheader.querySelector('#select-facilitytype-detail');
+  selectElement.innerHTML = '';
+  typeDetailOptions.forEach(optionText => {
+    const optionElement = document.createElement('option');
+    optionElement.value = optionText; // Set value attribute
+    optionElement.text = optionText; // Sett displayed to the user
+    optionElement.id = `select-type-detail-${optionText}`;
+    selectElement.add(optionElement);
+  });
 
   // eslint-disable-next-line no-use-before-define
   await populateForm(divheader);
@@ -452,13 +529,13 @@ export default async function decorate(block) {
       const modalwindow = document.querySelector('#myModal');
       modalwindow.style.display = 'none';
     };
-    window.onclick = function (event) {
-      const modal = document.querySelector('#myModal');
-      if (event.target === modal) {
-        const modalwindow = document.querySelector('#myModal');
-        modalwindow.style.display = 'none';
-      }
-    };
+    // window.onclick = function (event) {
+    //   const modal = document.querySelector('#myModal');
+    //   if (event.target === modal) {
+    //     const modalwindow = document.querySelector('#myModal');
+    //     modalwindow.style.display = 'none';
+    //   }
+    // };
     submitBtn.onclick = async function () {
       // eslint-disable-next-line no-use-before-define
       if (incompleteAddress(updatedfacility.address)) {
@@ -535,24 +612,25 @@ You entered:
     showDiv.style.display = 'block';
     showDiv.innerHTML = '';
     showDiv.appendChild(bdy);
+    // eslint-disable-next-line no-unused-vars
     const modal = showDiv.querySelector('#myModal');
     const span = showDiv.querySelector('.close');
-    const submitBtn = showDiv.querySelector('#submitBtn');
-    const cancelBtn = showDiv.querySelector('#cancelBtn');
+    const modalsubmitBtn = showDiv.querySelector('#submitBtn');
+    const modalcancelBtn = showDiv.querySelector('#cancelBtn');
     span.onclick = function () {
       const modalwindow = document.querySelector('#myModal');
       modalwindow.style.display = 'none';
     };
 
-    window.onclick = function (event) {
-      if (event.target === modal) {
-        // const modal = document.querySelector('#myModal');
-        const modalwindow = document.querySelector('#myModal');
-        modalwindow.style.display = 'none';
-      }
-    };
+    // window.onclick = function (event) {
+    //   if (event.target === modal) {
+    //     // const modal = document.querySelector('#myModal');
+    //     const modalwindow = document.querySelector('#myModal');
+    //     modalwindow.style.display = 'none';
+    //   }
+    // };
 
-    submitBtn.onclick = async function () {
+    modalsubmitBtn.onclick = async function () {
       modalSelect = '';
       // Get all radio buttons with the specified name
       const radioButtons = document.querySelectorAll(
@@ -602,76 +680,146 @@ You entered:
       modalwindow.style.display = 'none';
     };
 
-    cancelBtn.onclick = function () {
+    modalcancelBtn.onclick = function () {
       const modalwindow = document.querySelector('#myModal');
       modalwindow.style.display = 'none';
     };
   }
 
   async function populateForm(divh) {
+    function showText(id, text) {
+      const field = divh.querySelector(id);
+      field.value = text;
+    }
+    function showNumber(id, number) {
+      const field = divh.querySelector(id);
+      field.value = Number(number || 0);
+    }
+    function showChecked(id, checked) {
+      const field = divh.querySelector(id);
+      field.checked = checked;
+    }
     // eslint-disable-next-line no-unused-vars
 
     // facility USTA Number
-    const fieldFacilityUSTANumber = divh.querySelector(
-      '#text-facility-usta-number',
-    );
-    fieldFacilityUSTANumber.value = Number(facility.ustaFacilityId);
-    // externalFacilityId
-    const fieldExternalFacilityId = divh.querySelector(
-      '#text-zendesk-internal-id',
-    );
-    fieldExternalFacilityId.value = facility.externalFacilityId;
-    // Name
-    const facilityName = divh.querySelector('#text-name');
-    facilityName.value = facility.name;
-    // Address
-    const fieldAddress = divh.querySelector('#text-address');
-    fieldAddress.value = facility.address.streetAddressLine1;
-    // City
-    const fieldCity = divh.querySelector('#text-city');
-    fieldCity.value = facility.address.city;
-    // Country
-    const fieldCountry = divh.querySelector('#text-country');
-    fieldCountry.value = facility.address.country;
-    // State
-    const fieldState = divh.querySelector('#text-state');
-    fieldState.value = facility.address.state;
-    // Zip
-    const fieldZip = divh.querySelector('#text-zip');
-    fieldZip.value = facility.address.zip;
-    // FacilityType
-    const fieldFacilityType = divh.querySelector('#select-facilitytype');
-    fieldFacilityType.value = facility.facilityType;
-    // FacilityTypeDetail
-    const fieldFacilityTypeDetail = divh.querySelector(
-      '#select-facilitytype-detail',
-    );
-    fieldFacilityTypeDetail.value = facility.facilityTypeDetail;
-    // Private?
-    const fieldIsPrivateYes = divh.querySelector('#radio-isprivate-yes');
-    const fieldIsPrivateNo = divh.querySelector('#radio-isprivate-no');
-    fieldIsPrivateYes.checked = facility.isPrivateFlag;
-    fieldIsPrivateNo.checked = !facility.isPrivateFlag;
-    // FacilityStatus
-    const fieldFacilityStatus = divh.querySelector('#select-facility-status');
-    fieldFacilityStatus.value = facility.facilityStatus;
-    // FacilityStatus
+    showNumber('#text-facility-usta-number', facility.ustaFacilityId);
+    showText('#text-zendesk-internal-id', facility.externalFacilityId);
+    showText('#text-name', facility.name);
+    showText('#text-address', facility.address.streetAddressLine1);
+    showText('#text-city', facility.address.city);
+    showText('#text-country', facility.address.country);
+    showText('#text-state', facility.address.state);
+    showText('#text-zip', facility.address.zip);
+    showText('#select-facilitytype', facility.facilityType);
+    showText('#select-facilitytype-detail', facility.facilityTypeDetail);
+    showChecked('#radio-isprivate-yes', facility.isPrivateFlag);
+    showChecked('#radio-isprivate-no', !facility.isPrivateFlag);
+    showText('#select-facility-status', facility.facilityStatus);
     const survivorFacilityId = divh.querySelector('#text-survivor-facility-id');
     survivorFacilityId.value = Number(facility.survivorFacilityId);
     // Total indoor tennis courts
-    const fieldTotalIndoorTennisCourts = divh.querySelector(
+    showNumber(
       '#text-total-indoor-tennis-courts',
-    );
-    fieldTotalIndoorTennisCourts.value = Number(
-      facility.courts.totalIndoorTennisCourts || 0,
+      facility.courts.totalIndoorTennisCourts,
     );
     // Total outdoor tennis courts
-    const fieldTotalOutdoorTennisCourts = divh.querySelector(
+    showNumber(
       '#text-total-outdoor-tennis-courts',
+      facility.courts.totalOutdoorTennisCourts,
     );
-    fieldTotalOutdoorTennisCourts.value = Number(
-      facility.courts.totalOutdoorTennisCourts || 0,
+    showText('#select-courts-playable-status', 'placeholder');
+    showNumber('#text-total-bubble-courts', facility.courts.totalBubbleCourts);
+    showNumber(
+      '#text-number-of-outdoor-lighted-courts',
+      facility.courts.numberOfOutdoorLightedCourts,
     );
+    showNumber(
+      '#text-number-of-grass-courts',
+      facility.courts.numberOfGrassCourts,
+    );
+    showNumber(
+      '#text-number-of-hard-courts',
+      facility.courts.numberOfHardCourts,
+    );
+    showNumber(
+      '#text-number-of-clay-courts',
+      facility.courts.numberOfClayCourts,
+    );
+    showNumber(
+      '#text-number-of-soft-courts',
+      facility.courts.numberOfSoftCourts,
+    );
+    showNumber(
+      '#text-number-of-36ft-courts',
+      facility.courts.numberOf36ftCourts,
+    );
+    showNumber(
+      '#text-number-of-36ft-blended-courts',
+      facility.courts.numberOf36ftBlendedCourts,
+    );
+    showNumber(
+      '#text-number-of-36ft-standalone-courts',
+      facility.courts.numberOf36ftStandaloneCourts,
+    );
+    showNumber(
+      '#text-number-of-60ft-courts',
+      facility.courts.numberOf60ftCourts,
+    );
+    showNumber(
+      '#text-number-of-60ft-blended-courts',
+      facility.courts.numberOf60ftBlendedCourts,
+    );
+    showNumber(
+      '#text-number-of-60ft-standalone-courts',
+      facility.courts.numberOf60ftStandaloneCourts,
+    );
+    showNumber(
+      '#text-number-of-78ft-courts',
+      facility.courts.numberOf78ftCourts,
+    );
+    showNumber(
+      '#text-number-of-standalone-pickleball-court',
+      facility.courts.numberOfPickleballCourts,
+    );
+    showNumber(
+      '#text-number-of-standalone-pickleball-court',
+      facility.courts.numberOfPickleballCourts,
+    );
+    showNumber(
+      '#text-number-of-pickleball-blended-courts',
+      facility.courts.numberOfPickleballBlendedCourts,
+    );
+
+    // amenities
+    showChecked(
+      '#facility-feature-coaching-available',
+      facility.amenities.coachingAvailable,
+    );
+    showChecked('#facility-feature-pro-shop', facility.amenities.proShop);
+    showChecked(
+      '#facility-feature-changing-room',
+      facility.amenities.changingRoom,
+    );
+    showChecked(
+      '#facility-feature-smart-gate-access',
+      facility.amenities.smartGateAccess,
+    );
+    showChecked(
+      '#accessibility-language-spanish',
+      facility.amenities.spanishSpeaking,
+    );
+    showChecked(
+      '#accessibility-wheelchair',
+      facility.amenities.wheelchairAccessible,
+    );
+
+    // additional info
+
+    showText('#text-phone-number', facility.phoneNumber);
+    showText('#text-website', facility.website);
+    showText('#select-reservation-type', facility.reservationType);
+    showText('#text-latitude', facility.address.latitude);
+    showText('#text-longitude', facility.address.longitude);
   }
 
   function formToObject(divh) {
@@ -684,11 +832,23 @@ You entered:
   }
 
   // function showMessage(id,msg){
-  //   const 
+  //   const
 
   // }
 
   function validateForm(divh) {
+    const fieldaddresslongitude = divh.querySelector('.field-text-longitude');
+    fieldaddresslongitude.addEventListener('change', function (event) {
+      if (event.target.value !== facility.address.longitude) {
+        coordinatesEnteredManually = true;
+      }
+    });
+    const fieldaddresslatitude = divh.querySelector('.field-text-latitude');
+    fieldaddresslatitude.addEventListener('change', function (event) {
+      if (event.target.value !== facility.address.latitude) {
+        coordinatesEnteredManually = true;
+      }
+    });
     const fieldFacilityUstaNumber = divh.querySelector(
       '.field-text-facility-usta-number',
     );
@@ -874,17 +1034,41 @@ You entered:
       totalOutdoorTennisCourtsError.innerHTML = '';
     });
 
-    const btnCancel = divh.querySelector('#btn-cancel');
-    btnCancel.addEventListener('click', ev => {
-      ev.preventDefault();
-      window.location.href = '/facility-search';
-    });
+    // const btnCancel = divh.querySelector('#btn-cancel');
+    // btnCancel.addEventListener('click', ev => {
+    //   ev.preventDefault();
+    //   window.location.href = '/facility-search';
+    // });
 
     function tabClickHandler(elementlist, panelList, ev) {
+      ev.preventDefault();
       Array.from(elementlist).forEach(function (element) {
         element.classList.remove('selected');
       });
       ev.target.classList.add('selected');
+      Array.from(panelList).forEach((panel, i) => {
+        if (elementlist[i].classList.contains('selected')) {
+          panel.classList.remove('hidden');
+          panel.classList.add('visible');
+        } else {
+          panel.classList.remove('visible');
+          panel.classList.add('hidden');
+        }
+      });
+    }
+
+    function nextClickHandler(elementlist, panelList, ev) {
+      ev.preventDefault();
+      let selectedindex = Array.from(elementlist).findIndex(element =>
+        element.classList?.contains('selected'),
+      );
+      if (selectedindex === -1) {
+        selectedindex = elementlist.length - 1;
+      } else {
+        elementlist[selectedindex].classList.remove('selected');
+      }
+      selectedindex = (selectedindex + 1) % elementlist.length;
+      elementlist[selectedindex].classList.add('selected');
       Array.from(panelList).forEach((panel, i) => {
         if (elementlist[i].classList.contains('selected')) {
           panel.classList.remove('hidden');
@@ -904,7 +1088,23 @@ You entered:
       );
     });
 
-    const btnSubmit = divh.querySelector('#btn-next');
+    const btnNext = divh.querySelectorAll('.btn-next');
+    Array.from(btnNext).forEach(element => {
+      element.addEventListener(
+        'click',
+        nextClickHandler.bind(null, tabElements, tabPanels),
+      );
+    });
+
+    const btnCancel = divh.querySelectorAll('#btn-cancel');
+    Array.from(btnCancel).forEach(element => {
+      element.addEventListener('click', async ev => {
+        ev.preventDefault();
+        window.location.href = '/facility-search';
+      });
+    });
+
+    const btnSubmit = divh.querySelector('#btn-submit');
     btnSubmit.addEventListener('click', async ev => {
       // eslint-disable-next-line prettier/prettier
       console.log('SUBMIT');
@@ -917,6 +1117,9 @@ You entered:
         state: ob['address.state'],
         zip: ob['address.zip'],
         country: ob['address.country'],
+        coordinatesEnteredManually,
+        latitude: ob['address.latitude'],
+        longitude: ob['address.longitude'],
       };
       ob.survivorFacilityId = Number(ob.survivorFacilityId || 0);
       const courts = {
@@ -926,6 +1129,57 @@ You entered:
         totalOutdoorTennisCourts: Number(
           ob['courts.totalOutdoorTennisCourts'] || 0,
         ),
+        numberOf36ftBlendedCourts: Number(
+          ob['courts.numberOf36ftBlendedCourts'] || 0,
+        ),
+        numberOf36ftCourts: Number(ob['courts.numberOf36ftCourts'] || 0),
+        numberOf36ftStandaloneCourts: Number(
+          ob['courts.numberOf36ftStandaloneCourts'] || 0,
+        ),
+        numberOf60ftBlendedCourts: Number(
+          ob['courts.numberOf60ftBlendedCourts'] || 0,
+        ),
+        numberOf60ftCourts: Number(ob['courts.numberOf60ftCourts'] || 0),
+        numberOf78ftCourts: Number(ob['courts.numberOf78ftCourts'] || 0),
+        totalBubbleCourts: Number(ob['courts.totalBubbleCourts'] || 0),
+        hasGrassCourts: false,
+        numberOfGrassCourts: Number(ob['courts.numberOfGrassCourts'] || 0),
+        hasHardCourts: false,
+        numberOfHardCourts: Number(ob['courts.numberOfHardCourts'] || 0),
+        hasClayCourts: true,
+        numberOfClayCourts: Number(ob['courts.numberOfClayCourts'] || 0),
+        hasOtherCourtSurface: false,
+        hasOutdoorLightedCourts: true,
+        numberOfOutdoorLightedCourts: Number(
+          ob['courts.numberOfOutdoorLightedCourts'] || 0,
+        ),
+        has36ftCourts: false,
+        hasBlended36ftCourts: false,
+        hasStandalone36ftCourts: false,
+        has60ftCourts: false,
+        hasBlended60ftCourts: false,
+        hasStandalone60ftCourts: false,
+        numberOf60ftStandaloneCourts: Number(
+          ob['courts.numberOf60ftStandaloneCourts'] || 0,
+        ),
+        has78ftCourts: true,
+        hasPickleballCourts: false,
+        numberOfStandalonePickleballCourts: Number(
+          ob['courts.numberOfStandalonePickleballCourts'] || 0,
+        ),
+        numberOfPickleballBlendedCourts: Number(
+          ob['courts.numberOfPickleballBlendedCourts'] || 0,
+        ),
+        reservationType: ob['courts.reservationType'],
+      };
+      const amenities = {
+        proShop: ob['amenities.proShop'] === 'true',
+        spanishSpeaking: ob['amenities.spanishSpeaking'] === 'true',
+        hittingWall: ob['amenities.hittingWall'] === 'true',
+        smartGateAccess: ob['amenities.smartGateAccess'] === 'true',
+        wheelchairAccessible: ob['amenities.wheelchairAccessible'] === 'true',
+        changingRoom: ob['amenities.changingRoom'] === 'true',
+        coachingAvailable: ob['amenities.coachingAvailable'] === 'true',
       };
       ob.isPrivateFlag = ob.isPrivate === 'Yes';
       delete ob['address.streetAddressLine1'];
@@ -933,12 +1187,38 @@ You entered:
       delete ob['address.state'];
       delete ob['address.zip'];
       delete ob['address.country'];
-
+      if (!coordinatesEnteredManually) {
+        delete ob['address.latitude'];
+        delete ob['address.longitude'];
+      }
       delete ob['courts.totalIndoorTennisCourts'];
       delete ob['courts.totalOutdoorTennisCourts'];
       delete ob.isPrivate;
+
+      delete ob['amenities.changingRoom'];
+      delete ob['amenities.coachingAvailable'];
+      delete ob['amenities.proShop'];
+      delete ob['amenities.smartGateAccess'];
+      delete ob['amenities.spanishSpeaking'];
+      delete ob['amenities.wheelchairAccessible'];
+      delete ob['courts.numberOf36ftBlendedCourts'];
+      delete ob['courts.numberOf36ftCourts'];
+      delete ob['courts.numberOf36ftStandaloneCourts'];
+      delete ob['courts.numberOf60ftStandaloneCourts'];
+      delete ob['courts.numberOf60ftBlendedCourts'];
+      delete ob['courts.numberOf60ftCourts'];
+      delete ob['courts.numberOf78ftCourts'];
+      delete ob['courts.numberOfClayCourts'];
+      delete ob['courts.numberOfGrassCourts'];
+      delete ob['courts.numberOfHardCourts'];
+      delete ob['courts.numberOfOutdoorLightedCourts'];
+      delete ob['courts.numberOfPickleballBlendedCourts'];
+      delete ob['courts.numberOfPickleballCourts'];
+      delete ob['courts.numberOfSoftCourts'];
+      delete ob['courts.totalBubbleCourts'];
       facility.address = { ...facility.address, ...addr };
       facility.courts = { ...facility.courts, ...courts };
+      facility.amenities = { ...facility.amenities, ...amenities };
       updatedfacility = { ...facility, ...ob };
       //   const date = new Date();
       //   updatedfacility.lastUpdatedDateTime = date.toISOString().slice(0, 19);
@@ -948,6 +1228,20 @@ You entered:
       delete updatedfacility.address.longitude;
       delete updatedfacility.lastUpdatedDateTime;
       delete updatedfacility.createdDateTime;
+      // delete updatedfacility.courts.numberOf36ftBlendedCourts;
+      // delete updatedfacility.courts.numberOf36ftCourts;
+      // delete updatedfacility.courts.numberOf36ftStandaloneCourts;
+      // delete updatedfacility.courts.numberOf60ftBlendedCourts;
+      // delete updatedfacility.courts.numberOf60ftCourts;
+      // delete updatedfacility.courts.numberOf78ftCourts;
+      // delete updatedfacility.courts.numberOfClayCourts;
+      // delete updatedfacility.courts.numberOfGrassCourts;
+      // delete updatedfacility.courts.numberOfHardCourts;
+      // delete updatedfacility.courts.numberOfOutdoorLightedCourts;
+      // delete updatedfacility.courts.numberOfPickleballBlendedCourts;
+      // delete updatedfacility.courts.numberOfPickleballCourts;
+      // delete updatedfacility.courts.numberOfSoftCourts;
+      delete updatedfacility.courts.totalBubbleCourts;
       // delete all derived fields
       delete updatedfacility.courts.hasGrassCourts;
       delete updatedfacility.courts.hasHardCourts;
@@ -962,6 +1256,7 @@ You entered:
       delete updatedfacility.courts.hasStandalone60ftCourts;
       delete updatedfacility.courts.has78ftCourts;
       delete updatedfacility.courts.hasPickleballCourts;
+
       updatedfacility.lastUpdatedBy = userNameCpitalized;
       updatedfacility.verifiedBy = userNameCpitalized;
       if (updatedfacility.facilityStatus !== 'Duplicate') {
@@ -977,6 +1272,16 @@ You entered:
       userAddress.state = updatedfacility.address.state;
       userAddress.zip = updatedfacility.address.zip;
       userAddress.country = updatedfacility.address.country;
+      if (coordinatesEnteredManually) {
+        if (createFacilityOperation) delete updatedfacility.ustaFacilityId;
+        const response = await createOrUpdateFacility(updatedfacility);
+        console.log(response);
+        if (response.message) {
+          alert(response.message);
+        } else {
+          window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
+        }
+      }
       // eslint-disable-next-line no-unused-vars
       const sinRes = await addressValidation(userAddress);
       matchedAddress = {
@@ -1004,6 +1309,7 @@ You entered:
         } else {
           window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
         }
+        alert('end of form');
       }
 
       // const response = await createOrUpdateFacility(updatedfacility);

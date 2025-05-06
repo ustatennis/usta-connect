@@ -95,12 +95,8 @@ const htmlString = `<div class="tab-panel visible">
    <button class="formbutton" id="btn-cancel">CANCEL</button>
    <button class="formbutton" id="btn-next">NEXT</button>
 </div>`;
-function showError(id, msg) {
 
-}
 const tempElement = document.createElement('div');
 tempElement.innerHTML = htmlString;
-tempElement.addEventListener() {
-    
-}
+
 export const basicInfo = tempElement.firstChild;
