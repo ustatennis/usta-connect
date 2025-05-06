@@ -348,6 +348,10 @@ export default async function decorate(block) {
           const pullMM = ob.pulltime.split(':')[1] || '*';
           sched.EndDate = enddate;
           sched.StartDate = startdate;
+          const now = new Date();
+          if (sched.StartDate < now) {
+            sched.StartDate = now;
+          }
           sched.State = 'ENABLED';
           sched.ScheduleExpression = `cron(${pullMM} ${pullHH} * * ? *)`;
           // eslint-disable-next-line no-await-in-loop
@@ -357,6 +361,10 @@ export default async function decorate(block) {
           const sendMM = ob.sendtime.split(':')[1] || '*';
           sched.EndDate = enddate;
           sched.StartDate = startdate;
+          const now = new Date();
+          if (sched.StartDate < now) {
+            sched.StartDate = now;
+          }
           sched.State = 'ENABLED';
           sched.ScheduleExpression = `cron(${sendMM} ${sendHH} * * ? *)`;
           // eslint-disable-next-line no-await-in-loop
@@ -369,6 +377,10 @@ export default async function decorate(block) {
           }
           sched.EndDate = enddate;
           sched.StartDate = startdate;
+          const now = new Date();
+          if (sched.StartDate < now) {
+            sched.StartDate = now;
+          }
           sched.State = newstate;
           sched.ScheduleExpression = `cron(${statusMM} ${statusHH} * * ? *)`;
           // eslint-disable-next-line no-await-in-loop
