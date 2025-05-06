@@ -322,7 +322,7 @@ export function decorateBlock(block) {
     block.dataset.blockName = shortBlockName;
     block.dataset.blockStatus = 'initialized';
     const blockWrapper = block.parentElement;
-    blockWrapper.classList.add(`${shortBlockName}-wrapper`);
+    blockWrapper?.classList.add(`${shortBlockName}-wrapper`);
     const section = block.closest('.section');
     if (section) section.classList.add(`${shortBlockName}-container`);
   }
@@ -644,7 +644,12 @@ export function decorateTemplateAndTheme() {
 export function decorateAnchors(element) {
   element.querySelectorAll('a').forEach(a => {
     if (a.getAttribute('href').charAt(0) === '#') return;
-    if (a.getAttribute('href').charAt(0) === '/') return;
+    if (a.getAttribute('href').charAt(0) === '/') {
+      if (a.target = '_blank') {
+        a.target = '_self';
+      }
+      return
+    };
     const linkPath = new URL(a.href);
     if (linkPath.origin !== window.location.origin) {
       if (a.target === '') {
@@ -738,7 +743,7 @@ export function loadHeader(header) {
  */
 export function loadUserDayInfo(section) {
   const userDayInfoBlock = buildBlock('user-day-info', '');
-  section.append(userDayInfoBlock);
+  section?.append(userDayInfoBlock);
   decorateBlock(userDayInfoBlock);
   decorateAnchors(userDayInfoBlock);
   return loadBlock(userDayInfoBlock);
@@ -751,7 +756,7 @@ export function loadUserDayInfo(section) {
  */
 export function loadSidebar(aside) {
   const sidebarBlock = buildBlock('sidebar', '');
-  aside.append(sidebarBlock);
+  aside?.append(sidebarBlock);
   decorateBlock(sidebarBlock);
   return loadBlock(sidebarBlock);
 }

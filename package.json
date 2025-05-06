@@ -14,19 +14,20 @@
     "lint:format": "npm run lint:js:format && npm run lint:css:format",
     "prettier": "prettier ./**/*.js",
     "prettier:format": "npm run prettier -- --write",
-    "scss": "node-sass -rw-o styles/scss/global.scss -o styles/css && node-sass -rw-o blocks -o styles/css",
-    "watch:g:scss": "node-sass -rw styles/scss/global.scss -o styles/css",
-    "watch:scss": "node-sass -rw blocks -o styles/css",
+    "scss": "sass styles/scss/global.scss:styles/css/global.css && sass --watch blocks:styles/css",
+    "watch:g:scss": "sass --watch styles/scss/global.scss styles/css/global.css",
+    "watch:scss": "sass --watch blocks:styles/css",
     "hlx": "concurrently --kill-others \"npm run watch:g:scss\" \"npm run watch:scss\" \"hlx up\"",
     "prepare": "husky install",
     "commit": "cz"
   },
   "license": "Apache License 2.0",
   "devDependencies": {
-    "@babel/core": "7.21.0",
-    "@babel/eslint-parser": "7.19.1",
+    "@babel/core": "^7.24.9",
+    "@babel/eslint-parser": "7.25.0",
     "@babel/preset-react": "^7.22.15",
     "@esm-bundle/chai": "4.3.4-fix.0",
+    "@hapi/eslint-plugin": "^7.0.0",
     "@web/test-runner": "0.15.1",
     "@web/test-runner-commands": "0.6.5",
     "chai": "4.3.7",
@@ -39,12 +40,11 @@
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.3",
-    "node-sass": "^9.0.0",
     "postcss-scss": "^4.0.6",
     "prettier": "^2.8.8",
     "sinon": "15.0.1",
-    "stylelint": "15.2.0",
-    "stylelint-config-standard": "30.0.1"
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^30.0.1"
   },
   "config": {
     "commitizen": {
@@ -58,6 +58,8 @@
   },
   "dependencies": {
     "ag-grid-community": "^29.3.5",
-    "aws-sdk": "^2.1552.0"
+    "aws-sdk": "^2.1692.0",
+    "@aws-sdk/client-scheduler": "3.758.0",
+    "sass": "^1.82.0"
   }
 }

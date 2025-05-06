@@ -1,14 +1,31 @@
-import { FOLDER_IDS } from '../../constants/googleDrive.js';
+// import { FOLDER_IDS } from '../../constants/googleDrive.js';
 import '../../jslibraries/ag-grid-community.min.js';
-import { getDataFromFolder } from '../../middleware/googleDrive.js';
-import BtnCellRenderer from './btn-cell-renderer.js';
+// import { getDataFromFolder } from '../../middleware/googleDrive.js';
+// import BtnCellRenderer from './btn-cell-renderer.js';
 import { formatBytes } from '../../jslibraries/utility/utility.js';
+import { uploadS3Objects, listFiles } from '../../scripts/s3script.js';
+import { getAWSStore } from '../../store/awsStore.js';
+import { getUser } from '../../store/userStore.js';
 
 export default async function decorate(block) {
   function formatBytesGetter(params) {
     return formatBytes(params.data.size, 0);
   }
-  const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
+  async function fetchFiles() {
+    const config = getAWSStore();
+    const user = getUser();
+    if (!user) return [];
+    let files = await listFiles(config.s3ScannedBucket, 1000, user);
+    files.sort((a, b) => b.createdTime - a.createdTime);
+    files = files.slice(0, 3);
+    files.forEach(f => {
+      f.fileName = f.fileName.split('/').pop();
+    });
+    return files;
+  }
+
+  // const files = await getDataFromFolder(FOLDER_IDS.availablefiles);
+  let files = await fetchFiles();
   const isHomePage = window.location.pathname === '/';
 
   // const div = document.createElement('div');
@@ -44,26 +61,30 @@ export default async function decorate(block) {
     <div class='button-row'>
     <input type="file" name="uploadedFile" class="inputfile" id="uploadedFile" data-multiple-caption="{count} files selected" multiple>
     <label for="uploadedFile" id="uploadFileTest"><img class="total-center" src=""></label>
-    <button class="upload">UPLOAD</button>
-    <p id="file-names"></p>
+    <button id='uploadBtn' class="upload" >UPLOAD</button>
+    
     </div>
-    <div class="upload-status">
-    <progress id="upload-success" class="upload-progress upload-success" value=0 max=100></progress>
-    <div class="upload-header">Success! Uploads Complete</div>
-    <div class="upload-body">Success / Error Lorem ipsum message dolor sit amet,
-    consectetur adipiscing elit, sed do eiusmod tempor.</div>
-    <br/>
-    <progress id="upload-errors" class="upload-progress upload-errors" value=0 max=100></progress>
-    <div class="upload-header">Uploads completed with errors</div>
-    <div class="upload-body">Success / Error Lorem ipsum message dolor sit amet,
-    consectetur adipiscing elit, sed do eiusmod tempor.</div>
-    </div>
+    <div id="output"></div>
     </div>
     <div class='column'>
-        <div id="upload-files-grid" class="ag-theme-alpine" style="height:500px; width: 100%; font-size: 12px; --ag-line-height: 60px">
+        <div id="upload-files-grid" class="ag-theme-alpine" style="height:250px; width: 100%; font-size: 12px; --ag-line-height: 60px">
         </div>
     </div>
     `;
+
+  /*
+    <div class="upload-status">
+      <progress id="upload-success" class="upload-progress upload-success" value=0 max=100></progress>
+      <div class="upload-header">Success! Uploads Complete</div>
+      <div class="upload-body">Success / Error Lorem ipsum message dolor sit amet,
+      consectetur adipiscing elit, sed do eiusmod tempor.</div>
+      <br/>
+      <progress id="upload-errors" class="upload-progress upload-errors" value=0 max=100></progress>
+      <div class="upload-header">Uploads completed with errors</div>
+      <div class="upload-body">Success / Error Lorem ipsum message dolor sit amet,
+      consectetur adipiscing elit, sed do eiusmod tempor.</div>
+    </div>
+     */
 
   block.textContent = '';
 
@@ -73,7 +94,7 @@ export default async function decorate(block) {
       const { fileName, createdTime } = params.data;
       this.eGui.innerHTML = `<div class="gridItemFileName">${fileName?.toUpperCase()}</div>
       <div class="gridItemCreatedTime">
-      ${createdTime?.toUpperCase() || ''}</div>`;
+      ${createdTime.toString() || ''}</div>`;
     }
 
     getGui() {
@@ -85,27 +106,29 @@ export default async function decorate(block) {
     {
       field: 'fileName',
       headerName: 'FILE NAME',
-      sortable: true,
-      minWidth: 380,
+      minWidth: 280,
       cellRenderer: iconNameAndDateRenderer,
     },
-    { field: 'modifiedTime', headerName: 'DATE ADDED', sortable: true },
-    { field: 'modifiedTime', headerName: 'USER / SYSTEM', sortable: true },
+    {
+      field: 'modifiedTime',
+      headerName: 'DATE ADDED',
+      minWidth: 100,
+    },
+    // { field: 'modifiedTime', headerName: 'USER / SYSTEM', sortable: true },
     {
       field: 'size',
       valueGetter: formatBytesGetter,
       headerName: 'SIZE',
-      sortable: true,
     },
-    {
-      field: 'action',
-      headerName: 'DOWNLOAD',
-      cellRenderer: BtnCellRenderer,
-      cellRendererParams: {
-        clicked() {},
-      },
-      minWidth: 150,
-    },
+    // {
+    //   field: 'action',
+    //   headerName: 'DOWNLOAD',
+    //   cellRenderer: BtnCellRenderer,
+    //   cellRendererParams: {
+    //     clicked() {},
+    //   },
+    //   minWidth: 150,
+    // },
   ];
 
   const rowData = [...files];
@@ -154,20 +177,39 @@ export default async function decorate(block) {
     );
   });
 
-  const input = document.getElementById('uploadedFile');
-  // eslint-disable-next-line func-names
-  input.addEventListener('change', function (e) {
-    const filenames = document.getElementById('file-names');
-    if (e.target.files.length > 0) {
-      Array.from(e.target.files).forEach(file => {
-        filenames.innerHTML += `<br>${file.name}`;
-      });
-    }
-  });
+  // const input = document.getElementById('uploadedFile');
+  // // eslint-disable-next-line func-names
+  // input.addEventListener('change', function (e) {
+  //   const filenames = document.getElementById('file-names');
+  //   if (e.target.files.length > 0) {
+  //     Array.from(e.target.files).forEach(file => {
+  //       filenames.innerHTML += `<br>${file.name}`;
+  //     });
+  //   }
+  // });
 
-  const uploadsuccess = document.getElementById('upload-success');
-  const succ = Math.floor(Math.random() * 100);
-  uploadsuccess.value = succ;
-  const uploaderrors = document.getElementById('upload-errors');
-  uploaderrors.value = 100 - succ;
+  // const uploadsuccess = document.getElementById('upload-success');
+  // const succ = Math.floor(Math.random() * 100);
+  // uploadsuccess.value = succ;
+  // const uploaderrors = document.getElementById('upload-errors');
+  // uploaderrors.value = 100 - succ;
+
+  const uploadFiles = () => {
+    const fileInput = document.getElementById('uploadedFile');
+    // output for progress
+    const config = getAWSStore();
+    const user = getUser();
+    uploadS3Objects(fileInput.files, config.s3UploadBucket, user);
+  };
+  const uploadBtn = document.getElementById('uploadBtn');
+  uploadBtn.addEventListener('click', uploadFiles);
+
+  document.addEventListener('uploaded', async function (/* event */) {
+    console.log('able to listend to uploaded files');
+    await new Promise(resolve => {
+      setTimeout(() => resolve('success'), 2000);
+    });
+    files = await fetchFiles();
+    gridOptions1.api.setRowData(files);
+  });
 }

@@ -1,12 +1,11 @@
 footer {
   padding: 0 15px 30px;
   margin: 0 auto;
-  background-color: #f0f2f3;
+  background-color: #000;
   font-size: var(--body-font-size-s);
-  border-top: solid 9px #212121; }
-
-footer .footer {
-  max-width: 1200px; }
+  border-top: solid 14px #92BFB7;
+  position: relative;
+  z-index: 1; }
 
 footer .footer p,
 footer .footer ul {
@@ -59,7 +58,7 @@ footer .footer > div > div:nth-child(1) > ul li picture {
     width: 50%; } }
 
 footer .footer > div > div:nth-child(1) > ul li:nth-child(2) {
-  color: #858a83;
+  color: #fff;
   font-size: 12px;
   font-weight: 500; }
 

@@ -46,6 +46,14 @@ function setProductionPoolConfig() {
   window.hlx.USER_POOL_ID = 'us-east-1_CRUiPa1lK'; // temporary setting userPoolID here
   window.hlx.IDENTITY_POOL_ID =
     'us-east-1:c90a0d53-f82a-4907-8bf6-bfb96337ef9a'; // temporary setting userPoolID here
+  window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET = 's3upload-ui-upload-prod';
+  window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET = 's3upload-ui-download-prod';
+  window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned-prod';
+  window.hlx.APP_AUTHORIZATION_API_ENDPOINT = 'https://account-ustaconnect.usta.com';
+  window.hlx.APP_FILE_STATUS_API_ENDPOINT = 'https://api-ustaconnect.usta.com';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_ID = 'w7gnVGC0imaOL0XENYqRIZ6KMVCBGZFb';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET ='2eN7BpYA69zbqicg8JFtjo54XSQOm6_JcQMWxh9g2JpVs3Z1LoXXdmiorZL7CsQ-';
+  window.hlx.AUDIENCE = 'https://api-ustaconnect.usta.com';
 }
 function setDevPoolConfig() {
   window.hlx.RUM_GENERATION = 'usta-connect'; // add your RUM generation information here
@@ -53,6 +61,13 @@ function setDevPoolConfig() {
   window.hlx.USER_POOL_ID = 'us-east-1_XcYnoGlwq'; // temporary setting userPoolID here
   window.hlx.IDENTITY_POOL_ID =
     'us-east-1:12372ea4-1035-4ca7-9428-2d1d6deb5ecf'; // temporary setting userPoolID here
+  window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET = 's3upload-ui-upload';
+  window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET = 's3upload-ui-download';
+  window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned';
+  window.hlx.APP_AUTHORIZATION_API_ENDPOINT = 'https://stage-account-ustaconnect.usta.com';
+  window.hlx.APP_FILE_STATUS_API_ENDPOINT = 'https://stage-api-ustaconnect.usta.com';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_ID = '7tpb3e2ceupf5r572oh7fpsdpe';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET = 'pcm2f7gi5gu0vhpqjneup3fhk35capc13n92qk5ham8onjhg3s9';
 }
 
 function setStagePoolConfig() {
@@ -61,6 +76,18 @@ function setStagePoolConfig() {
   window.hlx.USER_POOL_ID = 'us-east-1_DKSSJUVlY'; // temporary setting userPoolID here
   window.hlx.IDENTITY_POOL_ID =
     'us-east-1:a5df722d-28a6-408b-a10c-8a391051bfb5'; // temporary setting userPoolID here
+  window.hlx.APP_S3_BUCKETS_UPLOAD_BUCKET = 's3upload-ui-upload-stage';
+  window.hlx.APP_S3_BUCKETS_DOWNLOAD_BUCKET = 's3upload-ui-download-stage';
+  window.hlx.APP_S3_BUCKETS_UPLOADED_FILES_BUCKET = 's3upload-ui-scanned-stage';
+  window.hlx.APP_AUTHORIZATION_API_ENDPOINT = 'https://stage-account-ustaconnect.usta.com';
+  window.hlx.APP_FILE_STATUS_API_ENDPOINT = 'https://stage-api-ustaconnect.usta.com';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_ID = '7qYeHPKt6vUUHTImUWspqOMqJF4bb1VS';
+  window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET = 'SYvDISy2k4E_xdmQ611-86Wefxc-_vjIt2aBoLmXPZbVdWkh7F9PhklMV0tm859F';
+  window.hlx.APP_SINITI_AUTHORIZATION_API_ENDPOINT = 'https://stage-account.usta.com';
+  window.hlx.APP_SINITI_API_ENDPOINT = 'https://stage-services.usta.com';
+  window.hlx.APP_SINITI_API_CLIENT_ID = '3sfema9t4ftf0mguomefmqr6pq';
+  window.hlx.APP_SINITI_API_CLIENT_SECRET = 'ti1mscnufta4h6fh1vkshuj0so3rui213gbjft4m1c5incgnlqk';
+  window.hlx.AUDIENCE = 'https://external-stage-services.usta.com';
 }
 const subdomain = window.location.hostname.split('.')[0];
 const envUnderDomain = subdomain?.split('-')[0];

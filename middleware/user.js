@@ -14,6 +14,7 @@ import {
   removeUserRole,
   setUser,
 } from '../store/userStore.js';
+import { getAdminUser, getCognitoGroups } from './admin.js';
 import { getCredentialsForIdentity } from './identity.js';
 
 export async function fetchUser() {
@@ -31,7 +32,8 @@ export async function fetchUser() {
     setUser(data);
     setGoogleStore();
     await getCredentialsForIdentity();
-    // await getAdminUser();
+    await getAdminUser();
+    await getCognitoGroups();
     return getUser();
   } catch (error) {
     if (getValueFromLocalStorage('refresh_token')) {
@@ -49,7 +51,7 @@ export async function fetchUser() {
         setUser(user);
         setGoogleStore();
         await getCredentialsForIdentity();
-        // await getAdminUser();
+        await getAdminUser();
         return getUser();
       } catch (err) {
         removeTokens();

@@ -5,6 +5,32 @@ header {
   font-size: var(--body-font-size-s);
 }
 
+.page-main header .header {
+  height: 21px;
+  background-image: none;
+}
+
+.admin-create-facility-container {
+  a {
+    color:white;
+    background-color: #337ab7;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+.teaser-banner .banner-title {
+  text-align: left;
+  height: 210px;
+  font: normal normal bold 30px/39px Graphik, sans-serif;
+  letter-spacing: 1px;
+  color: black;
+  text-transform: none;
+  opacity: 1;
+}
+
 header .header {
   max-width: 1440px;
   background: #92bfb7

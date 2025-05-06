@@ -1,13 +1,15 @@
 .upload-files-wrapper {
-  height: 600px;
+  height: 300px;
   margin-bottom: 100px;
-  overflow: hidden; }
+  padding-bottom: 50px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px #0000001A;
+  border: 1px solid #DBDBDB; }
 
 #upload-files-grid {
   height: 500px;
   width: 100%;
-  font-size: 12px;
-  overflow-y: scroll; }
+  font-size: 12px; }
 
 .grid-header {
   height: 60px;

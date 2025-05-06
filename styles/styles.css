@@ -24,7 +24,7 @@
 
   /* heading sizes */
   --heading-font-size-xxl: 48px;
-  --heading-font-size-xl: 40px;
+  --heading-font-size-xl: 30px;
   --heading-font-size-l: 32px;
   --heading-font-size-m: 24px;
   --heading-font-size-s: 20px;
@@ -62,6 +62,17 @@
 @font-face {
   font-family: icomoon;
   src: url('./fonts/icomoon/icomoon.ttf');
+}
+
+@font-face {
+  font-family: Graphik-Regular;
+  src: url('https://www.usta.com/etc.clientlibs/usta/clientlibs/clientlib-site/resources/fonts/Graphik-Regular-App.woff2');
+}
+
+
+@font-face {
+  font-family: Graphik-Semibold;
+  src: url('https://www.usta.com/etc.clientlibs/usta/clientlibs/clientlib-site/resources/fonts/Graphik-Semibold-App.woff2');
 }
 
 [class^='icon-'],
@@ -137,7 +148,7 @@ a .icon-download:hover::after {
 @media (min-width: 900px) {
   :root {
     --heading-font-size-xxl: 50px;
-    --heading-font-size-xl: 48px;
+    --heading-font-size-xl: 30px;
     --heading-font-size-l: 36px;
     --heading-font-size-m: 30px;
     --heading-font-size-s: 24px;
@@ -177,6 +188,16 @@ body.page-sign-in {
   min-width: 0;
 }
 
+main.page-forgot-password {
+  margin-left: 0;
+  max-width: 1440px;
+  background: #92bfb7;
+}
+
+body.page-forgot-password {
+  min-width: 0;
+}
+
 main.page-sign-in {
   margin-left: 0;
   max-width: 1440px;
@@ -190,6 +211,7 @@ body.page-sign-up {
 main.page-sign-up {
   margin-left: 0;
   max-width: 1440px;
+  background: #92bfb7;
 }
 
 header {
@@ -198,7 +220,7 @@ header {
 
 .role-admin main,
 .role-user main {
-  min-height: 2000px;
+  min-height: 1500px;
 }
 
 main {
@@ -210,7 +232,7 @@ main {
   background: #f7f7f7
     url('https://www.usta.com/content/dam/bmw/assets/tennis_player_footer.png')
     no-repeat bottom right 50px;
-  padding-bottom: 350px;
+  padding-bottom: 120px;
 }
 
 h1,

@@ -1,6 +1,10 @@
 import { logOut } from '../../middleware/auth.js';
 import { decorateIcons } from '../../scripts/lib-franklin.js';
-import { getUser, isAdminUser } from '../../store/userStore.js';
+import {
+  getUser,
+  isAdminUser,
+  isFacilityGroupMember,
+} from '../../store/userStore.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -144,13 +148,21 @@ export default async function decorate(block) {
     if (isAdminUser()) bodytag.className += ' role-admin';
     else bodytag.className += ' role-user';
 
-    /// const nnn = nav.querySelectorAll('a[href*="/users"]');
-    // if (!isAdminUser()) {
-    //   nnn[0].parentElement.parentElement.className += 'disabled';
-    //   nnn.forEach((l, i) => {
-    //     nnn[i].className = 'disabled';
-    //   });
-    // }
+    const nnn = nav.querySelectorAll('a[href*="/users"]');
+    if (!isAdminUser() && nnn.length > 0) {
+      nnn[0].parentElement.parentElement.className += 'disabled';
+      nnn.forEach((l, i) => {
+        nnn[i].className = 'disabled';
+      });
+    }
+
+    const faciltyNav = nav.querySelectorAll('a[href*="/facility-search"]');
+    if (faciltyNav && !isFacilityGroupMember()) {
+      faciltyNav[0].parentElement.parentElement.className += 'disabled';
+      faciltyNav.forEach((l, i) => {
+        faciltyNav[i].className = 'disabled';
+      });
+    }
 
     const classes = ['brand', 'sections', 'auth', 'tools'];
     classes.forEach((c, i) => {
