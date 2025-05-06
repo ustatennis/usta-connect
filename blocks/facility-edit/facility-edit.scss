@@ -38,6 +38,31 @@
   cursor: pointer;
 }
 
+.tab-bar {
+  display:flex;
+  width: 100%;
+  border-bottom: lightgrey 5px solid;
+  margin-bottom: 30px;
+  position: relative;
+  font-size: var(--body-font-size-s);
+  font-weight:700;
+  padding-bottom: 0;
+}
+
+.tab-item {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: -5px;
+  position: relative;
+  padding-bottom: 10px;
+  cursor: pointer;
+
+  &.selected {
+    border-bottom: black 5px solid;
+  }
+
+}
+
 #modal-form button{
   font-size: 14px;
   font-weight: bold;
@@ -61,6 +86,12 @@
 .modal-sub-header {
   font-size: var(--heading-font-size-xs);
   font-weight: bold;
+}
+
+.formbuilder-header {
+  font-size: var(--body-font-size-m);
+  font-weight: 700;
+  padding-top: 30px;
 }
 
 .formbuilder-text label{
@@ -91,6 +122,19 @@
 .formbuilder-radio {
   margin-top: 20px;
   font-size: var(--body-font-size-xxs);
+}
+
+.checkbox-group {
+  padding-bottom: 20px;
+}
+
+.checkbox-group label {
+  font-size: var(--body-font-size-xxs);
+}
+
+.checkbox-header {
+  font-size: var(--body-font-size-xxs);
+  font-weight: bold;
 }
 
 .formbuilder-radio label {
@@ -141,6 +185,10 @@
 
 .hidden {
   display:none;
+}
+
+.visible {
+  display:block;
 }
 
 .row {
