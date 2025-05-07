@@ -629,7 +629,6 @@ export async function tagResource(resourceArn, tags) {
         ResourceArn: resourceArn, // ARN of the resource (schedule) to set tags
         Tags: tags
     };
-    debugger;
     const result = await scheduler.tagResource(params).promise();
     console.log('Tags for resource:', result);
     return result;
