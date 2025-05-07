@@ -15,6 +15,7 @@ import { htmlForm } from './campaign-update-html.js';
 let schedule = {};
 let scheduleGroup = {};
 let schedules = [];
+let extendedSchedules = [];
 let tags = [];
 let sanitizedtags = [];
 let startDate = '';
@@ -35,7 +36,6 @@ export default async function decorate(block) {
 
   // Get the value of a specific parameter
   const campaignid = urlParams.get('campaignid');
-  const extendedSchedules = [];
 
   // eslint-disable-next-line no-unused-vars
   if (campaignid) {
@@ -274,7 +274,24 @@ export default async function decorate(block) {
 
   async function populateForm(divh) {
     // eslint-disable-next-line no-unused-vars
-
+    const s3pullcron = extendedSchedules.find(sc =>
+      sc.Arn.includes('-S3-'),
+    ).ScheduleExpression;
+    // debugger;
+    let numbers = s3pullcron.match(/\d+/g);
+    if (numbers.length >= 2 && s3pullcron.includes('cron(')) {
+      const campaignpulltime = divh.querySelector('#campaign-pulltime');
+      campaignpulltime.value = `${numbers[1]}:${numbers[0]}`;
+    }
+    const sendcron = extendedSchedules.find(sc =>
+      sc.Arn.includes('Send-'),
+    ).ScheduleExpression;
+    // debugger;
+    numbers = sendcron.match(/\d+/g);
+    if (numbers.length >= 2 && sendcron.includes('cron(')) {
+      const campaignsendtime = divh.querySelector('#campaign-sendtime');
+      campaignsendtime.value = `${numbers[1]}:${numbers[0]}`;
+    }
     // campaign name
     const campaignName = divh.querySelector('#campaign-name');
     // campaignGroupName = campaignName;
@@ -348,6 +365,10 @@ export default async function decorate(block) {
           const pullMM = ob.pulltime.split(':')[1] || '*';
           sched.EndDate = enddate;
           sched.StartDate = startdate;
+          const now = new Date();
+          if (sched.StartDate < now) {
+            sched.StartDate = now;
+          }
           sched.State = 'ENABLED';
           sched.ScheduleExpression = `cron(${pullMM} ${pullHH} * * ? *)`;
           // eslint-disable-next-line no-await-in-loop
@@ -357,6 +378,10 @@ export default async function decorate(block) {
           const sendMM = ob.sendtime.split(':')[1] || '*';
           sched.EndDate = enddate;
           sched.StartDate = startdate;
+          const now = new Date();
+          if (sched.StartDate < now) {
+            sched.StartDate = now;
+          }
           sched.State = 'ENABLED';
           sched.ScheduleExpression = `cron(${sendMM} ${sendHH} * * ? *)`;
           // eslint-disable-next-line no-await-in-loop
@@ -369,6 +394,10 @@ export default async function decorate(block) {
           }
           sched.EndDate = enddate;
           sched.StartDate = startdate;
+          const now = new Date();
+          if (sched.StartDate < now) {
+            sched.StartDate = now;
+          }
           sched.State = newstate;
           sched.ScheduleExpression = `cron(${statusMM} ${statusHH} * * ? *)`;
           // eslint-disable-next-line no-await-in-loop
@@ -406,7 +435,12 @@ export default async function decorate(block) {
       // eslint-disable-next-line no-unused-vars
       submitBtn.addEventListener('click', async e3 => {
         e3.preventDefault();
-        await updateScheduleStatus('DISABLED');
+        try {
+          await updateScheduleStatus('DISABLED');
+          window.location = `/marketing-triggers`;
+        } catch (error) {
+          alert(error.message);
+        }
       });
     });
 
@@ -441,7 +475,12 @@ export default async function decorate(block) {
       // eslint-disable-next-line no-unused-vars
       submitBtn.addEventListener('click', async e3 => {
         e3.preventDefault();
-        await updateScheduleStatus('ENABLED');
+        try {
+          await updateScheduleStatus('ENABLED');
+          window.location = `/marketing-triggers`;
+        } catch (error) {
+          alert(error.message);
+        }
       });
     });
 

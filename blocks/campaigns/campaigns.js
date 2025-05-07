@@ -210,7 +210,7 @@ export default async function decorate(block) {
     sendchedulessummary = sndres;
     const s3pulltime = scheduletime(sendchedulessummary[0]);
     // const { startDate } = sendchedulessummary[0] || {};
-    const { endDate } = sendchedulessummary[0] || {};
+    const { EndDate } = sendchedulessummary[0] || {};
     const adobestatustime = scheduletime(statusschedulessummary[0]);
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
@@ -219,12 +219,12 @@ export default async function decorate(block) {
     console.log(currentTime);
     campaigns.ScheduleGroups[s].Status = 'SCHEDULED';
     if (campaigns.ScheduleGroups[s].State === 'DISABLED') {
-      if (endDate > now) {
+      if (EndDate > now) {
         campaigns.ScheduleGroups[s].Status = 'PAUSED';
       } else {
         campaigns.ScheduleGroups[s].Status = 'INACTIVE';
       }
-    } else if (endDate > now) {
+    } else if (EndDate > now) {
       campaigns.ScheduleGroups[s].Status = 'SCHEDULED';
       if (s3pulltime <= now && now <= adobestatustime) {
         campaigns.ScheduleGroups[s].Status = 'RUNNING';
