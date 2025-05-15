@@ -197,7 +197,7 @@ export default async function decorate(block) {
         const enddate =
           ob.enddate === ''
             ? null
-            : new Date(new Date(ob.enddate).setUTCHours(23, 59, 59, 999));
+            : new Date(new Date(ob.enddate).setHours(23, 59, 59, 999));
         if (sched.Name.includes('-S3-')) {
           const pullHH = ob.pulltime.split(':')[0] || '*';
           const pullMM = ob.pulltime.split(':')[1] || '*';
