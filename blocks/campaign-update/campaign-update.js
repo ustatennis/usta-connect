@@ -15,7 +15,7 @@ import { htmlForm } from './campaign-update-html.js';
 let schedule = {};
 let scheduleGroup = {};
 let schedules = [];
-let extendedSchedules = [];
+const extendedSchedules = [];
 let tags = [];
 let sanitizedtags = [];
 let startDate = '';
@@ -84,194 +84,6 @@ export default async function decorate(block) {
   // eslint-disable-next-line no-unused-vars
   function modalMessageOpen(msg) {}
 
-  // eslint-disable-next-line no-unused-vars
-  // function modalAddressConfirm() {
-  //   const bdy = document.createElement('div');
-  //   bdy.innerHTML = `
-  //     <div class="modal-content">
-  //   <span class="close">&times;</span>
-  //   <div class="modal-header">No Address Found</div>
-  //   <div class="modal-body">
-  //     <div class="modal-sub-header">Would you like to continue with this address?</div>
-
-  //   <form id="modal-form">
-  //     <button type="button" id="submitBtn">CONTINUE</button>
-  //     <button type="button" id="cancelBtn">CANCEL</button>
-  //   </form>
-  //   </div>
-  // </div>
-  //   `;
-  //   const showDiv = divheader.querySelector('#myModal');
-  //   showDiv.style.display = 'block';
-  //   showDiv.innerHTML = '';
-  //   showDiv.appendChild(bdy);
-  //   // const modal = showDiv.querySelector('#myModal');
-  //   const span = showDiv.querySelector('.close');
-  //   const submitBtn = showDiv.querySelector('#submitBtn');
-  //   const cancelBtn = showDiv.querySelector('#cancelBtn');
-  //   span.onclick = function () {
-  //     const modalwindow = document.querySelector('#myModal');
-  //     modalwindow.style.display = 'none';
-  //   };
-  //   window.onclick = function (event) {
-  //     const modal = document.querySelector('#myModal');
-  //     if (event.target === modal) {
-  //       const modalwindow = document.querySelector('#myModal');
-  //       modalwindow.style.display = 'none';
-  //     }
-  //   };
-  //   // submitBtn.onclick = async function () {
-  //   //   // eslint-disable-next-line no-use-before-define
-  //   //   if (incompleteAddress(updatedfacility.address)) {
-  //   //     alert(incompleteMessage);
-  //   //   } else {
-  //   //     const response = await createOrUpdateFacility(updatedfacility);
-  //   //     // hideSpinner();
-  //   //     console.log(response);
-  //   //     if (response.message) {
-  //   //       alert(response.message);
-  //   //     } else {
-  //   //       window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
-  //   //     }
-  //   //   }
-
-  //   //   // const response = await createOrUpdateFacility(updatedfacility);
-  //   //   // // hideSpinner();
-  //   //   // console.log(response);
-  //   //   // if (response.message) {
-  //   //   //   alert(response.message);
-  //   //   // } else {
-  //   //   //   window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
-  //   //   // }
-  //   //   const modalwindow = document.querySelector('#myModal');
-  //   //   modalwindow.style.display = 'none';
-  //   // };
-  //   cancelBtn.onclick = function () {
-  //     const modalwindow = document.querySelector('#myModal');
-  //     modalwindow.style.display = 'none';
-  //   };
-  // }
-  //   // eslint-disable-next-line no-unused-vars
-  //   function modalAddressSelect(addr1, addr2) {
-  //     const bdy = document.createElement('div');
-  //     bdy.innerHTML = `
-  //       <div class="modal-content">
-  //     <span class="close">&times;</span>
-  //     <div class="modal-header">We found a similar address</div>
-  //     <div class="modal-body">
-  //       <div class="modal-sub-header">Please verify your address below</div>
-
-  //     <div class="row">
-  //   <div class="column">
-  // We found:
-  //     <div>
-  //     ${addr1.address1}<br/>
-  //     ${addr1?.city}, ${addr1?.state} ${addr1?.zip}<br/>
-  //     ${addr1.country}<br/><br/>
-  //     <input type="radio" id="radio1" name="addressoption" value="selectFound" checked>
-  //     <label for="radio1">Use this address</label>
-  //     </div>
-  //   </div>
-
-  //   <div class="column">
-  // You entered:
-  //     <div>
-  //     ${addr2.address1}<br/>
-  //     ${addr2?.city}, ${addr2?.state} ${addr2?.zip}<br/>
-  //     ${addr2.country}<br/><br/>
-  //     <input type="radio" id="radio2" name="addressoption" value="selectEntered">
-  //     <label for="radio2">Use the address you entered</label>
-  //     </div>
-  //   </div>
-  // </div>
-
-  //     <form id="modal-form">
-  //       <button type="button" id="submitBtn">CONTINUE</button>
-  //       <button type="button" id="cancelBtn">CANCEL</button>
-  //     </form>
-  //     </div>
-  //   </div>
-  //     `;
-  //     // const showDiv = divheader.querySelector('#myModal');
-  //     // showDiv.style.display = 'block';
-  //     // showDiv.innerHTML = '';
-  //     // showDiv.appendChild(bdy);
-  //     // const modal = showDiv.querySelector('#myModal');
-  //     // const span = showDiv.querySelector('.close');
-  //     // const submitBtn = showDiv.querySelector('#submitBtn');
-  //     // const cancelBtn = showDiv.querySelector('#cancelBtn');
-  //     // // eslint-disable-next-line func-names
-  //     // span.onclick = function () {
-  //     //   const modalwindow = document.querySelector('#myModal');
-  //     //   modalwindow.style.display = 'none';
-  //     // };
-
-  //     // // eslint-disable-next-line func-names
-  //     // window.onclick = function (event) {
-  //     //   if (event.target === modal) {
-  //     //     // const modal = document.querySelector('#myModal');
-  //     //     const modalwindow = document.querySelector('#myModal');
-  //     //     modalwindow.style.display = 'none';
-  //     //   }
-  //     // };
-
-  //     // // eslint-disable-next-line func-names
-  //     // submitBtn.onclick = async function () {
-  //     //   modalSelect = '';
-  //     //   // Get all radio buttons with the specified name
-  //     //   const radioButtons = document.querySelectorAll(
-  //     //     'input[name="addressoption"]',
-  //     //   );
-
-  //     //   // Find the selected radio button
-  //     //   radioButtons.forEach(radioButton => {
-  //     //     if (radioButton.checked) {
-  //     //       modalSelect = radioButton.value;
-  //     //     }
-  //     //   });
-  //     //   if (modalSelect === 'selectFound') {
-  //     //     updatedfacility.address.streetAddressLine1 = addr1.address1;
-  //     //     updatedfacility.address.city = addr1.city;
-  //     //     updatedfacility.address.postalCode = addr1.zip;
-  //     //     updatedfacility.address.zip = addr2.zip;
-  //     //     updatedfacility.address.state = addr1.state;
-  //     //   } else {
-  //     //     updatedfacility.address.postalCode = updatedfacility.address.zip;
-  //     //   }
-
-  //     //   // eslint-disable-next-line no-use-before-define
-  //     //   if (incompleteAddress(updatedfacility.address)) {
-  //     //     // eslint-disable-next-line no-alert
-  //     //     alert(incompleteMessage);
-  //     //   } else {
-  //     //     const response = await createOrUpdateFacility(updatedfacility);
-  //     //     // hideSpinner();
-  //     //     console.log(response);
-  //     //     if (response.message) {
-  //     //       alert(response.message);
-  //     //     } else {
-  //     //       window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
-  //     //     }
-  //     //   }
-
-  //     // const response = await createOrUpdateFacility(updatedfacility);
-  //     // // hideSpinner();
-  //     // console.log(response);
-  //     // if (response.message) {
-  //     //   alert(response.message);
-  //     // } else {
-  //     //   window.location = `/facility-confirm?ustafacilityid=${response.ustaFacilityId}`;
-  //     // }
-  //     //   const modalwindow = document.querySelector('#myModal');
-  //     //   modalwindow.style.display = 'none';
-  //     // };
-
-  //     // cancelBtn.onclick = function () {
-  //     //   const modalwindow = document.querySelector('#myModal');
-  //     //   modalwindow.style.display = 'none';
-  //     // };
-  //   }
-
   async function populateForm(divh) {
     // eslint-disable-next-line no-unused-vars
     const s3pullcron = extendedSchedules.find(sc =>
@@ -331,6 +143,29 @@ export default async function decorate(block) {
   }
 
   function validateForm(divh) {
+    // eslint-disable-next-line no-unused-vars
+    function containsAmOrPm(text) {
+      return (
+        text.toLowerCase().includes('am') || text.toLowerCase().includes('pm')
+      );
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    function convertTimeFormat(timeString) {
+      const [time, modifier] = timeString.split(' ');
+      // eslint-disable-next-line prefer-const
+      let [hours, minutes] = time.split(':');
+
+      if (hours === '12') {
+        hours = '00';
+      }
+
+      if (modifier.toUpperCase() === 'PM') {
+        hours = parseInt(hours, 10) + 12;
+      }
+
+      return `${hours}:${minutes}`;
+    }
     async function updateScheduleStatus(newstate) {
       const modalwindow = document.querySelector('#enableModal');
       modalwindow.style.display = 'none';
@@ -359,7 +194,10 @@ export default async function decorate(block) {
         delete sched.CreationDate;
         delete sched.LastModificationDate;
         const startdate = ob.startdate === '' ? null : new Date(ob.startdate);
-        const enddate = ob.enddate === '' ? null : new Date(ob.enddate);
+        const enddate =
+          ob.enddate === ''
+            ? null
+            : new Date(ob.enddate).setHours(23, 59, 59, 999);
         if (sched.Name.includes('-S3-')) {
           const pullHH = ob.pulltime.split(':')[0] || '*';
           const pullMM = ob.pulltime.split(':')[1] || '*';
@@ -508,19 +346,6 @@ export default async function decorate(block) {
     return obj;
   }
 
-  // function stringToObj(str) {
-  //   const obj = {};
-  //   const pairs = str.split(',');
-  //   // eslint-disable-next-line no-restricted-syntax
-  //   for (const pair of pairs) {
-  //     const [key, value] = pair.split('=');
-  //     if (key && value) {
-  //       obj[key.trim()] = value.trim();
-  //     }
-  //   }
-  //   return obj;
-  // }
-
   function objToString(obj) {
     let result = '';
     // eslint-disable-next-line no-restricted-syntax
@@ -533,19 +358,6 @@ export default async function decorate(block) {
     // Remove the trailing comma if the object is not empty
     return result.length > 0 ? result.slice(0, -2) : result;
   }
-
-  // function incompleteAddress(address) {
-  //   return (
-  //     address.streetAddressLine1 === '' ||
-  //     address.city === '' ||
-  //     address.state === '' ||
-  //     address.country === '' ||
-  //     address.zip === ''
-  //   );
-  // }
-  // function isDigitsOnly(str) {
-  //   return /^\d+$/.test(str);
-  // }
 
   validateForm(divheader);
 

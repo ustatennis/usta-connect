@@ -209,6 +209,7 @@ export function addFavIcon(href) {
 }
 
 function loadGlobalComponents(doc) {
+  debugger;
   const { pathname } = window.location;
 
   if (!ROUTES_WITHOUT_HEADER.includes(pathname)) {
