@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 // import { getUsersList } from '../../middleware/admin.js';
 // import { usstates } from '../../constants/usstates.js';
 import {
@@ -67,6 +68,25 @@ export default async function decorate(block) {
     return str.substring(indexOfT + 1, Math.min(indexOfT + 6, str.length));
   }
 
+  function schedulefulltime(schedule, startdate) {
+    const scheduleExpression = schedule?.ScheduleExpression;
+    if (scheduleExpression && scheduleExpression.substring(0, 5) === 'cron(') {
+      const match = scheduleExpression.match(/\(([^)]+)\)/);
+      const crontime = match ? match[1] : null;
+      const items = crontime.split(' ');
+      const firstrun = startdate || new Date();
+      if (items[0] !== '*' && items[1] !== '*')
+        firstrun.setHours(items[1], items[0], 0);
+      return firstrun;
+    }
+    if (scheduleExpression && scheduleExpression.substring(0, 3) === 'at(') {
+      const match = scheduleExpression.match(/\(([^)]+)\)/);
+      const atTime = match ? match[1] : null;
+      return Date(atTime);
+    }
+    return new Date();
+  }
+
   function scheduletime(schedule) {
     const scheduleExpression = schedule?.ScheduleExpression;
     if (scheduleExpression && scheduleExpression.substring(0, 5) === 'cron(') {
@@ -80,21 +100,6 @@ export default async function decorate(block) {
 
   block.textContent = '';
   block.append(div);
-  // class titleAndDescriptionRenderer {
-  //   init(params) {
-  //     this.eGui = document.createElement('div');
-  //     this.eGui.innerHTML = `<div class="cellicon">
-  //       <div class="cellheader">${
-  //         params.data?.Title || params.data?.Name
-  //       }</div><div class="cellsubheader">${params.data.Description || ''}</div>
-  //       <div class="cellbuttons"><button class="cellbutton" type="button">Edit Campaign</button></div>
-  //       </div>`;
-  //   }
-
-  //   getGui() {
-  //     return this.eGui;
-  //   }
-  // }
 
   let columnDefs = [
     {
@@ -130,7 +135,7 @@ export default async function decorate(block) {
   inputbox.id = 'filter-text-box';
   inputbox.disabled = false;
   inputbox.type = 'text';
-  inputbox.placeholder = 'SEARCH FCAMPAIGNS';
+  inputbox.placeholder = 'SEARCH FOR CAMPAIGNS';
   inputbox.addEventListener('input', () => {
     gridOptions.api.setQuickFilter(
       document.getElementById('filter-text-box').value,
@@ -208,10 +213,14 @@ export default async function decorate(block) {
       sndres.push(ss);
     }
     sendchedulessummary = sndres;
+    // eslint-disable-next-line no-unused-vars
     const s3pulltime = scheduletime(sendchedulessummary[0]);
+    const s3pullfulltime = schedulefulltime(sendchedulessummary[0]);
     // const { startDate } = sendchedulessummary[0] || {};
     const { EndDate } = sendchedulessummary[0] || {};
+    // eslint-disable-next-line no-unused-vars
     const adobestatustime = scheduletime(statusschedulessummary[0]);
+    const adobestatusfulltime = schedulefulltime(sendchedulessummary[0]);
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -226,7 +235,7 @@ export default async function decorate(block) {
       }
     } else if (EndDate > now) {
       campaigns.ScheduleGroups[s].Status = 'SCHEDULED';
-      if (s3pulltime <= now && now <= adobestatustime) {
+      if (s3pullfulltime <= now && now <= adobestatusfulltime) {
         campaigns.ScheduleGroups[s].Status = 'RUNNING';
       }
     } else {
