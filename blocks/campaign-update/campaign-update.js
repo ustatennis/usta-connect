@@ -198,7 +198,6 @@ export default async function decorate(block) {
           ob.enddate === ''
             ? null
             : new Date(new Date(ob.enddate).setUTCHours(23, 59, 59, 999));
-            debugger;
         if (sched.Name.includes('-S3-')) {
           const pullHH = ob.pulltime.split(':')[0] || '*';
           const pullMM = ob.pulltime.split(':')[1] || '*';
