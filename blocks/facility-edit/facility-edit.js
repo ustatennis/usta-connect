@@ -736,7 +736,10 @@ You entered:
       '#text-total-outdoor-tennis-courts',
       facility.courts.totalOutdoorTennisCourts,
     );
-    showText('#select-courts-playable-status', 'placeholder');
+    showText(
+      '#select-courts-playable-status',
+      facility.courts.courtsPlayableStatus,
+    );
     showNumber('#text-total-bubble-courts', facility.courts.totalBubbleCourts);
     showNumber(
       '#text-number-of-outdoor-lighted-courts',
@@ -1132,6 +1135,7 @@ You entered:
       };
       ob.survivorFacilityId = Number(ob.survivorFacilityId || 0);
       const courts = {
+        courtsPlayableStatus: ob['courts.courtsPlayableStatus'],
         totalIndoorTennisCourts: Number(
           ob['courts.totalIndoorTennisCourts'] || 0,
         ),
@@ -1202,6 +1206,7 @@ You entered:
       }
       delete ob['courts.totalIndoorTennisCourts'];
       delete ob['courts.totalOutdoorTennisCourts'];
+      delete ob['courts.courtsPlayableStatus'];
       delete ob.isPrivate;
 
       delete ob['amenities.changingRoom'];
