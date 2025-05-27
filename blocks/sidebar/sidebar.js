@@ -156,6 +156,22 @@ export default async function decorate(block) {
       });
     }
 
+    const marketingTriggerNav = nav.querySelectorAll('a[href*="/marketing-triggers"]');
+    if (!isAdminUser() && marketingTriggerNav.length > 0) {
+      marketingTriggerNav[0].parentElement.parentElement.className += 'disabled';
+      nnn.forEach((l, i) => {
+        nnn[i].className = 'disabled';
+      });
+    }
+
+    const marketingTriggerDashboardNav = nav.querySelectorAll('a[href*="/marketing-trigger-dashboard"]');
+    if (!isAdminUser() && marketingTriggerDashboardNav.length > 0) {
+      marketingTriggerDashboardNav[0].parentElement.parentElement.className += 'disabled';
+      nnn.forEach((l, i) => {
+        nnn[i].className = 'disabled';
+      });
+    }
+
     const faciltyNav = nav.querySelectorAll('a[href*="/facility-search"]');
     if (faciltyNav && !isFacilityGroupMember()) {
       faciltyNav[0].parentElement.parentElement.className += 'disabled';
