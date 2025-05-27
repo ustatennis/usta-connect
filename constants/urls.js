@@ -3,6 +3,9 @@ export const ROUTES = {
 
   home: '/',
   users: '/users',
+  marketingtriggers: '/marketing-triggers',
+  marketingtriggerupdate: '/marketing-trigger-update',
+  marketingtriggerdashboard: '/marketing-trigger-dashboard',
   facilitysearch: '/facility-search',
   facilityupdate: '/facility-update',
   facilitycreate: '/facility-create',
@@ -35,6 +38,9 @@ export const ROUTES = {
 export const PRIVATE_ROUTES = [
   ROUTES.home,
   ROUTES.users,
+  ROUTES.marketingtriggers,
+  ROUTES.marketingtriggerupdate,
+  ROUTES.marketingtriggerdashboard,
   ROUTES.facilitysearch,
   ROUTES.facilitycreate,
   ROUTES.facilityupdate,
