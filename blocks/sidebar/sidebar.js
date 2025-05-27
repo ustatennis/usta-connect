@@ -156,17 +156,23 @@ export default async function decorate(block) {
       });
     }
 
-    const marketingTriggerNav = nav.querySelectorAll('a[href*="/marketing-triggers"]');
+    const marketingTriggerNav = nav.querySelectorAll(
+      'a[href*="/marketing-triggers"]',
+    );
     if (!isAdminUser() && marketingTriggerNav.length > 0) {
-      marketingTriggerNav[0].parentElement.parentElement.className += 'disabled';
+      marketingTriggerNav[0].parentElement.parentElement.className +=
+        'disabled';
       nnn.forEach((l, i) => {
         nnn[i].className = 'disabled';
       });
     }
 
-    const marketingTriggerDashboardNav = nav.querySelectorAll('a[href*="/marketing-trigger-dashboard"]');
+    const marketingTriggerDashboardNav = nav.querySelectorAll(
+      'a[href*="/marketing-trigger-dashboard"]',
+    );
     if (!isAdminUser() && marketingTriggerDashboardNav.length > 0) {
-      marketingTriggerDashboardNav[0].parentElement.parentElement.className += 'disabled';
+      marketingTriggerDashboardNav[0].parentElement.parentElement.className +=
+        'disabled';
       nnn.forEach((l, i) => {
         nnn[i].className = 'disabled';
       });
