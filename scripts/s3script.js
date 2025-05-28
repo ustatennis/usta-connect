@@ -436,7 +436,7 @@ export async function addressValidation(address){
 async function assumeRole() {
     try {
         const region = AWS.config.region;
-        const roleArn = 'arn:aws:iam::449001737845:role/ustaconnect-stage-eventbridge';
+        const roleArn = window.hlx.IAM_ROLE;
         const roleSessionName = AWS.config.credentials.params.RoleSessionName;
         
         const sts = new AWS.STS({ region });
