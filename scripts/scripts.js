@@ -54,6 +54,7 @@ function setProductionPoolConfig() {
   window.hlx.APP_FILE_STATUS_API_CLIENT_ID = 'w7gnVGC0imaOL0XENYqRIZ6KMVCBGZFb';
   window.hlx.APP_FILE_STATUS_API_CLIENT_SECRET ='2eN7BpYA69zbqicg8JFtjo54XSQOm6_JcQMWxh9g2JpVs3Z1LoXXdmiorZL7CsQ-';
   window.hlx.AUDIENCE = 'https://api-ustaconnect.usta.com';
+  window.hlx.IAM_ROLE = 'arn:aws:iam::901120583860:role/ustaconnect-prod-eventbridge';
 }
 function setDevPoolConfig() {
   window.hlx.RUM_GENERATION = 'usta-connect'; // add your RUM generation information here
@@ -88,6 +89,7 @@ function setStagePoolConfig() {
   window.hlx.APP_SINITI_API_CLIENT_ID = '3sfema9t4ftf0mguomefmqr6pq';
   window.hlx.APP_SINITI_API_CLIENT_SECRET = 'ti1mscnufta4h6fh1vkshuj0so3rui213gbjft4m1c5incgnlqk';
   window.hlx.AUDIENCE = 'https://external-stage-services.usta.com';
+  window.hlx.IAM_ROLE = 'arn:aws:iam::449001737845:role/ustaconnect-stage-eventbridge';
 }
 const subdomain = window.location.hostname.split('.')[0];
 const envUnderDomain = subdomain?.split('-')[0];
