@@ -50,7 +50,7 @@ export default async function decorate(block) {
           groupName: campaignid,
           scheduleName: schedules[i]?.Name,
         });
-        debugger;
+        // debugger;
         extendedSchedules.push(extendedSchedule);
         startDate = extendedSchedule.StartDate
           ? extendedSchedule.StartDate
