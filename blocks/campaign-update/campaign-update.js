@@ -50,6 +50,7 @@ export default async function decorate(block) {
           groupName: campaignid,
           scheduleName: schedules[i]?.Name,
         });
+        debugger;
         extendedSchedules.push(extendedSchedule);
         startDate = extendedSchedule.StartDate
           ? extendedSchedule.StartDate
@@ -209,6 +210,7 @@ export default async function decorate(block) {
           }
           sched.State = 'ENABLED';
           sched.ScheduleExpression = `cron(${pullMM} ${pullHH} * * ? *)`;
+          sched.ScheduleExpressionTimezone = `America/New_York`;
           // eslint-disable-next-line no-await-in-loop
           await updateSchedule(sched);
         } else if (sched.Name.includes('Send-')) {
@@ -222,6 +224,7 @@ export default async function decorate(block) {
           }
           sched.State = 'ENABLED';
           sched.ScheduleExpression = `cron(${sendMM} ${sendHH} * * ? *)`;
+          sched.ScheduleExpressionTimezone = `America/New_York`;
           // eslint-disable-next-line no-await-in-loop
           await updateSchedule(sched);
         } else if (sched.Name.includes('Status-')) {
@@ -238,6 +241,7 @@ export default async function decorate(block) {
           }
           sched.State = newstate;
           sched.ScheduleExpression = `cron(${statusMM} ${statusHH} * * ? *)`;
+          sched.ScheduleExpressionTimezone = `America/New_York`;
           // eslint-disable-next-line no-await-in-loop
           await updateSchedule(sched);
         }
