@@ -277,7 +277,14 @@ export default async function decorate(block) {
 
   if (!isHomePage) gridOptions.api.sizeColumnsToFit();
   gridOptions.api.sizeColumnsToFit();
-  gridOptions.api.setDomLayout('autoHeight');
+  gridOptions.api.setRowData(files);
+  if (gridOptions.api.getDisplayedRowCount() < 11) {
+    gridOptions.api.setDomLayout('autoHeight');
+  } else {
+    gridOptions.api.setDomLayout('normal');
+    gridDiv.style.height = '600px';
+  }
+  // gridOptions.api.setDomLayout('autoHeight');
 
   // Function to enable/disable file input and upload button based on dropdown selection
   async function toggleFileInputAndButton() {
@@ -296,6 +303,12 @@ export default async function decorate(block) {
       files = await fetchFiles(selectedUser);
       // console.log(files);
       gridOptions.api.setRowData(files);
+      if (gridOptions.api.getDisplayedRowCount() < 11) {
+        gridOptions.api.setDomLayout('autoHeight');
+      } else {
+        gridOptions.api.setDomLayout('normal');
+        gridDiv.style.height = '600px';
+      }
     }
   }
   // Add event listener to dropdown
@@ -311,5 +324,11 @@ export default async function decorate(block) {
 
     // console.log(files);
     gridOptions.api.setRowData(files);
+    if (gridOptions.api.getDisplayedRowCount() < 11) {
+      gridOptions.api.setDomLayout('autoHeight');
+    } else {
+      gridOptions.api.setDomLayout('normal');
+      gridDiv.style.height = '600px';
+    }
   });
 }
