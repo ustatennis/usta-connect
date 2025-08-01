@@ -15,7 +15,7 @@ export default async function decorate(block) {
     const config = getAWSStore();
     const user = getUser();
     if (!user) return [];
-    let files = await listFiles(config.s3ScannedBucket, 1000, user);
+    let files = await listFiles(config.s3ScannedBucket, 1200, user);
     files.sort((a, b) => b.createdTime - a.createdTime);
     files = files.slice(0, 3);
     files.forEach(f => {
