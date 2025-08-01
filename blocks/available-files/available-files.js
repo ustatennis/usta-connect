@@ -18,8 +18,8 @@ export default async function decorate(block) {
     const config = getAWSStore();
     const user = getUser();
     if (!user) return;
-    const downloadFiles = await listFiles(config.s3DownloadBucket, 1000, user);
-    const scannedFiles = await listFiles(config.s3ScannedBucket, 1000, user);
+    const downloadFiles = await listFiles(config.s3DownloadBucket, 1200, user);
+    const scannedFiles = await listFiles(config.s3ScannedBucket, 1200, user);
     const filesStatuses = (await getFileStatuses(user)) || [];
     const files = [
       ...downloadFiles.map(obj => {
