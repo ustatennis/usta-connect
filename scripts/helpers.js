@@ -52,7 +52,6 @@ export function redirectTo(path, query = {}) {
       )
       .join('&')}`;
   }
-
   window.location.href = path + queryString;
 }
 

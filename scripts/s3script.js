@@ -457,7 +457,7 @@ export async function addressValidation(address){
 async function assumeRole() {
     try {
         const region = AWS.config.region;
-        const roleArn = 'arn:aws:iam::449001737845:role/ustaconnect-stage-eventbridge';
+        const roleArn = window.hlx.IAM_ROLE;
         const roleSessionName = AWS.config.credentials.params.RoleSessionName;
         
         const sts = new AWS.STS({ region });
@@ -650,7 +650,6 @@ export async function tagResource(resourceArn, tags) {
         ResourceArn: resourceArn, // ARN of the resource (schedule) to set tags
         Tags: tags
     };
-    debugger;
     const result = await scheduler.tagResource(params).promise();
     console.log('Tags for resource:', result);
     return result;

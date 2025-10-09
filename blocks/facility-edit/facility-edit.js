@@ -349,7 +349,7 @@ export default async function decorate(block) {
       </div>
       <div class="formbuilder-text form-group field-text-number-of-standalone-pickleball-courts">
          <label for="text-name" class="formbuilder-text-label">NUMBER OF STANDALONE PICKLEBALL COURTS<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="courts.numberOfPickleballCourts" access="false" id="text-number-of-standalone-pickleball-court">
+         <input type="number" class="form-control" name="courts.numberOfStandalonePickleballCourts" access="false" id="text-number-of-standalone-pickleball-court">
          <span class="field-error" id="number-of-standalone-pickleball-court-error"></span>
       </div>
       <div class="formbuilder-text form-group field-text-number-of-pickleball-blended-courts">
@@ -788,11 +788,7 @@ You entered:
     );
     showNumber(
       '#text-number-of-standalone-pickleball-court',
-      facility.courts.numberOfPickleballCourts,
-    );
-    showNumber(
-      '#text-number-of-standalone-pickleball-court',
-      facility.courts.numberOfPickleballCourts,
+      facility.courts.numberOfStandalonePickleballCourts,
     );
     showNumber(
       '#text-number-of-pickleball-blended-courts',
@@ -864,6 +860,27 @@ You entered:
     if (createFacilityOperation) {
       fieldFacilityUstaNumber.classList.add('hidden');
     }
+    // validate phone number
+    const fieldFacilityPhone = divh.querySelector('#text-phone-number');
+    fieldFacilityPhone.addEventListener('blur', ev => {
+      const phoneValue = fieldFacilityPhone.value.trim();
+      const phoneError = divh.querySelector('#phone-number-error');
+
+      // Allow only digits, optional +, and basic length validation
+      const phonePattern = /^[+]?[0-9]{7,15}$/;
+
+      if (!phonePattern.test(phoneValue)) {
+        ev.target.parentNode.classList.add('field-input-error');
+        phoneError.innerHTML =
+          'Please enter a valid phone number (7–15 digits, optional +).';
+      }
+    });
+
+    fieldFacilityPhone.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('field-input-error');
+      const phoneError = divh.querySelector('#phone-number-error');
+      phoneError.innerHTML = '';
+    });
 
     // validate zendesk-internal-id
     const fieldZendesk = divh.querySelector('#text-zendesk-internal-id');
@@ -1132,6 +1149,7 @@ You entered:
       };
       ob.survivorFacilityId = Number(ob.survivorFacilityId || 0);
       const courts = {
+        courtsPlayableStatus: ob['courts.courtsPlayableStatus'],
         totalIndoorTennisCourts: Number(
           ob['courts.totalIndoorTennisCourts'] || 0,
         ),
@@ -1196,10 +1214,10 @@ You entered:
       delete ob['address.state'];
       delete ob['address.zip'];
       delete ob['address.country'];
-      if (!coordinatesEnteredManually) {
-        delete ob['address.latitude'];
-        delete ob['address.longitude'];
-      }
+      delete ob['address.latitude'];
+      delete ob['address.longitude'];
+
+      delete ob['courts.courtsPlayableStatus'];
       delete ob['courts.totalIndoorTennisCourts'];
       delete ob['courts.totalOutdoorTennisCourts'];
       delete ob.isPrivate;
@@ -1222,19 +1240,24 @@ You entered:
       delete ob['courts.numberOfHardCourts'];
       delete ob['courts.numberOfOutdoorLightedCourts'];
       delete ob['courts.numberOfPickleballBlendedCourts'];
-      delete ob['courts.numberOfPickleballCourts'];
+      delete ob['courts.numberOfStandalonePickleballCourts'];
       delete ob['courts.numberOfSoftCourts'];
       delete ob['courts.totalBubbleCourts'];
       facility.address = { ...facility.address, ...addr };
       facility.courts = { ...facility.courts, ...courts };
       facility.amenities = { ...facility.amenities, ...amenities };
+      ob.phoneNumber = ob.phoneNumber.trim()
+        ? ob.phoneNumber.trim()
+        : undefined;
       updatedfacility = { ...facility, ...ob };
       //   const date = new Date();
       //   updatedfacility.lastUpdatedDateTime = date.toISOString().slice(0, 19);
       delete updatedfacility.address.district_id;
       delete updatedfacility.address.section_id;
-      delete updatedfacility.address.latitude;
-      delete updatedfacility.address.longitude;
+      if (!updatedfacility.address.coordinatesEnteredManually) {
+        delete updatedfacility.address.latitude;
+        delete updatedfacility.address.longitude;
+      }
       delete updatedfacility.lastUpdatedDateTime;
       delete updatedfacility.createdDateTime;
       // delete updatedfacility.courts.numberOf36ftBlendedCourts;
