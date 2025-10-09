@@ -864,6 +864,27 @@ You entered:
     if (createFacilityOperation) {
       fieldFacilityUstaNumber.classList.add('hidden');
     }
+    // validate phone number
+    const fieldFacilityPhone = divh.querySelector('#text-phone-number');
+    fieldFacilityPhone.addEventListener('blur', ev => {
+      const phoneValue = fieldFacilityPhone.value.trim();
+      const phoneError = divh.querySelector('#phone-number-error');
+
+      // Allow only digits, optional +, and basic length validation
+      const phonePattern = /^[+]?[0-9]{7,15}$/;
+
+      if (!phonePattern.test(phoneValue)) {
+        ev.target.parentNode.classList.add('field-input-error');
+        phoneError.innerHTML =
+          'Please enter a valid phone number (7–15 digits, optional +).';
+      }
+    });
+
+    fieldFacilityPhone.addEventListener('focus', ev => {
+      ev.target.parentNode.classList.remove('field-input-error');
+      const phoneError = divh.querySelector('#phone-number-error');
+      phoneError.innerHTML = '';
+    });
 
     // validate zendesk-internal-id
     const fieldZendesk = divh.querySelector('#text-zendesk-internal-id');
@@ -1228,6 +1249,9 @@ You entered:
       facility.address = { ...facility.address, ...addr };
       facility.courts = { ...facility.courts, ...courts };
       facility.amenities = { ...facility.amenities, ...amenities };
+      ob.phoneNumber = ob.phoneNumber.trim()
+        ? ob.phoneNumber.trim()
+        : undefined;
       updatedfacility = { ...facility, ...ob };
       //   const date = new Date();
       //   updatedfacility.lastUpdatedDateTime = date.toISOString().slice(0, 19);

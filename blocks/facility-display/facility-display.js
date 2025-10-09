@@ -64,6 +64,10 @@ export default async function decorate(block) {
       <div class="cell">${facility?.name}</div>
     </div>
     <div class="row">
+      <div class="cell cell-title">PHONE NUMBER</div>
+      <div class="cell">${facility?.phoneNumber}</div>
+    </div>
+    <div class="row">
       <div class="cell cell-title">ADDRESS</div>
       <div class="cell">${facility?.address?.streetAddressLine1}</div>
     </div>
@@ -95,6 +99,7 @@ export default async function decorate(block) {
       <div class="cell cell-title">FACILITY STATUS</div>
       <div class="cell">${facility?.facilityStatus}</div>
     </div>
+    
     <div class="row">
      <div class="cell cell-title">TOTAL INDOOR TENNIS COURTS</div>
       <div class="cell">${facility?.courts?.totalIndoorTennisCourts}</div>
