@@ -388,8 +388,8 @@ export default async function decorate(block) {
    </div>
    <div class="tab-panel hidden">
       <div class="formbuilder-text form-group field-text-phone-number">
-         <label for="text-address" class="formbuilder-text-label">PHONE NUMBER<span class="formbuilder-required">*</span></label>
-         <input type="number" class="form-control" name="phoneNumber" access="false" id="text-phone-number" aria-required="true">
+         <label for="text-address" class="formbuilder-text-label">PHONE NUMBER</label>
+         <input type="text" class="form-control" name="phoneNumber" access="false" id="text-phone-number" >
          <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
       </div>
       <div class="formbuilder-text form-group field-text-website">
@@ -398,7 +398,7 @@ export default async function decorate(block) {
          <span class="field-error" id="total-outdoor-tennis-courts-error"></span>
       </div>
       <div class="formbuilder-select form-group field-select-reservation-status">
-         <label for="select-facilitytype-detail" class="formbuilder-select-label">RESERVATION TYPE<span class="formbuilder-required">*</span></label>
+         <label for="select-facilitytype-detail" class="formbuilder-select-label">RESERVATION TYPE</label>
          <select class="form-control" name="reservationType" id="select-reservation-type">
             <option value="All Playable" selected="true" id="select-courts-palyable-status-0">First Come/First Served</option>
             <option value="Closed" id="select-courts-palyable-status-1">Managed Reservation</option>
@@ -864,27 +864,27 @@ You entered:
     if (createFacilityOperation) {
       fieldFacilityUstaNumber.classList.add('hidden');
     }
-    // validate phone number
-    const fieldFacilityPhone = divh.querySelector('#text-phone-number');
-    fieldFacilityPhone.addEventListener('blur', ev => {
-      const phoneValue = fieldFacilityPhone.value.trim();
-      const phoneError = divh.querySelector('#phone-number-error');
+    // // validate phone number
+    // const fieldFacilityPhone = divh.querySelector('#text-phone-number');
+    // fieldFacilityPhone.addEventListener('blur', ev => {
+    //   const phoneValue = fieldFacilityPhone.value.trim();
+    //   const phoneError = divh.querySelector('#phone-number-error');
 
-      // Allow only digits, optional +, and basic length validation
-      const phonePattern = /^[+]?[0-9]{7,15}$/;
+    //   // Allow only digits, optional +, and basic length validation
+    //   const phonePattern = /^[+]?[0-9]{7,15}$/;
 
-      if (!phonePattern.test(phoneValue)) {
-        ev.target.parentNode.classList.add('field-input-error');
-        phoneError.innerHTML =
-          'Please enter a valid phone number (7–15 digits, optional +).';
-      }
-    });
+    //   if (!phonePattern.test(phoneValue)) {
+    //     ev.target.parentNode.classList.add('field-input-error');
+    //     phoneError.innerHTML =
+    //       'Please enter a valid phone number (7–15 digits, optional +).';
+    //   }
+    // });
 
-    fieldFacilityPhone.addEventListener('focus', ev => {
-      ev.target.parentNode.classList.remove('field-input-error');
-      const phoneError = divh.querySelector('#phone-number-error');
-      phoneError.innerHTML = '';
-    });
+    // fieldFacilityPhone.addEventListener('focus', ev => {
+    //   ev.target.parentNode.classList.remove('field-input-error');
+    //   const phoneError = divh.querySelector('#phone-number-error');
+    //   phoneError.innerHTML = '';
+    // });
 
     // validate zendesk-internal-id
     const fieldZendesk = divh.querySelector('#text-zendesk-internal-id');
@@ -1249,9 +1249,9 @@ You entered:
       facility.address = { ...facility.address, ...addr };
       facility.courts = { ...facility.courts, ...courts };
       facility.amenities = { ...facility.amenities, ...amenities };
-      ob.phoneNumber = ob.phoneNumber.trim()
-        ? ob.phoneNumber.trim()
-        : undefined;
+      // ob.phoneNumber = ob.phoneNumber.trim()
+      //   ? ob.phoneNumber.trim()
+      //   : undefined;
       updatedfacility = { ...facility, ...ob };
       //   const date = new Date();
       //   updatedfacility.lastUpdatedDateTime = date.toISOString().slice(0, 19);
