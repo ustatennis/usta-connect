@@ -42,7 +42,9 @@ export default async function decorate(block) {
         pathParts.pop();
 
         // Find the index of the username in the path
-        const usernameIndex = pathParts.findIndex(part => part === user.Username);
+        const usernameIndex = pathParts.findIndex(
+          part => part === user.Username,
+        );
 
         if (usernameIndex !== -1 && usernameIndex < pathParts.length - 1) {
           // Get all parts after username
