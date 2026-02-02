@@ -31,7 +31,33 @@ export default async function decorate(block) {
     ];
     files.sort((a, b) => b.createdTime - a.createdTime);
     files.forEach(f => {
+      // Extract just the filename (last part)
       f.fileName = f.fileName.split('/').pop();
+
+      // Extract folderName from f.Key: everything between username and filename
+      // Pattern: private/uuid/{username}/folderPath/../filename
+      if (f.Key) {
+        const pathParts = f.Key.split('/');
+        // Remove the filename (last part)
+        pathParts.pop();
+
+        // Find the index of the username in the path
+        const usernameIndex = pathParts.findIndex(
+          part => part === user.Username,
+        );
+
+        if (usernameIndex !== -1 && usernameIndex < pathParts.length - 1) {
+          // Get all parts after username
+          const folderParts = pathParts.slice(usernameIndex + 1);
+          f.folderName = folderParts.join('/') || '';
+        } else {
+          // If username not found or no folder between username and file, set to empty
+          f.folderName = '';
+        }
+      } else {
+        f.folderName = '';
+      }
+
       filesStatuses.forEach(s => {
         if (f.fileName === s.fileName) {
           f.fileStatus = s.fileStatus;
@@ -100,6 +126,12 @@ export default async function decorate(block) {
       minWidth: 380,
       cellRenderer: iconNameAndDateRenderer,
       cellClass: 'fileName',
+    },
+    {
+      field: 'folderName',
+      headerName: 'FOLDER',
+      sortable: true,
+      minWidth: 200,
     },
     {
       field: 'modifiedTime',
