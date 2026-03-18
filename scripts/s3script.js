@@ -1,13 +1,13 @@
 import { getAWSStore } from '../store/awsStore.js';
 import { getValueFromLocalStorage, formatDateTime, setLocalStorage } from './helpers.js';
 import { getUser } from '../store/userStore.js';
-import { logOut  } from '../middleware/auth.js';
+import { logOut } from '../middleware/auth.js';
 // const AWS  = require('../../jslibraries/aws-sdk-2.1692.0.min.js');
 // import { SchedulerClient } from '../node_modules/@aws-sdk/client-scheduler';
 // Checks user object data is not found will logout.
-async function isUserValid(){
+async function isUserValid() {
   const user = getUser();
-  if(user && user.sub){
+  if (user && user.sub) {
     return;
   }
   await logOut();
@@ -124,7 +124,7 @@ function constructFileKey(fileName, pUser) {
   const user = !pUser ? getUser() : pUser;
   let uploadFileKey = `private/${user.sub}/${user.Username}/`;
   const currDateStr = `_${new Date().getTime()}`;
-  const fileExtIndex = fileName.search(/\.\w{3}$/g);
+  const fileExtIndex = fileName.search(/\.\w{3,4}$/g);
   if (fileExtIndex >= 0) {
     uploadFileKey +=
       fileName.slice(0, fileExtIndex) +
@@ -225,20 +225,20 @@ export async function getFileStatuses(user, retry = 3) {
     body: raw,
     redirect: "follow"
   };
-  try{
+  try {
     let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-connect/file/status", requestOptions)
-    if(response.status === 404){
-      if(retry > 0){
+    if (response.status === 404) {
+      if (retry > 0) {
         await authenticateFileStatusEndpoint();
         return await getFileStatuses(user, retry - 1);
       }
-    }else{
+    } else {
       response = await response.json();
       return response.files;
-    } 
-  }catch(e){
-    console.log("unable to fetch files status, retrying ", retry - 3 )
-    if(retry > 0){
+    }
+  } catch (e) {
+    console.log("unable to fetch files status, retrying ", retry - 3)
+    if (retry > 0) {
       await authenticateFileStatusEndpoint();
       return await getFileStatuses(user, retry - 1);
     }
@@ -249,25 +249,25 @@ export async function getFileStatuses(user, retry = 3) {
 export async function fetchAllFacilities(state, text) {
   let fac = [];
   let page = 1;
-  let resp=[];
+  let resp = [];
   do {
     resp = await fetchFacilities(state, text, page);
-    if (resp.length>0) fac.push(...resp);
+    if (resp.length > 0) fac.push(...resp);
     page++;;
   }
-  while (resp.length>0);
+  while (resp.length > 0);
   return fac;
 }
 
-export async function fetchFacilities(state, text, page, size){
+export async function fetchFacilities(state, text, page, size) {
   const config = getAWSStore();
   const headers = await getAuthHeaders();
 
   const raw = JSON.stringify({
     "state": state || "",
     "text": text || "",
-    "page" : page,
-    "size" : size
+    "page": page,
+    "size": size
   });
 
   const requestOptions = {
@@ -276,120 +276,120 @@ export async function fetchFacilities(state, text, page, size){
     body: raw
   };
 
-  try{
+  try {
     let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-connect/facilities/lookup", requestOptions);
-    if(response.status != 200){
+    if (response.status != 200) {
       //Handle error status.
     }
     response = await response.json();
     return response.data;
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
   return [];
 }
 
-export async function fetchFacilityById(facilityId){
+export async function fetchFacilityById(facilityId) {
   const headers = await getAuthHeaders();
-  const config =  getAWSStore();
+  const config = getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
   };
-  try{
-    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities/" + facilityId, requestOptions);
-    if(response.status != 200){
+  try {
+    let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-connect/facilities/" + facilityId, requestOptions);
+    if (response.status != 200) {
       //Handle error status.
     }
     response = await response.json();
     return response;
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
-  return {}; 
+  return {};
 }
 
-export async function createOrUpdateFacility(facility){
+export async function createOrUpdateFacility(facility) {
   const raw = JSON.stringify(facility);
   const headers = await getAuthHeaders();
-  const config =  getAWSStore();
+  const config = getAWSStore();
   const requestOptions = {
     method: "POST",
     headers: headers,
     body: raw,
   };
-  try{
-    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities", requestOptions);
-    if(response.status != 200){
+  try {
+    let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-connect/facilities", requestOptions);
+    if (response.status != 200) {
       //Handle error status.
     }
     response = await response.json();
     return response;
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
-  return {}; 
+  return {};
 }
 
-export async function fetchReferenceCategories(){
+export async function fetchReferenceCategories() {
   const headers = await getAuthHeaders();
-  const config =  getAWSStore();
+  const config = getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
   };
-  try{
-    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities/reference/category-types", requestOptions);
-    if(response.status != 200){
+  try {
+    let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-connect/facilities/reference/category-types", requestOptions);
+    if (response.status != 200) {
       //Handle error status.
     }
     response = await response.json();
     return response;
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
-  return {}; 
+  return {};
 }
 
-export async function fetchAllReferenceData(){
+export async function fetchAllReferenceData() {
   const headers = await getAuthHeaders();
-  const config =  getAWSStore();
+  const config = getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
   };
-  try{
-    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities/reference/data", requestOptions);
-    if(response.status != 200){
+  try {
+    let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-connect/facilities/reference/data", requestOptions);
+    if (response.status != 200) {
       //Handle error status.
     }
     response = await response.json();
     return response;
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
-  return {}; 
+  return {};
 }
 
 
-export async function fetchReferenceDataByCatergory(category){
+export async function fetchReferenceDataByCatergory(category) {
   const headers = await getAuthHeaders();
-  const config =  getAWSStore();
+  const config = getAWSStore();
   const requestOptions = {
     method: "GET",
     headers: headers
   };
-  try{
-    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-connect/facilities/reference?category=" + category, requestOptions);
-    if(response.status != 200){
+  try {
+    let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-connect/facilities/reference?category=" + category, requestOptions);
+    if (response.status != 200) {
       //Handle error status.
     }
     response = await response.json();
     return response;
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
-  return {}; 
+  return {};
 }
 
 
@@ -432,122 +432,122 @@ async function authenticateFileStatusEndpoint() {
 // https://s3upload-ui-scanned-stage.s3.amazonaws.com/?list-type=2&prefix=private%2Fus-east-1%3A68ffed30-3180-48d2-8b37-2e07596c5389
 
 // https://s3upload-ui-upload-prod.s3.us-east-1.amazonaws.com/private/us-east-1%3Aa0ea4540-cbcc-4ff9-9b53-2c258f383593/sai.theja%40contractor.usta.com/logo192_1708367868662.png?x-id=PutObjecthttps://s3upload-ui-upload-prod.s3.us-east-1.amazonaws.com/private/us-east-1%3Aa0ea4540-cbcc-4ff9-9b53-2c258f383593/sai.theja%40contractor.usta.com/logo192_1708367868662.png?x-id=PutObject
-export async function addressValidation(address){
+export async function addressValidation(address) {
   const raw = JSON.stringify(address);
   const headers = await getAuthHeaders();
-  const config =  getAWSStore();
+  const config = getAWSStore();
   const requestOptions = {
     method: "POST",
     headers: headers,
     body: raw,
   };
-  try{
-    let response = await fetch(config.appFileStatusEndpoint+ "/v1/usta-service/address/validation", requestOptions);
-    if(response.status != 200){
+  try {
+    let response = await fetch(config.appFileStatusEndpoint + "/v1/usta-service/address/validation", requestOptions);
+    if (response.status != 200) {
       //Handle error status.
     }
     response = await response.json();
     return response;
-  }catch(e){
+  } catch (e) {
     console.log(e)
   }
-  return {}; 
+  return {};
 }
 
 async function assumeRole() {
-    try {
-        const region = AWS.config.region;
-        const roleArn = window.hlx.IAM_ROLE;
-        const roleSessionName = AWS.config.credentials.params.RoleSessionName;
-        
-        const sts = new AWS.STS({ region });
-        const assumedRole = await sts.assumeRole({
-            RoleArn: roleArn,
-            RoleSessionName: roleSessionName,
-        }).promise();
-        
-        return {
-            region,
-            credentials: {
-                accessKeyId: assumedRole.Credentials.AccessKeyId,
-                secretAccessKey: assumedRole.Credentials.SecretAccessKey,
-                sessionToken: assumedRole.Credentials.SessionToken
-            }
-        };
-    } catch (error) {
-        console.error('Error assuming role:', error);
-        throw error;
-    }
+  try {
+    const region = AWS.config.region;
+    const roleArn = window.hlx.IAM_ROLE;
+    const roleSessionName = AWS.config.credentials.params.RoleSessionName;
+
+    const sts = new AWS.STS({ region });
+    const assumedRole = await sts.assumeRole({
+      RoleArn: roleArn,
+      RoleSessionName: roleSessionName,
+    }).promise();
+
+    return {
+      region,
+      credentials: {
+        accessKeyId: assumedRole.Credentials.AccessKeyId,
+        secretAccessKey: assumedRole.Credentials.SecretAccessKey,
+        sessionToken: assumedRole.Credentials.SessionToken
+      }
+    };
+  } catch (error) {
+    console.error('Error assuming role:', error);
+    throw error;
+  }
 }
 
 async function getScheduler() {
-    try {
-        const { region, credentials } = await assumeRole();
-        return new AWS.Scheduler({ region, credentials });
-    } catch (error) {
-        console.error('Error initializing scheduler:', error);
-        throw error;
-    }
+  try {
+    const { region, credentials } = await assumeRole();
+    return new AWS.Scheduler({ region, credentials });
+  } catch (error) {
+    console.error('Error initializing scheduler:', error);
+    throw error;
+  }
 }
 
 export async function getScheduleGroup(Name) {
-  try{
-  const scheduler = await getScheduler();
-  console.log('Get Schedule Group...');
-  return await scheduler.getScheduleGroup({Name}).promise();
-} catch (error) {
-  console.error('Error getting schedulegroup:', error);
-  throw error;
-}
+  try {
+    const scheduler = await getScheduler();
+    console.log('Get Schedule Group...');
+    return await scheduler.getScheduleGroup({ Name }).promise();
+  } catch (error) {
+    console.error('Error getting schedulegroup:', error);
+    throw error;
+  }
 }
 
 export async function listSchedule(GroupName) {
-    try {
-        const scheduler = await getScheduler();
-        console.log('Listing Schedules...');
-        return await scheduler.listSchedules({GroupName}).promise();
-    } catch (error) {
-        console.error('Error listing schedules:', error);
-        throw error;
-    }
+  try {
+    const scheduler = await getScheduler();
+    console.log('Listing Schedules...');
+    return await scheduler.listSchedules({ GroupName }).promise();
+  } catch (error) {
+    console.error('Error listing schedules:', error);
+    throw error;
+  }
 }
 
 export async function listSchedules(GroupName) {
   try {
     const scheduler = await getScheduler();
     console.log('Listing Schedules...');
-    return await scheduler.listSchedules({GroupName}).promise();
-} catch (error) {
+    return await scheduler.listSchedules({ GroupName }).promise();
+  } catch (error) {
     console.error('Error listing schedules:', error);
     throw error;
-}
+  }
 }
 
 export async function listAllSchedules(num) {
-    let count = num > 0 ? num : 999999;
-    const pageSize = num < 100 ? num : 100;
-    const reqData = {
-      MaxResults: pageSize,
-    };
-    try {
-      let response = [];
-      let res = [];
-      const scheduler = await getScheduler();
-      do {
-        reqData.MaxResults = Math.min(pageSize, count);
-        count -= pageSize;
-        // eslint-disable-next-line no-await-in-loop
-        res = await scheduler.listSchedules(reqData).promise();
-        if (res.NextToken) {
-          reqData.NextToken = res.NextToken;
-        }
-        response = response.concat(res.Schedules);
-      } while (res.NextToken !== null && count > 0);
-      return response;
-    } catch (e) {
-      console.error(e);
-    }
-  
+  let count = num > 0 ? num : 999999;
+  const pageSize = num < 100 ? num : 100;
+  const reqData = {
+    MaxResults: pageSize,
+  };
+  try {
+    let response = [];
+    let res = [];
+    const scheduler = await getScheduler();
+    do {
+      reqData.MaxResults = Math.min(pageSize, count);
+      count -= pageSize;
+      // eslint-disable-next-line no-await-in-loop
+      res = await scheduler.listSchedules(reqData).promise();
+      if (res.NextToken) {
+        reqData.NextToken = res.NextToken;
+      }
+      response = response.concat(res.Schedules);
+    } while (res.NextToken !== null && count > 0);
+    return response;
+  } catch (e) {
+    console.error(e);
+  }
+
   // try {
   //     const scheduler = await getScheduler();
   //     console.log('Listing Schedules...');
@@ -559,85 +559,85 @@ export async function listAllSchedules(num) {
 }
 
 export async function listScheduleGroups(NamePrefix) {
-    try {
-        const scheduler = await getScheduler();
-        console.log('Listing Schedule Groups...');
-        return await scheduler.listScheduleGroups({NamePrefix}).promise();
-    } catch (error) {
-        console.error('Error listing schedule groups:', error);
-        throw error;
-    }
+  try {
+    const scheduler = await getScheduler();
+    console.log('Listing Schedule Groups...');
+    return await scheduler.listScheduleGroups({ NamePrefix }).promise();
+  } catch (error) {
+    console.error('Error listing schedule groups:', error);
+    throw error;
+  }
 }
 export async function createSchedule(data) {
   try {
-      const scheduler = await getScheduler();
-      const result = await scheduler.createSchedule(data).promise();
-      console.log('Schedule created successfully:', result);
-      return result;
+    const scheduler = await getScheduler();
+    const result = await scheduler.createSchedule(data).promise();
+    console.log('Schedule created successfully:', result);
+    return result;
   } catch (error) {
-      console.error('Error creating schedule:', error);
-      throw error;
+    console.error('Error creating schedule:', error);
+    throw error;
   }
 }
 export async function updateSchedule(data) {
   try {
-      const scheduler = await getScheduler();
-      const result = await scheduler.updateSchedule(data).promise();
-      console.log('Schedule updated successfully:', result);
-      return result;
+    const scheduler = await getScheduler();
+    const result = await scheduler.updateSchedule(data).promise();
+    console.log('Schedule updated successfully:', result);
+    return result;
   } catch (error) {
-      console.error('Error updating schedule:', error);
-      throw error;
+    console.error('Error updating schedule:', error);
+    throw error;
   }
 }
 export async function deleteSchedule(data) {
   try {
-      const scheduler = await getScheduler();
+    const scheduler = await getScheduler();
 
-      const params = {
-          Name: data.scheduleName,  // Schedule name to be deleted
-      };
+    const params = {
+      Name: data.scheduleName,  // Schedule name to be deleted
+    };
 
-      const result = await scheduler.deleteSchedule(params).promise();
-      console.log('Schedule deleted successfully:', result);
-      return result;
+    const result = await scheduler.deleteSchedule(params).promise();
+    console.log('Schedule deleted successfully:', result);
+    return result;
   } catch (error) {
-      console.error('Error deleting schedule:', error);
-      throw error;
+    console.error('Error deleting schedule:', error);
+    throw error;
   }
 }
 
 // Get a Schedule
 export async function getSchedule(data) {
   try {
-      const scheduler = await getScheduler();
+    const scheduler = await getScheduler();
 
-      const params = {
-          GroupName: data.groupName,
-          Name: data.scheduleName,  // Schedule name to retrieve
-      };
-      const result = await scheduler.getSchedule(params).promise();
-      console.log('Schedule retrieved successfully:', result);
-      return result;
+    const params = {
+      GroupName: data.groupName,
+      Name: data.scheduleName,  // Schedule name to retrieve
+    };
+    const result = await scheduler.getSchedule(params).promise();
+    console.log('Schedule retrieved successfully:', result);
+    return result;
   } catch (error) {
-      console.error('Error getting schedule:', error);
-      throw error;
+    console.error('Error getting schedule:', error);
+    throw error;
   }
 }
 // List tags for a specific resource (Schedule)
 export async function listTagsForResource(resourceArn) {
   try {
-      const scheduler = await getScheduler();
+    const scheduler = await getScheduler();
 
-      const params = {
-          ResourceArn: resourceArn, // ARN of the resource (schedule) to list tags
-      };
-      const result = await scheduler.listTagsForResource(params).promise();
-      console.log('Tags for resource:', result);
-      return result;
+    const params = {
+      ResourceArn: resourceArn, // ARN of the resource (schedule) to list tags
+    };
+    const result = await scheduler.listTagsForResource(params).promise();
+    console.log('Tags for resource:', result);
+    return result;
   } catch (error) {
-      console.error('Error listing tags for resource:', error);
-      throw error;
+    console.error('Error listing tags for resource:', error);
+    throw error;
   }
 }
 
@@ -647,78 +647,78 @@ export async function tagResource(resourceArn, tags) {
     const scheduler = await getScheduler();
 
     const params = {
-        ResourceArn: resourceArn, // ARN of the resource (schedule) to set tags
-        Tags: tags
+      ResourceArn: resourceArn, // ARN of the resource (schedule) to set tags
+      Tags: tags
     };
     const result = await scheduler.tagResource(params).promise();
     console.log('Tags for resource:', result);
     return result;
-} catch (error) {
+  } catch (error) {
     console.error('Error setting tags for resource:', error);
     throw error;
-}
+  }
 }
 
 // List tags across multiple resources
 export async function listTags() {
   try {
-      const scheduler = await getScheduler();
+    const scheduler = await getScheduler();
 
-      const params = {
-          MaxResults: 50, // Optional: Adjust page size if needed
-      };
+    const params = {
+      MaxResults: 50, // Optional: Adjust page size if needed
+    };
 
-      let tagsList = [];
-      let hasNextPage = true;
+    let tagsList = [];
+    let hasNextPage = true;
 
-      while (hasNextPage) {
-          const result = await scheduler.listTagsForResource(params).promise();
-          tagsList = tagsList.concat(result.TagList);
+    while (hasNextPage) {
+      const result = await scheduler.listTagsForResource(params).promise();
+      tagsList = tagsList.concat(result.TagList);
 
-          // Check if there are more pages
-          if (result.NextToken) {
-              params.NextToken = result.NextToken;
-          } else {
-              hasNextPage = false;
-          }
+      // Check if there are more pages
+      if (result.NextToken) {
+        params.NextToken = result.NextToken;
+      } else {
+        hasNextPage = false;
       }
+    }
 
-      console.log('Tags for all resources:', tagsList);
-      return tagsList;
+    console.log('Tags for all resources:', tagsList);
+    return tagsList;
   } catch (error) {
-      console.error('Error listing tags for all resources:', error);
-      throw error;
+    console.error('Error listing tags for all resources:', error);
+    throw error;
   }
 }
 // Create a Schedule Group
 export async function createScheduleGroup(data) {
   try {
-      const scheduler = await getScheduler();
+    const scheduler = await getScheduler();
 
-      const params = {
-          Name: data.scheduleGroupName, // The name for the schedule group
-          Description: data.description || '', // Optional: Description of the schedule group
-          Tags: data.tags || [], // Optional: Tags to assign to the schedule group
-      };
+    const params = {
+      Name: data.scheduleGroupName, // The name for the schedule group
+      Description: data.description || '', // Optional: Description of the schedule group
+      Tags: data.tags || [], // Optional: Tags to assign to the schedule group
+    };
 
-      const result = await scheduler.createScheduleGroup(params).promise();
-      console.log('Schedule Group created successfully:', result);
-      return result;
+    const result = await scheduler.createScheduleGroup(params).promise();
+    console.log('Schedule Group created successfully:', result);
+    return result;
   } catch (error) {
-      console.error('Error creating schedule group:', error);
-      throw error;
+    console.error('Error creating schedule group:', error);
+    throw error;
   }
 }
 // Delete a Schedule Group
 export async function deleteScheduleGroup(Name) {
   try {
-      const scheduler = await getScheduler();
+    const scheduler = await getScheduler();
 
-      const result = await scheduler.deleteteScheduleGroup({Name}).promise();
-      console.log('Schedule Group deleted successfully:', result);
-      return result;
+    const result = await scheduler.deleteteScheduleGroup({ Name }).promise();
+    console.log('Schedule Group deleted successfully:', result);
+    return result;
   } catch (error) {
-      console.error('Error deleting schedule group:', error);
-      throw error;
+    console.error('Error deleting schedule group:', error);
+    throw error;
   }
 }
