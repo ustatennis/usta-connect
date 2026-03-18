@@ -1,13 +1,13 @@
 #filter-state-box {
-  height:32px;
-  margin-bottom:30px;
+  height: 32px;
+  margin-bottom: 30px;
   width: 100%;
 }
 
 #filter-text-box {
   height: 32px;
   width: calc(100% - 8px);
-  margin-bottom:30px;
+  margin-bottom: 30px;
   display: none;
 }
 
@@ -19,7 +19,7 @@
 
 .cellsubheader {
   line-height: 15px;
-  text-transform:capitalize;
+  text-transform: capitalize;
   word-wrap: normal;
   min-height: 40px;
   white-space: break-spaces;
@@ -78,36 +78,36 @@
   padding-right: 20px;
   padding-top: 2px;
   padding-bottom: 2px;
-  font-size:9;
+  font-size: 9;
 }
 
 .campaigninactive {
-  background-color: #FCF2F3;
+  background-color: #F5F5F5;
   font-weight: normal;
-  color: #840220;
+  color: #616161;
   text-align: center;
   border-radius: 10px;
-  border: 1px solid #BB1F1F;
+  border: 1px solid #9E9E9E;
   width: 75px;
   padding-left: 10px;
   padding-right: 20px;
   padding-top: 2px;
   padding-bottom: 2px;
-  font-size:9;
+  font-size: 9;
 }
 
 .campaignoverlaps {
   width: 74px;
   height: 13px;
   background: #D11B1B 0% 0% no-repeat padding-box;
-  color:white;
+  color: white;
   border-radius: 3px;
   font-weight: normal;
   padding-left: 10px;
   padding-right: 20px;
   padding-top: 2px;
   padding-bottom: 2px;
-  margin-left:10px;
+  margin-left: 10px;
 }
 
 .campaignpaused {
@@ -121,7 +121,64 @@
   padding-right: 20px;
   padding-top: 2px;
   padding-bottom: 2px;
-  font-size:9;
+  font-size: 9;
 }
 
+.campaignactive {
+  background-color: #1565C0;
+  font-weight: normal;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  width: 75px;
+  padding-left: 10px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: 9;
+}
 
+.campaignscheduled {
+  background-color: #FFF3E0;
+  font-weight: normal;
+  color: #E65100;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #E65100;
+  width: 75px;
+  padding-left: 10px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: 9;
+}
+
+.campaignenabled {
+  background-color: #E8F5E9;
+  font-weight: normal;
+  color: #1B5E20;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #1B5E20;
+  width: 75px;
+  padding-left: 10px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: 9;
+}
+
+.campaigndisabled {
+  background-color: #F5F5F5;
+  font-weight: normal;
+  color: #616161;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #9E9E9E;
+  width: 75px;
+  padding-left: 10px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: 9;
+}
