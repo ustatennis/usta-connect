@@ -18,10 +18,18 @@ export default class timeAndStatusRenderer {
     this.eGui.innerHTML = `<div class="statusandtime">
           <div class="cellstatus">DELIVERY TIME ${params.data.DeliveryTime} 
           ${
-            params.data.Status === 'ENABLED'
-              ? '<span class="campaignrunning">&#x25CF; RUNNING</span>'
+            params.data.Status === 'RUNNING'
+              ? '<span class="campaignrunning">&#x25CF; Running</span>'
               : ''
           }${
+      params.data.Status === 'ACTIVE'
+        ? '<span class="campaignactive">&#x25CF; Active</span>'
+        : ''
+    }${
+      params.data.Status === 'SCHEDULED'
+        ? '<span class="campaignscheduled">&#x25CF; Scheduled</span>'
+        : ''
+    }${
       params.data.Status === 'PAUSED'
         ? '<span class="campaignpaused">&#x25CF; Paused</span>'
         : ''
@@ -29,6 +37,10 @@ export default class timeAndStatusRenderer {
       params.data.Status === 'INACTIVE'
         ? '<span class="campaigninactive">&#x25CF; Inactive</span>'
         : ''
+    }${
+      params.data.EnabledStatus === 'Enabled'
+        ? '<span class="campaignenabled">&#x25CF; Enabled</span>'
+        : '<span class="campaigndisabled">&#x25CF; Disabled</span>'
     }</div>
           <div class="celllastrun">LAST RUN: ${
             convertIsoToDateAmPm(params.data.LastRun) || ''

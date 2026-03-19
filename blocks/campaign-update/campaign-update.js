@@ -60,7 +60,7 @@ export default async function decorate(block) {
     // eslint-disable-next-line no-use-before-define
     startDate = formatDate(startDate);
     // eslint-disable-next-line no-use-before-define
-    endDate = formatDate(endDate);
+    endDate = formatDateUTC(endDate);
     console.log(`startDate = ${startDate}, endDate = ${endDate}`);
     scheduleGroup = await getScheduleGroup(campaignid);
     const arn = scheduleGroup?.Arn;
@@ -130,6 +130,14 @@ export default async function decorate(block) {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  }
+
+  function formatDateUTC(date) {
+    if (date === null || date === '') return '';
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const year = date.getUTCFullYear();
     return `${year}-${month}-${day}`;
   }
 
@@ -247,6 +255,37 @@ export default async function decorate(block) {
       }
     }
 
+    async function disableScheduleWithoutValidation() {
+      const modalwindow = document.querySelector('#disableModal');
+      modalwindow.style.display = 'none';
+
+      // Re-fetch schedules to ensure we have the latest list
+      const latestScheduleData = await listSchedule(campaignid);
+      const latestSchedules = latestScheduleData?.Schedules || [];
+      console.log(`Found ${latestSchedules.length} schedules to disable.`);
+
+      for (let i = 0; i < latestSchedules.length; i++) {
+        const sch = latestSchedules[i];
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          const sched = await getSchedule({
+            groupName: sch.GroupName,
+            scheduleName: sch.Name,
+          });
+          delete sched.Arn;
+          delete sched.CreationDate;
+          delete sched.LastModificationDate;
+
+          sched.State = 'DISABLED';
+          // eslint-disable-next-line no-await-in-loop
+          await updateSchedule(sched);
+          console.log(`Successfully disabled schedule: ${sch.Name}`);
+        } catch (err) {
+          console.error(`Failed to disable schedule: ${sch.Name}`, err);
+        }
+      }
+    }
+
     const btnCancel = divh.querySelector('#btn-cancel');
     btnCancel.addEventListener('click', ev => {
       ev.preventDefault();
@@ -277,7 +316,7 @@ export default async function decorate(block) {
       submitBtn.addEventListener('click', async e3 => {
         e3.preventDefault();
         try {
-          await updateScheduleStatus('DISABLED');
+          await disableScheduleWithoutValidation();
           window.location = `/marketing-triggers`;
         } catch (error) {
           alert(error.message);

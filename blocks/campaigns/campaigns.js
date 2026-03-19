@@ -227,7 +227,21 @@ export default async function decorate(block) {
     const currentTime = `${hours}:${minutes}`;
     console.log(currentTime);
     campaigns.ScheduleGroups[s].Status = 'SCHEDULED';
-    if (campaigns.ScheduleGroups[s].State === 'DISABLED') {
+
+    // Derive EnabledStatus from individual schedule states across the group
+    const allGroupSchedules = [
+      ...s3schedulessummary,
+      ...statusschedulessummary,
+      ...sendchedulessummary,
+    ];
+    const allDisabled =
+      allGroupSchedules.length > 0 &&
+      allGroupSchedules.every(sch => sch.State === 'DISABLED');
+    campaigns.ScheduleGroups[s].EnabledStatus = allDisabled
+      ? 'Disabled'
+      : 'Enabled';
+
+    if (allDisabled) {
       if (EndDate > now) {
         campaigns.ScheduleGroups[s].Status = 'PAUSED';
       } else {
@@ -237,6 +251,8 @@ export default async function decorate(block) {
       campaigns.ScheduleGroups[s].Status = 'SCHEDULED';
       if (s3pullfulltime <= now && now <= adobestatusfulltime) {
         campaigns.ScheduleGroups[s].Status = 'RUNNING';
+      } else {
+        campaigns.ScheduleGroups[s].Status = 'ACTIVE';
       }
     } else {
       campaigns.ScheduleGroups[s].Status = 'INACTIVE';
