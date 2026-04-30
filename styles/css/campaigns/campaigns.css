@@ -21,8 +21,8 @@
   line-height: 15px;
   text-transform: capitalize;
   word-wrap: normal;
-  min-height: 40px;
   white-space: break-spaces;
+  margin-top: 0;
 }
 
 .campaigns-container p > a {
@@ -180,6 +180,15 @@
   padding-top: 2px;
   padding-bottom: 2px;
   font-size: 9;
+}
+
+.marketing-trigger-number {
+  font-weight: bold;
+  font-style: italic;
+  color: grey;
+  margin-top: 0;
+  margin-bottom: 10px;
+  line-height: 15px;
 }
 
 /*# sourceMappingURL=campaigns.css.map */
