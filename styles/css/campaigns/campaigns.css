@@ -45,7 +45,6 @@
   border-radius: 10px;
   opacity: 1;
 }
-
 #campaign-grid .cellbutton button {
   font: normal normal medium 10px/14px "Graphik sans-serif";
 }
@@ -180,6 +179,13 @@
   padding-top: 2px;
   padding-bottom: 2px;
   font-size: 9;
+}
+
+.marketing-trigger-number {
+  font-weight: bold;
+  font-style: italic;
+  color: grey;
+  margin: 5px 0;
 }
 
 /*# sourceMappingURL=campaigns.css.map */
