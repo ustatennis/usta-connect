@@ -4,7 +4,9 @@ export default class titleAndDescriptionRenderer {
     this.eGui.innerHTML = `<div class="cellicon">
         <div class="cellheader">${
           params.data?.Title || params.data?.Name
-        }</div><div class="marketing-trigger-number">${params.data.Name || ''}</div>
+        }</div><div class="marketing-trigger-number">${
+      params.data.Name || ''
+    }</div>
         <div class="cellsubheader">${params.data.Description || ''}</div>
         </div>`;
   }
