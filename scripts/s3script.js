@@ -26,32 +26,60 @@ export function getUserPoolIDP(identityPoolId) {
 }
 
 export async function createS3Client() {
+
   await isUserValid();
+
   const config = getAWSStore();
+
   // Get the identity pool ID.
+
   const { identityPoolId } = config;
 
+
+
   const idToken = getValueFromLocalStorage('id_token');
+
   // Create a new Amazon S3 client.
+
   let s3Client = null;
+
   const userPoolIdIDP = getUserPoolIDP(identityPoolId);
+
   const logins = {
+
     [`${userPoolIdIDP}`]: idToken,
+
   };
+
   try {
+
     s3Client = new AWS.S3({
+
       region: AWS.config.region,
+
       credentials: new AWS.CognitoIdentityCredentials({
+
         IdentityPoolId: identityPoolId,
+
         Logins: logins,
+
       }),
+
     });
+
   } catch (e) {
+
     console.error(e);
+
     await logOut();
+
   }
+
   return s3Client;
+
 }
+
+
 
 export async function getObject(details) {
   const s3Client = await createS3Client();
@@ -719,6 +747,97 @@ export async function deleteScheduleGroup(Name) {
     return result;
   } catch (error) {
     console.error('Error deleting schedule group:', error);
+    throw error;
+  }
+}
+
+async function assumeFaceRecognitionInvokerRole() {
+  const config = getAWSStore();
+  const { identityPoolId } = config;
+
+  const idToken = getValueFromLocalStorage('id_token');
+  const userPoolIdIDP = getUserPoolIDP(identityPoolId);
+
+  const cognitoCredentials = new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: identityPoolId,
+    Logins: {
+      [userPoolIdIDP]: idToken,
+    },
+  });
+
+  await cognitoCredentials.getPromise();
+
+  const sts = new AWS.STS({
+    region: 'us-east-1',
+    credentials: cognitoCredentials,
+  });
+
+  const assumedRole = await sts.assumeRole({
+    RoleArn: 'arn:aws:iam::631352388625:role/ustaconnect-face-recognition-invoker',
+    RoleSessionName: 'usta-connect-face-recognition',
+  }).promise();
+
+  return new AWS.Credentials({
+    accessKeyId: assumedRole.Credentials.AccessKeyId,
+    secretAccessKey: assumedRole.Credentials.SecretAccessKey,
+    sessionToken: assumedRole.Credentials.SessionToken,
+  });
+}
+
+async function createFaceRecognitionLambdaClient() {
+  const credentials = await assumeFaceRecognitionInvokerRole();
+
+  return new AWS.Lambda({
+    region: 'us-east-1',
+    credentials,
+  });
+}
+
+
+// Facial Recognition — Lambda invocation
+export async function findCredentialByFace(imageFile, similarityCutoff) {
+  // eslint-disable-next-line no-console
+  console.log('findCredentialByFace called', { imageFile, similarityCutoff });
+
+  const getBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+      if ((encoded.length % 4) > 0) {
+        encoded += '='.repeat(4 - (encoded.length % 4));
+      }
+      resolve(encoded);
+    };
+    reader.onerror = error => reject(error);
+  });
+
+  try {
+    const base64Image = await getBase64(imageFile);
+
+    const lambda = await createFaceRecognitionLambdaClient();
+
+    const payload = {
+      image: base64Image,
+      similarity: similarityCutoff
+    };
+
+    const params = {
+      FunctionName: 'arn:aws:lambda:us-east-1:631352388625:function:us_open_recognition',
+      InvocationType: 'RequestResponse',
+      Payload: JSON.stringify(payload),
+    };
+
+    const data = await lambda.invoke(params).promise();
+    console.log('Lambda Response:', data);
+
+    if (data.Payload) {
+      const responsePayload = JSON.parse(data.Payload);
+      return responsePayload;
+    }
+    return data;
+  } catch (error) {
+    console.error('Error calling Lambda:', error);
     throw error;
   }
 }
