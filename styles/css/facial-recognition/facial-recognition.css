@@ -6,10 +6,6 @@
   display: flex;
   flex-direction: column;
   font-family: var(--body-font-family, "Georgia", serif);
-  /* ── Hero ── */
-  /* subtle radial "crowd" texture overlay */
-  /* ── Selection panel (shown after file pick) ── */
-  /* ── Upload bar ── */
 }
 
 .facial-recognition .fr-hero {
@@ -20,9 +16,7 @@
   align-items: center;
   justify-content: flex-end;
   padding-bottom: 60px;
-  /* background set via JS using window.hlx.codeBasePath */
   background-color: #002fa7;
-  /* fallback while image loads */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
