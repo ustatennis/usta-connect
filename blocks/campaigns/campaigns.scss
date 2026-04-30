@@ -21,8 +21,8 @@
   line-height: 15px;
   text-transform: capitalize;
   word-wrap: normal;
-  min-height: 40px;
   white-space: break-spaces;
+  margin-top: 0;
 }
 
 .campaigns-container p>a {
@@ -187,5 +187,7 @@
   font-weight: bold;
   font-style: italic;
   color: grey;
-  margin: 5px 0;
+  margin-top: 0;
+  margin-bottom: 10px;
+  line-height: 15px;
 }
