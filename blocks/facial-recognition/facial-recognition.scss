@@ -1,0 +1,232 @@
+.facial-recognition {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font-family, 'Georgia', serif);
+
+  /* ── Hero ── */
+  .fr-hero {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 60px;
+
+    /* background set via JS using window.hlx.codeBasePath */
+    background-color: #002fa7;
+
+    /* fallback while image loads */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 720px;
+    overflow: hidden;
+  }
+
+  /* subtle radial "crowd" texture overlay */
+  .fr-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 70%,
+    rgb(0 0 0 / 0%) 20%,
+    rgb(0 0 0 / 40%) 100%);
+    pointer-events: none;
+  }
+
+  .fr-hero__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 40px 20px;
+  }
+
+  .fr-hero__title {
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-align: center;
+    margin: 0;
+    text-shadow: 0 2px 8px rgb(0 0 0 / 50%);
+  }
+
+  /* ── Selection panel (shown after file pick) ── */
+  .fr-selection-panel {
+    display: none;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .fr-selection-panel__preview {
+    flex-shrink: 0;
+  }
+
+  .fr-preview-img {
+    width: 110px;
+    height: 130px;
+    object-fit: cover;
+    border: 3px solid rgb(255 255 255 / 60%);
+    box-shadow: 0 4px 16px rgb(0 0 0 / 50%);
+    display: block;
+  }
+
+  .fr-selection-panel__controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding-top: 4px;
+  }
+
+  .fr-cutoff-label {
+    font-size: 0.78rem;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 4px rgb(0 0 0 / 60%);
+    margin: 0;
+    flex-direction: row;
+    margin-top: 0;
+  }
+
+  .fr-cutoff-input {
+    width: 120px;
+    height: 30px;
+    padding: 0 8px;
+    border: 1px solid #bbb;
+    background: #fff;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+  }
+
+  .fr-find-btn {
+    width: 120px;
+    min-height: 48px;
+    background: #d4d4d4;
+    border: 1px solid #999;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #222;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.3;
+    border-radius: 2px;
+    padding: 6px 8px;
+
+    &:hover {
+      background: #c0c0c0;
+    }
+
+    &:active {
+      background: #adadad;
+    }
+  }
+
+  .fr-selection-panel__results {
+    display: none;
+  }
+
+  .fr-results-table {
+    border-collapse: collapse;
+    width: 260px;
+    background: #fff;
+    border: 2px solid #555;
+    font-family: Arial, sans-serif;
+
+    th, td {
+      border: 1px solid #555;
+      padding: 8px 12px;
+      text-align: left;
+      color: #222;
+    }
+
+    th {
+      background: #dcdcdc;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    td {
+      font-size: 0.9rem;
+    }
+
+    tr:nth-child(even) td {
+      background: #f7f7f7;
+    }
+  }
+
+  /* ── Upload bar ── */
+  .fr-upload-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #e8e8e8;
+    border-top: 2px solid #ccc;
+    padding: 18px 32px;
+    flex-wrap: wrap;
+  }
+
+  .fr-upload-bar__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.35;
+    white-space: nowrap;
+    min-width: 110px;
+
+    .fr-upload-bar__sub {
+      font-weight: 400;
+    }
+  }
+
+  .fr-upload-bar__input-wrap {
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .fr-upload-bar__input {
+    width: 100%;
+    height: 34px;
+    padding: 0 8px;
+    border: 1px solid #aaa;
+    background: #fff;
+    font-size: 0.85rem;
+    color: #555;
+    box-sizing: border-box;
+    cursor: default;
+
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+
+  .fr-upload-bar__browse {
+    height: 34px;
+    padding: 0 18px;
+    background: #d4d4d4;
+    border: 1px solid #999;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #222;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 2px;
+
+    &:hover {
+      background: #c0c0c0;
+    }
+
+    &:active {
+      background: #adadad;
+    }
+  }
+}

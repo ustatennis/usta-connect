@@ -33,6 +33,7 @@ export const ROUTES = {
 
   oncourtSiteInformation: 'oncourt-site-information',
   shuttleReservationForm: '/shuttle-reservation-form',
+  facialRecognition: '/facial-recognition',
 };
 
 export const PRIVATE_ROUTES = [
@@ -55,6 +56,7 @@ export const PRIVATE_ROUTES = [
   ROUTES.archive,
   ROUTES.shuttleReservationForm,
   ROUTES.whatsApp,
+  ROUTES.facialRecognition,
 ];
 
 export const UN_AUTH_ROUTES = [
